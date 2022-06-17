@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from "react-native"
+import { NavigationContainer } from "@react-navigation/native"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { ApplicationProvider, Button, Input } from "@ui-kitten/components"
+import * as eva from "@eva-design/eva"
+import Login from "./Components/login"
+import Signup from "./Components/signup"
+import { default as theme } from "./custom-theme.json"
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const Stack = createNativeStackNavigator()
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  return (
+    <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Login"
+            children={({ navigation, route }) => (
+              <Login navigation={navigation} route={route} />
+            )}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name="Signup"
+            children={({ navigation, route }) => (
+              <Signup navigation={navigation} route={route} />
+            )}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ApplicationProvider>
+  )
+}
