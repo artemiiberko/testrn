@@ -18,7 +18,10 @@ const Login = ({ navigation }) => {
           setModalVisible(!modalVisible)
         }}
       >
-        <Pressable onPress={() => setModalVisible(!modalVisible)}>
+        <Pressable
+          style={{ flex: 1 }}
+          onPress={() => setModalVisible(!modalVisible)}
+        >
           <View style={styles.modalview}>
             <Text style={{ color: "#FF4B2B", fontSize: 22 }}>
               Wrong Email or Password!
@@ -43,64 +46,85 @@ const Login = ({ navigation }) => {
           colors={["rgba(240, 290, 260, 1)", "rgba(70, 125, 200, 1)"]}
           style={styles.formbody}
         >
-          <Text style={{ fontSize: 26, paddingBottom: 15 }}>Sign-in</Text>
-          <Input
-            style={styles.input}
-            textStyle={{ fontSize: 20 }}
-            size="large"
-            color="rgba(69, 69, 69, 1)"
-            value={email}
-            onChangeText={(nextValue) => {
-              setEmail(nextValue)
-            }}
-            placeholder="Email"
-          />
-          <Input
-            style={styles.input}
-            textStyle={{ fontSize: 20 }}
-            size="large"
-            value={pass}
-            onChangeText={(nextValue) => {
-              setPass(nextValue)
-            }}
-            secureTextEntry={true}
-            placeholder="Password"
-          />
+          <Text
+            style={{ fontSize: 26, alignSelf: "flex-start", color: "#454545" }}
+          >
+            Sign-in
+          </Text>
+          <View style={styles.inputContainer}>
+            <Input
+              textContentType="email"
+              style={styles.input}
+              textStyle={{ fontSize: 20 }}
+              size="large"
+              color="rgba(69, 69, 69, 1)"
+              value={email}
+              onChangeText={(nextValue) => {
+                setEmail(nextValue)
+              }}
+              placeholder="Email"
+            />
+            <Input
+              style={styles.input}
+              textStyle={{ fontSize: 20 }}
+              size="large"
+              value={pass}
+              onChangeText={(nextValue) => {
+                setPass(nextValue)
+              }}
+              secureTextEntry={true}
+              placeholder="Password"
+            />
+          </View>
           <Button
             style={styles.button}
-            size="giant"
+            size="medium"
             onPress={() => setModalVisible(true)}
           >
-            Login
+            {() => <Text style={styles.buttonText}>Login</Text>}
           </Button>
-          <Text style={{ textAlign: "center", fontSize: 20, color: "#454545" }}>
+          <Text style={{ textAlign: "center", fontSize: 18, color: "#454545" }}>
             or
           </Text>
-          <Button style={styles.buttonsocial} size="large" status="success">
-            Continue with Google
-          </Button>
-          <Button style={styles.buttonsocial} size="large" status="success">
-            Continue with Facebook
-          </Button>
-          <Text style={{ textAlign: "center", fontSize: 20, color: "#454545" }}>
+          <View style={styles.buttonsocialContainer}>
+            <Button style={styles.buttonsocial} size="medium" status="success">
+              {() => (
+                <Text style={styles.buttonTextSocial}>
+                  Continue with Google
+                </Text>
+              )}
+            </Button>
+            <Button style={styles.buttonsocial} size="medium" status="success">
+              {() => (
+                <Text style={styles.buttonTextSocial}>
+                  Continue with Facebook
+                </Text>
+              )}
+            </Button>
+          </View>
+          <Text style={{ textAlign: "center", fontSize: 18, color: "#454545" }}>
             Dont't have an account?
           </Text>
           <Button
             style={styles.button}
             onPress={() => navigation.navigate("Signup")}
-            size="giant"
+            size="medium"
           >
-            Create account
+            {() => <Text style={styles.buttonText}>Create account</Text>}
           </Button>
           <Button
             style={{
-              backgroundColor: "rgba(0, 0, 0, 0.0)",
-              borderColor: "rgba(0, 0, 0, 0.0)",
               marginTop: 25,
             }}
+            appearance="ghost"
+            onPress={() => navigation.navigate("Password Recovery")}
             size="medium"
           >
-            Forgot your password ?
+            {() => (
+              <Text style={{ color: "white", fontWeight: "600" }}>
+                Forgot your password ?
+              </Text>
+            )}
           </Button>
         </LinearGradient>
         <Text style={{ padding: 20, color: "grey" }}>Powered by Bookly</Text>
@@ -115,7 +139,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  logo: {},
   linearGradient: {
     flex: 1,
     width: "100%",
@@ -132,6 +155,12 @@ const styles = StyleSheet.create({
     width: "90%",
     borderRadius: 25,
     padding: 20,
+    height: "75%",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  inputContainer: {
+    width: "85%",
   },
   input: {
     borderRadius: 3,
@@ -140,13 +169,25 @@ const styles = StyleSheet.create({
     borderColor: "rgba(109, 109, 109, 0.15)",
   },
   button: {
-    marginHorizontal: 50,
-    marginTop: 15,
-    marginBottom: 10,
+    width: "60%",
+  },
+  buttonText: {
+    fontSize: 18,
+    color: "white",
+    fontWeight: "600",
+  },
+  buttonsocialContainer: {
+    width: "85%",
+    alignItems: "center",
   },
   buttonsocial: {
-    marginHorizontal: 20,
-    marginVertical: 10,
+    width: "90%",
+    marginVertical: 5,
+  },
+  buttonTextSocial: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: "600",
   },
   modalview: {
     width: "90%",
