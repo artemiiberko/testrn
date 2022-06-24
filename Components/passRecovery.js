@@ -49,7 +49,7 @@ const PassRecovery = ({ navigation }) => {
           </Text>
           <View style={styles.inputContainer}>
             <Input
-              textContentType="email"
+              textContentType="emailAddress"
               style={styles.input}
               textStyle={{ fontSize: 20 }}
               size="large"

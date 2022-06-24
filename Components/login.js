@@ -53,7 +53,7 @@ const Login = ({ navigation }) => {
           </Text>
           <View style={styles.inputContainer}>
             <Input
-              textContentType="email"
+              textContentType="emailAddress"
               style={styles.input}
               textStyle={{ fontSize: 20 }}
               size="large"
@@ -65,6 +65,7 @@ const Login = ({ navigation }) => {
               placeholder="Email"
             />
             <Input
+              textContentType="password"
               style={styles.input}
               textStyle={{ fontSize: 20 }}
               size="large"
@@ -79,7 +80,11 @@ const Login = ({ navigation }) => {
           <Button
             style={styles.button}
             size="medium"
-            onPress={() => setModalVisible(true)}
+            onPress={() => {
+              email === "admin" && pass === "pass"
+                ? navigation.navigate("Main")
+                : setModalVisible(true)
+            }}
           >
             {() => <Text style={styles.buttonText}>Login</Text>}
           </Button>

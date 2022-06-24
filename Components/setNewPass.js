@@ -71,7 +71,7 @@ const SetNewPass = ({ navigation }) => {
           <View style={styles.inputContainer}>
             <Input
               secureTextEntry={true}
-              textContentType="password"
+              textContentType="newPassword"
               style={styles.input}
               textStyle={{ fontSize: 20 }}
               size="large"
@@ -84,7 +84,7 @@ const SetNewPass = ({ navigation }) => {
             />
             <Input
               secureTextEntry={true}
-              textContentType="password"
+              textContentType="newPassword"
               style={styles.input}
               textStyle={{ fontSize: 20 }}
               size="large"
