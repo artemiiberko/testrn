@@ -10,6 +10,7 @@ import {
 } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button } from "@ui-kitten/components"
+import BookingComponent from "./bookingComponent"
 
 const Home = ({ navigation }) => {
   return (
@@ -66,51 +67,12 @@ const Home = ({ navigation }) => {
               alignSelf: "center",
             }}
           ></View>
-          <View
-            style={{
-              backgroundColor: "#e7f4f6",
-              width: "90%",
-              height: 200,
-              alignSelf: "center",
-              marginVertical: 10,
-            }}
-          ></View>
-          <View
-            style={{
-              backgroundColor: "#e7f4f6",
-              width: "90%",
-              height: 200,
-              alignSelf: "center",
-              marginVertical: 10,
-            }}
-          ></View>
-          <View
-            style={{
-              backgroundColor: "#e7f4f6",
-              width: "90%",
-              height: 200,
-              alignSelf: "center",
-              marginVertical: 10,
-            }}
-          ></View>
-          <View
-            style={{
-              backgroundColor: "#e7f4f6",
-              width: "90%",
-              height: 200,
-              alignSelf: "center",
-              marginVertical: 10,
-            }}
-          ></View>
-          <View
-            style={{
-              backgroundColor: "#e7f4f6",
-              width: "90%",
-              height: 200,
-              alignSelf: "center",
-              marginVertical: 10,
-            }}
-          ></View>
+          <BookingComponent status="completed" />
+          <BookingComponent status="awaiting confirmation" />
+          <BookingComponent status="canceled by therapist" />
+          <BookingComponent status="full refund" />
+          <BookingComponent status="canceled by you" />
+          <BookingComponent status="no refund" />
         </ScrollView>
       </LinearGradient>
     </View>

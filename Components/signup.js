@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, Text, View, Image, Modal, Pressable } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { BlurView } from "expo-blur"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
 
@@ -61,100 +62,117 @@ const Signup = ({ navigation }) => {
           style={styles.logo}
           source={require("./../content/saluderia.png")}
         />
-
         <LinearGradient
-          colors={["rgba(240, 290, 260, 1)", "rgba(70, 125, 200, 1)"]}
-          style={styles.formbody}
+          colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
+          style={styles.formbodyContainer}
         >
-          <Text
-            style={{ fontSize: 26, alignSelf: "flex-start", color: "#454545" }}
-          >
-            Sign up
-          </Text>
-          <View style={styles.inputContainer}>
-            <Input
-              style={styles.input}
-              textStyle={{ fontSize: 20 }}
-              size="large"
-              color="rgba(69, 69, 69, 1)"
-              value={userName}
-              onChangeText={(nextValue) => {
-                setUserName(nextValue)
+          <BlurView intensity={100} style={styles.formbody}>
+            <Text
+              style={{
+                fontSize: 26,
+                alignSelf: "flex-start",
+                color: "#454545",
               }}
-              placeholder="Name"
-            />
-            <Input
-              style={styles.input}
-              textStyle={{ fontSize: 20 }}
-              size="large"
-              color="rgba(69, 69, 69, 1)"
-              value={email}
-              onChangeText={(nextValue) => {
-                setEmail(nextValue)
+            >
+              Sign up
+            </Text>
+            <View style={styles.inputContainer}>
+              <Input
+                style={styles.input}
+                textStyle={{ fontSize: 20 }}
+                size="large"
+                color="rgba(69, 69, 69, 1)"
+                value={userName}
+                onChangeText={(nextValue) => {
+                  setUserName(nextValue)
+                }}
+                placeholder="Name"
+              />
+              <Input
+                style={styles.input}
+                textStyle={{ fontSize: 20 }}
+                size="large"
+                color="rgba(69, 69, 69, 1)"
+                value={email}
+                onChangeText={(nextValue) => {
+                  setEmail(nextValue)
+                }}
+                placeholder="Email"
+              />
+              <Input
+                style={styles.input}
+                textStyle={{ fontSize: 20 }}
+                size="large"
+                value={pass}
+                onChangeText={(nextValue) => {
+                  setPass(nextValue)
+                }}
+                placeholder="Password"
+                secureTextEntry={true}
+              />
+              <Input
+                style={styles.input}
+                textStyle={{ fontSize: 20 }}
+                size="large"
+                value={repeatpass}
+                onChangeText={(nextValue) => {
+                  setRepeatPass(nextValue)
+                }}
+                placeholder="Repeat Password"
+                secureTextEntry={true}
+              />
+            </View>
+            <Button
+              style={styles.button}
+              onPress={() => {
+                showError()
               }}
-              placeholder="Email"
-            />
-            <Input
-              style={styles.input}
-              textStyle={{ fontSize: 20 }}
-              size="large"
-              value={pass}
-              onChangeText={(nextValue) => {
-                setPass(nextValue)
-              }}
-              placeholder="Password"
-              secureTextEntry={true}
-            />
-            <Input
-              style={styles.input}
-              textStyle={{ fontSize: 20 }}
-              size="large"
-              value={repeatpass}
-              onChangeText={(nextValue) => {
-                setRepeatPass(nextValue)
-              }}
-              placeholder="Repeat Password"
-              secureTextEntry={true}
-            />
-          </View>
-          <Button
-            style={styles.button}
-            onPress={() => {
-              showError()
-            }}
-            size="medium"
-          >
-            {() => <Text style={styles.buttonText}>Sign up</Text>}
-          </Button>
-          <Text style={{ textAlign: "center", fontSize: 18, color: "#454545" }}>
-            or
-          </Text>
-          <View style={styles.buttonsocialContainer}>
-            <Button style={styles.buttonsocial} size="medium" status="success">
-              {() => (
-                <Text style={styles.buttonTextSocial}>
-                  Continue with Google
-                </Text>
-              )}
+              size="medium"
+            >
+              {() => <Text style={styles.buttonText}>Sign up</Text>}
             </Button>
-            <Button style={styles.buttonsocial} size="medium" status="success">
-              {() => (
-                <Text style={styles.buttonTextSocial}>
-                  Continue with Facebook
-                </Text>
-              )}
+            <Text
+              style={{ textAlign: "center", fontSize: 18, color: "#454545" }}
+            >
+              or
+            </Text>
+            <View style={styles.buttonsocialContainer}>
+              <Button
+                style={styles.buttonsocial}
+                size="medium"
+                status="success"
+              >
+                {() => (
+                  <Text style={styles.buttonTextSocial}>
+                    Continue with Google
+                  </Text>
+                )}
+              </Button>
+              <Button
+                style={styles.buttonsocial}
+                size="medium"
+                status="success"
+              >
+                {() => (
+                  <Text style={styles.buttonTextSocial}>
+                    Continue with Facebook
+                  </Text>
+                )}
+              </Button>
+            </View>
+            <Text
+              style={{ textAlign: "center", fontSize: 18, color: "#454545" }}
+            >
+              Already have an account?
+            </Text>
+            <Button
+              style={styles.button}
+              onPress={() => navigation.navigate("Login")}
+              size="medium"
+            >
+              {() => <Text style={styles.buttonText}>Sign In</Text>}
             </Button>
-          </View>
-          <Text style={{ textAlign: "center", fontSize: 18, color: "#454545" }}>
-            Already have an account?
-          </Text>
-          <Button
-            style={styles.button}
-            onPress={() => navigation.navigate("Login")}
-            size="medium"
-          >
-            {() => <Text style={styles.buttonText}>Sign In</Text>}
-          </Button>
+          </BlurView>
         </LinearGradient>
         <Text style={{ padding: 20, color: "grey" }}>Powered by Bookly</Text>
       </LinearGradient>
@@ -181,11 +199,16 @@ const styles = StyleSheet.create({
     height: 600,
     resizeMode: "contain",
   },
-  formbody: {
+  formbodyContainer: {
     width: "90%",
     borderRadius: 25,
-    padding: 20,
     height: "75%",
+    overflow: "hidden",
+  },
+  formbody: {
+    width: "100%",
+    padding: 20,
+    height: "100%",
     justifyContent: "space-between",
     alignItems: "center",
   },

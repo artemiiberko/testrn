@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, Text, View, Image, Modal, Pressable } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { BlurView } from "expo-blur"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
 
@@ -43,71 +44,73 @@ const SetNewPass = ({ navigation }) => {
         />
 
         <LinearGradient
-          colors={["rgba(240, 290, 260, 1)", "rgba(70, 125, 200, 1)"]}
-          style={styles.formbody}
+          colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
+          style={styles.formbodyContainer}
         >
-          <Button
-            style={styles.backButton}
-            appearance="ghost"
-            size="giant"
-            accessoryLeft={() => (
-              <Image source={require("./../content/arrow-back.png")} />
-            )}
-            onPress={() => {
-              navigation.goBack()
-            }}
-          />
-          <Text
-            style={{
-              fontSize: 26,
-              color: "#454545",
-            }}
-          >
-            Password Recovery
-          </Text>
-          <Text style={{ fontSize: 22, color: "#A8A8A8", marginTop: 40 }}>
-            Enter a new password, different from the past
-          </Text>
-          <View style={styles.inputContainer}>
-            <Input
-              secureTextEntry={true}
-              textContentType="newPassword"
-              style={styles.input}
-              textStyle={{ fontSize: 20 }}
-              size="large"
-              color="rgba(69, 69, 69, 1)"
-              value={newPass}
-              onChangeText={(nextValue) => {
-                setNewPass(nextValue)
+          <BlurView intensity={100} style={styles.formbody}>
+            <Button
+              style={styles.backButton}
+              appearance="ghost"
+              size="giant"
+              accessoryLeft={() => (
+                <Image source={require("./../content/arrow-back.png")} />
+              )}
+              onPress={() => {
+                navigation.goBack()
               }}
-              placeholder="New password"
             />
-            <Input
-              secureTextEntry={true}
-              textContentType="newPassword"
-              style={styles.input}
-              textStyle={{ fontSize: 20 }}
-              size="large"
-              color="rgba(69, 69, 69, 1)"
-              value={confirmPass}
-              onChangeText={(nextValue) => {
-                setConfirmPass(nextValue)
+            <Text
+              style={{
+                fontSize: 26,
+                color: "#454545",
               }}
-              placeholder="Repeat password"
-            />
-          </View>
-          <Button
-            style={styles.button}
-            size="medium"
-            disabled={newPass && confirmPass ? false : true}
-            onPress={() => {
-              newPass === confirmPass
-                ? navigation.navigate("New Password Saved")
-                : setModalVisible(true)
-            }}
-          >
-            {() => <Text style={styles.buttonText}>Save</Text>}
-          </Button>
+            >
+              Password Recovery
+            </Text>
+            <Text style={{ fontSize: 22, color: "#A8A8A8", marginTop: 40 }}>
+              Enter a new password, different from the past
+            </Text>
+            <View style={styles.inputContainer}>
+              <Input
+                secureTextEntry={true}
+                textContentType="newPassword"
+                style={styles.input}
+                textStyle={{ fontSize: 20 }}
+                size="large"
+                color="rgba(69, 69, 69, 1)"
+                value={newPass}
+                onChangeText={(nextValue) => {
+                  setNewPass(nextValue)
+                }}
+                placeholder="New password"
+              />
+              <Input
+                secureTextEntry={true}
+                textContentType="newPassword"
+                style={styles.input}
+                textStyle={{ fontSize: 20 }}
+                size="large"
+                color="rgba(69, 69, 69, 1)"
+                value={confirmPass}
+                onChangeText={(nextValue) => {
+                  setConfirmPass(nextValue)
+                }}
+                placeholder="Repeat password"
+              />
+            </View>
+            <Button
+              style={styles.button}
+              size="medium"
+              disabled={newPass && confirmPass ? false : true}
+              onPress={() => {
+                newPass === confirmPass
+                  ? navigation.navigate("New Password Saved")
+                  : setModalVisible(true)
+              }}
+            >
+              {() => <Text style={styles.buttonText}>Save</Text>}
+            </Button>
+          </BlurView>
         </LinearGradient>
         <Text style={{ padding: 20, color: "grey" }}>Powered by Bookly</Text>
       </LinearGradient>
@@ -133,11 +136,16 @@ const styles = StyleSheet.create({
     height: 600,
     resizeMode: "contain",
   },
-  formbody: {
+  formbodyContainer: {
     width: "90%",
     borderRadius: 25,
-    padding: 20,
     height: "75%",
+    overflow: "hidden",
+  },
+  formbody: {
+    width: "100%",
+    padding: 20,
+    height: "100%",
     alignItems: "center",
   },
   inputContainer: {

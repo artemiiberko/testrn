@@ -1,7 +1,8 @@
 import React from "react"
 import { StyleSheet, Text, View, Image } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
-import { Button, Input } from "@ui-kitten/components"
+import { BlurView } from "expo-blur"
+import { Button } from "@ui-kitten/components"
 
 const NewPassSaved = ({ navigation }) => {
   return (
@@ -20,51 +21,53 @@ const NewPassSaved = ({ navigation }) => {
         />
 
         <LinearGradient
-          colors={["rgba(240, 290, 260, 1)", "rgba(70, 125, 200, 1)"]}
-          style={styles.formbody}
+          colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
+          style={styles.formbodyContainer}
         >
-          <Button
-            style={styles.backButton}
-            appearance="ghost"
-            size="giant"
-            accessoryLeft={() => (
-              <Image source={require("./../content/arrow-back.png")} />
-            )}
-            onPress={() => {
-              navigation.goBack()
-            }}
-          />
-          <Text
-            style={{
-              fontSize: 26,
-              color: "#454545",
-            }}
-          >
-            Password Recovery
-          </Text>
-          <Text
-            style={{
-              fontSize: 22,
-              color: "#A8A8A8",
-              marginTop: 40,
-              alignSelf: "center",
-            }}
-          >
-            New password saved
-          </Text>
-          <View style={styles.inputContainer}>
-            <Image
-              style={styles.doneimg}
-              source={require("./../content/done.png")}
-            ></Image>
-          </View>
-          <Button
-            style={styles.button}
-            size="medium"
-            onPress={() => navigation.navigate("Login")}
-          >
-            {() => <Text style={styles.buttonText}>Sing-in</Text>}
-          </Button>
+          <BlurView intensity={100} style={styles.formbody}>
+            <Button
+              style={styles.backButton}
+              appearance="ghost"
+              size="giant"
+              accessoryLeft={() => (
+                <Image source={require("./../content/arrow-back.png")} />
+              )}
+              onPress={() => {
+                navigation.goBack()
+              }}
+            />
+            <Text
+              style={{
+                fontSize: 26,
+                color: "#454545",
+              }}
+            >
+              Password Recovery
+            </Text>
+            <Text
+              style={{
+                fontSize: 22,
+                color: "#A8A8A8",
+                marginTop: 40,
+                alignSelf: "center",
+              }}
+            >
+              New password saved
+            </Text>
+            <View style={styles.inputContainer}>
+              <Image
+                style={styles.doneimg}
+                source={require("./../content/done.png")}
+              ></Image>
+            </View>
+            <Button
+              style={styles.button}
+              size="medium"
+              onPress={() => navigation.navigate("Login")}
+            >
+              {() => <Text style={styles.buttonText}>Sign-in</Text>}
+            </Button>
+          </BlurView>
         </LinearGradient>
         <Text style={{ padding: 20, color: "grey" }}>Powered by Bookly</Text>
       </LinearGradient>
@@ -90,11 +93,16 @@ const styles = StyleSheet.create({
     height: 600,
     resizeMode: "contain",
   },
-  formbody: {
+  formbodyContainer: {
     width: "90%",
     borderRadius: 25,
-    padding: 20,
     height: "75%",
+    overflow: "hidden",
+  },
+  formbody: {
+    width: "100%",
+    padding: 20,
+    height: "100%",
     alignItems: "center",
   },
   inputContainer: {

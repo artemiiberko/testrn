@@ -3,7 +3,10 @@ import { LogBox, Image } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { ApplicationProvider } from "@ui-kitten/components"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import {
+  createBottomTabNavigator,
+  BottomTabBar,
+} from "@react-navigation/bottom-tabs"
 import * as eva from "@eva-design/eva"
 import Login from "./Components/login"
 import Signup from "./Components/signup"
@@ -13,6 +16,7 @@ import ConfirmCode from "./Components/confirmationCode"
 import SetNewPass from "./Components/setNewPass"
 import NewPassSaved from "./Components/newPassSaved"
 import Home from "./Components/home"
+import { LinearGradient } from "expo-linear-gradient"
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -43,7 +47,7 @@ export default function App() {
     tabBarBadge: "",
   }
 
-  function Main({ navigation }) {
+  function Main() {
     return (
       <Tab.Navigator
         initialRouteName={"Home"}
@@ -52,7 +56,7 @@ export default function App() {
           tabBarShowLabel: false,
           tabBarStyle: {
             height: 90,
-            paddingHorizontal: 5,
+            paddingHorizontal: 0,
             paddingTop: 0,
             backgroundColor: "#EAF6F7",
             position: "absolute",

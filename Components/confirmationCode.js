@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, Text, View, Image } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { BlurView } from "expo-blur"
 import { Button } from "@ui-kitten/components"
 import { useState } from "react"
 import CodeInput from "react-native-confirmation-code-input"
@@ -24,69 +25,71 @@ const ConfirmCode = ({ navigation }) => {
         />
 
         <LinearGradient
-          colors={["rgba(240, 290, 260, 1)", "rgba(70, 125, 200, 1)"]}
-          style={styles.formbody}
+          colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
+          style={styles.formbodyContainer}
         >
-          <Button
-            style={styles.backButton}
-            appearance="ghost"
-            size="giant"
-            accessoryLeft={() => (
-              <Image source={require("./../content/arrow-back.png")} />
-            )}
-            onPress={() => {
-              navigation.goBack()
-            }}
-          />
-          <Text
-            style={{
-              fontSize: 26,
-              color: "#454545",
-            }}
-          >
-            Password Recovery
-          </Text>
-          <Text
-            style={{
-              fontSize: 22,
-              color: "#A8A8A8",
-              marginTop: 40,
-            }}
-          >
-            Sent to you confirmation code by Email
-          </Text>
-          <View style={styles.inputContainer}>
-            <CodeInput
-              keyboardType="numeric"
-              codeLength={5}
-              autoFocus={false}
-              size={50}
-              activeColor="#00ABB9"
-              containerStyle={{
-                marginTop: 0,
-                marginBottom: 50,
-              }}
-              codeInputStyle={{
-                fontWeight: "400",
-                fontSize: 22,
-                color: "#454545",
-                borderRadius: 3,
-                backgroundColor: "#6D6D6D26",
-              }}
-              onFulfill={(code) => {
-                setCode(code)
-                setIsEmpty(false)
+          <BlurView intensity={100} style={styles.formbody}>
+            <Button
+              style={styles.backButton}
+              appearance="ghost"
+              size="giant"
+              accessoryLeft={() => (
+                <Image source={require("./../content/arrow-back.png")} />
+              )}
+              onPress={() => {
+                navigation.goBack()
               }}
             />
-          </View>
-          <Button
-            style={styles.button}
-            size="medium"
-            disabled={isEmpty}
-            onPress={() => navigation.navigate("Set New Password")}
-          >
-            {() => <Text style={styles.buttonText}>Confirm</Text>}
-          </Button>
+            <Text
+              style={{
+                fontSize: 26,
+                color: "#454545",
+              }}
+            >
+              Password Recovery
+            </Text>
+            <Text
+              style={{
+                fontSize: 22,
+                color: "#A8A8A8",
+                marginTop: 40,
+              }}
+            >
+              Sent to you confirmation code by Email
+            </Text>
+            <View style={styles.inputContainer}>
+              <CodeInput
+                keyboardType="numeric"
+                codeLength={5}
+                autoFocus={false}
+                size={50}
+                activeColor="#00ABB9"
+                containerStyle={{
+                  marginTop: 0,
+                  marginBottom: 50,
+                }}
+                codeInputStyle={{
+                  fontWeight: "400",
+                  fontSize: 22,
+                  color: "#454545",
+                  borderRadius: 3,
+                  backgroundColor: "#6D6D6D26",
+                }}
+                onFulfill={(code) => {
+                  setCode(code)
+                  setIsEmpty(false)
+                }}
+              />
+            </View>
+            <Button
+              style={styles.button}
+              size="medium"
+              disabled={isEmpty}
+              onPress={() => navigation.navigate("Set New Password")}
+            >
+              {() => <Text style={styles.buttonText}>Confirm</Text>}
+            </Button>
+          </BlurView>
         </LinearGradient>
         <Text style={{ padding: 20, color: "grey" }}>Powered by Bookly</Text>
       </LinearGradient>
@@ -112,11 +115,16 @@ const styles = StyleSheet.create({
     height: 600,
     resizeMode: "contain",
   },
-  formbody: {
+  formbodyContainer: {
     width: "90%",
     borderRadius: 25,
-    padding: 20,
     height: "75%",
+    overflow: "hidden",
+  },
+  formbody: {
+    width: "100%",
+    padding: 20,
+    height: "100%",
     alignItems: "center",
   },
   inputContainer: {

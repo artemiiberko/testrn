@@ -1,8 +1,10 @@
 import React from "react"
 import { StyleSheet, Text, View, Image, Modal, Pressable } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { BlurView } from "expo-blur"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
+import { StackActions } from "@react-navigation/native"
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("")
@@ -43,94 +45,112 @@ const Login = ({ navigation }) => {
         />
 
         <LinearGradient
-          colors={["rgba(240, 290, 260, 1)", "rgba(70, 125, 200, 1)"]}
-          style={styles.formbody}
+          colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
+          style={styles.formbodyContainer}
         >
-          <Text
-            style={{ fontSize: 26, alignSelf: "flex-start", color: "#454545" }}
-          >
-            Sign-in
-          </Text>
-          <View style={styles.inputContainer}>
-            <Input
-              textContentType="emailAddress"
-              style={styles.input}
-              textStyle={{ fontSize: 20 }}
-              size="large"
-              color="rgba(69, 69, 69, 1)"
-              value={email}
-              onChangeText={(nextValue) => {
-                setEmail(nextValue)
+          <BlurView intensity={100} style={styles.formbody}>
+            <Text
+              style={{
+                fontSize: 26,
+                alignSelf: "flex-start",
+                color: "#454545",
               }}
-              placeholder="Email"
-            />
-            <Input
-              textContentType="password"
-              style={styles.input}
-              textStyle={{ fontSize: 20 }}
-              size="large"
-              value={pass}
-              onChangeText={(nextValue) => {
-                setPass(nextValue)
+            >
+              Sign-in
+            </Text>
+            <View style={styles.inputContainer}>
+              <Input
+                textContentType="emailAddress"
+                style={styles.input}
+                textStyle={{ fontSize: 20 }}
+                size="large"
+                color="rgba(69, 69, 69, 1)"
+                value={email}
+                onChangeText={(nextValue) => {
+                  setEmail(nextValue)
+                }}
+                placeholder="Email"
+              />
+              <Input
+                textContentType="password"
+                style={styles.input}
+                textStyle={{ fontSize: 20 }}
+                size="large"
+                value={pass}
+                onChangeText={(nextValue) => {
+                  setPass(nextValue)
+                }}
+                secureTextEntry={true}
+                placeholder="Password"
+              />
+            </View>
+            <Button
+              style={styles.button}
+              size="medium"
+              onPress={() => {
+                email === "admin" && pass === "pass"
+                  ? navigation.dispatch(StackActions.replace("Main"))
+                  : setModalVisible(true)
               }}
-              secureTextEntry={true}
-              placeholder="Password"
-            />
-          </View>
-          <Button
-            style={styles.button}
-            size="medium"
-            onPress={() => {
-              email === "admin" && pass === "pass"
-                ? navigation.navigate("Main")
-                : setModalVisible(true)
-            }}
-          >
-            {() => <Text style={styles.buttonText}>Login</Text>}
-          </Button>
-          <Text style={{ textAlign: "center", fontSize: 18, color: "#454545" }}>
-            or
-          </Text>
-          <View style={styles.buttonsocialContainer}>
-            <Button style={styles.buttonsocial} size="medium" status="success">
+            >
+              {() => <Text style={styles.buttonText}>Login</Text>}
+            </Button>
+            <Text
+              style={{ textAlign: "center", fontSize: 18, color: "#454545" }}
+            >
+              or
+            </Text>
+            <View style={styles.buttonsocialContainer}>
+              <Button
+                style={styles.buttonsocial}
+                size="medium"
+                status="success"
+              >
+                {() => (
+                  <Text style={styles.buttonTextSocial}>
+                    Continue with Google
+                  </Text>
+                )}
+              </Button>
+              <Button
+                style={styles.buttonsocial}
+                size="medium"
+                status="success"
+              >
+                {() => (
+                  <Text style={styles.buttonTextSocial}>
+                    Continue with Facebook
+                  </Text>
+                )}
+              </Button>
+            </View>
+            <Text
+              style={{ textAlign: "center", fontSize: 18, color: "#454545" }}
+            >
+              Dont't have an account?
+            </Text>
+            <Button
+              style={styles.button}
+              onPress={() => navigation.navigate("Signup")}
+              size="medium"
+            >
+              {() => <Text style={styles.buttonText}>Create account</Text>}
+            </Button>
+            <Button
+              style={{
+                marginTop: 25,
+              }}
+              appearance="ghost"
+              onPress={() => navigation.navigate("Password Recovery")}
+              size="medium"
+            >
               {() => (
-                <Text style={styles.buttonTextSocial}>
-                  Continue with Google
+                <Text style={{ color: "white", fontWeight: "600" }}>
+                  Forgot your password ?
                 </Text>
               )}
             </Button>
-            <Button style={styles.buttonsocial} size="medium" status="success">
-              {() => (
-                <Text style={styles.buttonTextSocial}>
-                  Continue with Facebook
-                </Text>
-              )}
-            </Button>
-          </View>
-          <Text style={{ textAlign: "center", fontSize: 18, color: "#454545" }}>
-            Dont't have an account?
-          </Text>
-          <Button
-            style={styles.button}
-            onPress={() => navigation.navigate("Signup")}
-            size="medium"
-          >
-            {() => <Text style={styles.buttonText}>Create account</Text>}
-          </Button>
-          <Button
-            style={{
-              marginTop: 25,
-            }}
-            appearance="ghost"
-            onPress={() => navigation.navigate("Password Recovery")}
-            size="medium"
-          >
-            {() => (
-              <Text style={{ color: "white", fontWeight: "600" }}>
-                Forgot your password ?
-              </Text>
-            )}
-          </Button>
+          </BlurView>
         </LinearGradient>
         <Text style={{ padding: 20, color: "grey" }}>Powered by Bookly</Text>
       </LinearGradient>
@@ -156,11 +176,16 @@ const styles = StyleSheet.create({
     height: 600,
     resizeMode: "contain",
   },
-  formbody: {
+  formbodyContainer: {
     width: "90%",
     borderRadius: 25,
-    padding: 20,
     height: "75%",
+    overflow: "hidden",
+  },
+  formbody: {
+    width: "100%",
+    padding: 20,
+    height: "100%",
     justifyContent: "space-between",
     alignItems: "center",
   },
