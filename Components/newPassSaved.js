@@ -3,6 +3,9 @@ import { StyleSheet, Text, View, Image } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import { Button } from "@ui-kitten/components"
+import SaluderiaSvg from "./../content/saluderia.svg"
+import DoneSvg from "./../content/done.svg"
+import ArrowBackSvg from "./../content/arrow-back.svg"
 
 const NewPassSaved = ({ navigation }) => {
   return (
@@ -15,11 +18,8 @@ const NewPassSaved = ({ navigation }) => {
           style={styles.backgroundimg}
           source={require("./../content/backimg.png")}
         />
-        <Image
-          style={styles.logo}
-          source={require("./../content/saluderia.png")}
-        />
-
+        <ArrowBackSvg style={styles.backgroundimg} />
+        <SaluderiaSvg />
         <LinearGradient
           colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
           style={styles.formbodyContainer}
@@ -29,9 +29,7 @@ const NewPassSaved = ({ navigation }) => {
               style={styles.backButton}
               appearance="ghost"
               size="giant"
-              accessoryLeft={() => (
-                <Image source={require("./../content/arrow-back.png")} />
-              )}
+              accessoryLeft={() => <ArrowBackSvg />}
               onPress={() => {
                 navigation.goBack()
               }}
@@ -55,10 +53,7 @@ const NewPassSaved = ({ navigation }) => {
               New password saved
             </Text>
             <View style={styles.inputContainer}>
-              <Image
-                style={styles.doneimg}
-                source={require("./../content/done.png")}
-              ></Image>
+              <DoneSvg style={styles.doneimg} />
             </View>
             <Button
               style={styles.button}
