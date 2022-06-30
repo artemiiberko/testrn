@@ -5,6 +5,8 @@ import { BlurView } from "expo-blur"
 import { Button } from "@ui-kitten/components"
 import { useState } from "react"
 import CodeInput from "react-native-confirmation-code-input"
+import SaluderiaSvg from "./../content/saluderia.svg"
+import ArrowBackSvg from "./../content/arrow-back.svg"
 
 const ConfirmCode = ({ navigation }) => {
   const [code, setCode] = useState("")
@@ -19,11 +21,7 @@ const ConfirmCode = ({ navigation }) => {
           style={styles.backgroundimg}
           source={require("./../content/backimg.png")}
         />
-        <Image
-          style={styles.logo}
-          source={require("./../content/saluderia.png")}
-        />
-
+        <SaluderiaSvg />
         <LinearGradient
           colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
           style={styles.formbodyContainer}
@@ -33,9 +31,7 @@ const ConfirmCode = ({ navigation }) => {
               style={styles.backButton}
               appearance="ghost"
               size="giant"
-              accessoryLeft={() => (
-                <Image source={require("./../content/arrow-back.png")} />
-              )}
+              accessoryLeft={() => <ArrowBackSvg />}
               onPress={() => {
                 navigation.goBack()
               }}

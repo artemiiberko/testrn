@@ -5,6 +5,7 @@ import { BlurView } from "expo-blur"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
 import { StackActions } from "@react-navigation/native"
+import SaluderiaSvg from "./../content/saluderia.svg"
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("")
@@ -39,11 +40,7 @@ const Login = ({ navigation }) => {
           style={styles.backgroundimg}
           source={require("./../content/backimg.png")}
         />
-        <Image
-          style={styles.logo}
-          source={require("./../content/saluderia.png")}
-        />
-
+        <SaluderiaSvg />
         <LinearGradient
           colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
           style={styles.formbodyContainer}

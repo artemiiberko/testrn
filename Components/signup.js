@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
+import SaluderiaSvg from "./../content/saluderia.svg"
 
 const Signup = ({ navigation }) => {
   const [email, setEmail] = useState("")
@@ -58,10 +59,7 @@ const Signup = ({ navigation }) => {
           style={styles.backgroundimg}
           source={require("./../content/backimg.png")}
         />
-        <Image
-          style={styles.logo}
-          source={require("./../content/saluderia.png")}
-        />
+        <SaluderiaSvg />
         <LinearGradient
           colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
           style={styles.formbodyContainer}

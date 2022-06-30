@@ -1,7 +1,10 @@
 import React from "react"
-import { StyleSheet, View, Image, Text } from "react-native"
+import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
+import TimeSvg from "./../content/time.svg"
+import StarSvg from "./../content/star.svg"
+import SmallCheckSvg from "./../content/small-check.svg"
 
 const Completed = () => {
   return (
@@ -16,26 +19,11 @@ const Completed = () => {
         Completed
       </Text>
       <View style={{ flexDirection: "row" }}>
-        <Image
-          style={{ marginHorizontal: 3 }}
-          source={require("./../content/star.png")}
-        ></Image>
-        <Image
-          style={{ marginHorizontal: 3 }}
-          source={require("./../content/star.png")}
-        ></Image>
-        <Image
-          style={{ marginHorizontal: 3 }}
-          source={require("./../content/star.png")}
-        ></Image>
-        <Image
-          style={{ marginHorizontal: 3 }}
-          source={require("./../content/star.png")}
-        ></Image>
-        <Image
-          style={{ marginHorizontal: 3 }}
-          source={require("./../content/star.png")}
-        ></Image>
+        <StarSvg style={{ marginHorizontal: 3 }} />
+        <StarSvg style={{ marginHorizontal: 3 }} />
+        <StarSvg style={{ marginHorizontal: 3 }} />
+        <StarSvg style={{ marginHorizontal: 3 }} />
+        <StarSvg style={{ marginHorizontal: 3 }} />
       </View>
     </View>
   )
@@ -50,8 +38,8 @@ const AwaitingConfirmation = () => {
       }}
     >
       <View style={{ flexDirection: "row" }}>
-        <Image
-          source={require("./../content/time.png")}
+        <TimeSvg
+          height="auto"
           style={{ resizeMode: "contain", height: "auto" }}
         />
         <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
@@ -89,10 +77,7 @@ const FullRefund = () => {
       <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
         Cancelation in 24 hours or more full refund
       </Text>
-      <Image
-        source={require("./../content/check-small.png")}
-        style={{ resizeMode: "contain", height: "auto" }}
-      ></Image>
+      <SmallCheckSvg height="auto" style={{ resizeMode: "contain" }} />
     </View>
   )
 }
@@ -108,10 +93,7 @@ const NoRefund = () => {
       <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
         Cancelation in 24 hours or less no refund
       </Text>
-      <Image
-        source={require("./../content/check-small.png")}
-        style={{ resizeMode: "contain", height: "auto" }}
-      ></Image>
+      <SmallCheckSvg height="auto" style={{ resizeMode: "contain" }} />
     </View>
   )
 }
@@ -129,7 +111,17 @@ const CanceledByYou = () => {
   )
 }
 
-const BookingComponent = ({ status }) => {
+const BookingComponent = ({
+  status,
+  name,
+  date,
+  starttime,
+  endtime,
+  where,
+  price,
+  id,
+  navigation,
+}) => {
   return (
     <LinearGradient
       colors={
@@ -140,69 +132,82 @@ const BookingComponent = ({ status }) => {
       style={styles.card}
     >
       <BlurView intensity={100} style={{ flex: 1 }}>
-        <View style={styles.infoSection}>
-          <Image
-            source={require("./../content/profile-photo.png")}
-            style={styles.photo}
-          />
-          <View style={styles.infoText}>
-            <Text style={{ color: "#454545", fontSize: 22, fontWeight: "700" }}>
-              Kim Potapov
-            </Text>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ color: "#454545", fontSize: 22 }}>13 June</Text>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => {
+            navigation.navigate("Booking Information", {
+              id: id,
+            })
+          }}
+        >
+          <View style={styles.infoSection}>
+            <Image
+              source={require("./../content/profile-photo.png")}
+              style={styles.photo}
+            />
+            <View style={styles.infoText}>
               <Text
+                style={{ color: "#454545", fontSize: 22, fontWeight: "700" }}
+              >
+                {name}
+              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={{ color: "#454545", fontSize: 22 }}>{date}</Text>
+                <Text
+                  style={{
+                    color: "#454545",
+                    fontSize: 16,
+                    paddingLeft: 10,
+                    marginBottom: -4,
+                  }}
+                >
+                  {starttime} - {endtime}
+                </Text>
+              </View>
+              <View
                 style={{
-                  color: "#454545",
-                  fontSize: 16,
-                  paddingLeft: 10,
-                  marginBottom: -4,
+                  backgroundColor: "#fff",
+                  borderRadius: 25,
+                  padding: 3,
+                  paddingHorizontal: 10,
+                  alignSelf: "flex-start",
                 }}
               >
-                15:00 - 16:30
-              </Text>
+                <Text style={{ fontSize: 16, color: "#454545" }}>{where}</Text>
+              </View>
+            </View>
+          </View>
+          <LinearGradient
+            colors={["#00ABB9FF", "#00ABB900"]}
+            start={{ x: -1, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ height: 1 }}
+          />
+          <View style={styles.priceSection}>
+            <View>
+              <View style={styles.procedure}>
+                <Text style={styles.procedureText}>
+                  Therapeutic back massage
+                </Text>
+              </View>
+              <View style={styles.procedure}>
+                <Text style={styles.procedureText}>Neck massage</Text>
+              </View>
             </View>
             <View
               style={{
-                backgroundColor: "#fff",
-                borderRadius: 25,
-                padding: 3,
-                paddingHorizontal: 10,
-                alignSelf: "flex-start",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Text style={{ fontSize: 16, color: "#454545" }}>
-                at the therapist
+              <Text
+                style={{ color: "#454545", fontSize: 32, fontWeight: "700" }}
+              >
+                {price} €
               </Text>
             </View>
           </View>
-        </View>
-        <LinearGradient
-          colors={["#00ABB9FF", "#00ABB900"]}
-          start={{ x: -1, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={{ height: 1 }}
-        />
-        <View style={styles.priceSection}>
-          <View>
-            <View style={styles.procedure}>
-              <Text style={styles.procedureText}>ck massage</Text>
-            </View>
-            <View style={styles.procedure}>
-              <Text style={styles.procedureText}>Neck massage</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "#454545", fontSize: 32, fontWeight: "700" }}>
-              130 €
-            </Text>
-          </View>
-        </View>
+        </TouchableOpacity>
         <LinearGradient
           colors={["#00ABB9FF", "#00ABB900"]}
           start={{ x: -1, y: 0 }}

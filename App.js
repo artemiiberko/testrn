@@ -3,10 +3,7 @@ import { LogBox, Image } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { ApplicationProvider } from "@ui-kitten/components"
-import {
-  createBottomTabNavigator,
-  BottomTabBar,
-} from "@react-navigation/bottom-tabs"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import * as eva from "@eva-design/eva"
 import Login from "./Components/login"
 import Signup from "./Components/signup"
@@ -16,7 +13,11 @@ import ConfirmCode from "./Components/confirmationCode"
 import SetNewPass from "./Components/setNewPass"
 import NewPassSaved from "./Components/newPassSaved"
 import Home from "./Components/home"
-import { LinearGradient } from "expo-linear-gradient"
+import HomeSvg from "./content/home.svg"
+import ProfileSvg from "./content/profile.svg"
+import MessagesSvg from "./content/messages.svg"
+import BookingInfo from "./Components/bookingInfo"
+import ConfirmCancelation from "./Components/confirmCancelation"
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -27,22 +28,25 @@ export default function App() {
 
   const notificationStyle = {
     tabBarIcon: (tab) => (
-      <Image
+      <MessagesSvg
+        opacity={tab.focused ? 1 : 0.5}
+        height={30}
         style={{
-          opacity: tab.focused ? 1 : 0.5,
-          height: 30,
           resizeMode: "contain",
         }}
-        source={require("./content/messages.png")}
       />
     ),
     tabBarBadgeStyle: {
-      minWidth: 14,
-      minHeight: 14,
-      maxWidth: 14,
-      maxHeight: 14,
-      borderRadius: 7,
+      top: 8,
+      left: 5,
+      minWidth: 16,
+      minHeight: 16,
+      maxWidth: 16,
+      maxHeight: 16,
+      borderRadius: 8,
       backgroundColor: "#00FF29",
+      borderWidth: 2,
+      borderColor: "#EAF6F7",
     },
     tabBarBadge: "",
   }
@@ -76,35 +80,18 @@ export default function App() {
           )}
           options={{
             tabBarIcon: (tab) => (
-              <Image
+              <HomeSvg
+                height={30}
+                opacity={tab.focused ? 1 : 0.5}
                 style={{
-                  opacity: tab.focused ? 1 : 0.5,
                   height: 30,
                   resizeMode: "contain",
                 }}
-                source={require("./content/home.png")}
               />
             ),
           }}
         />
-        <Tab.Screen
-          name="Booking"
-          children={({ navigation, route }) => (
-            <Home route={route} navigation={navigation} />
-          )}
-          options={{
-            tabBarIcon: (tab) => (
-              <Image
-                style={{
-                  opacity: tab.focused ? 1 : 0.5,
-                  height: 30,
-                  resizeMode: "contain",
-                }}
-                source={require("./content/booking.png")}
-              />
-            ),
-          }}
-        />
+
         <Tab.Screen
           name="Messages"
           children={({ navigation, route }) => (
@@ -115,36 +102,18 @@ export default function App() {
               ? notificationStyle
               : {
                   tabBarIcon: (tab) => (
-                    <Image
+                    <MessagesSvg
+                      opacity={tab.focused ? 1 : 0.5}
+                      height={30}
                       style={{
-                        opacity: tab.focused ? 1 : 0.5,
-                        height: 30,
                         resizeMode: "contain",
                       }}
-                      source={require("./content/messages.png")}
                     />
                   ),
                 }
           }
         />
-        <Tab.Screen
-          name="Settings"
-          children={({ navigation, route }) => (
-            <Home route={route} navigation={navigation} />
-          )}
-          options={{
-            tabBarIcon: (tab) => (
-              <Image
-                style={{
-                  opacity: tab.focused ? 1 : 0.5,
-                  height: 30,
-                  resizeMode: "contain",
-                }}
-                source={require("./content/settings.png")}
-              />
-            ),
-          }}
-        />
+
         <Tab.Screen
           name="Profile"
           children={({ navigation, route }) => (
@@ -152,13 +121,13 @@ export default function App() {
           )}
           options={{
             tabBarIcon: (tab) => (
-              <Image
+              <ProfileSvg
+                height={30}
+                opacity={tab.focused ? 1 : 0.5}
                 style={{
-                  opacity: tab.focused ? 1 : 0.5,
                   height: 30,
                   resizeMode: "contain",
                 }}
-                source={require("./content/profile.png")}
               />
             ),
           }}
@@ -216,6 +185,16 @@ export default function App() {
           <Stack.Screen
             name="Main"
             component={Main}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Booking Information"
+            component={BookingInfo}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Confirm Cancelation"
+            component={ConfirmCancelation}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
