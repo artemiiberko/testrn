@@ -18,6 +18,7 @@ import ProfileSvg from "./content/profile.svg"
 import MessagesSvg from "./content/messages.svg"
 import BookingInfo from "./Components/bookingInfo"
 import ConfirmCancelation from "./Components/confirmCancelation"
+import NewBookingNavigator from "./Components/newBookingNavigator"
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -132,6 +133,15 @@ export default function App() {
             ),
           }}
         />
+        <Tab.Screen
+          name="New Booking Navigator"
+          children={({ navigation, route }) => (
+            <NewBookingNavigator route={route} navigation={navigation} />
+          )}
+          options={{
+            tabBarButton: () => null,
+          }}
+        />
       </Tab.Navigator>
     )
   }
@@ -139,7 +149,7 @@ export default function App() {
   return (
     <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Login"
             children={({ navigation, route }) => (

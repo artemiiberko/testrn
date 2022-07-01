@@ -76,24 +76,19 @@ const ConfirmCancelation = ({ navigation, route }) => {
                   </Text>
                 </View>
               </View>
-              <LinearGradient
-                colors={["#00ABB9FF", "#00ABB900"]}
-                start={{ x: -1, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={{ height: 1 }}
-              />
+
               <View
                 style={{
-                  flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
+                  flex: 1,
                 }}
               >
                 <Text
                   style={{
                     fontSize: 24,
                     fontWeight: "700",
-                    paddingBottom: 15,
+                    paddingBottom: 25,
                     color: "#454545",
                   }}
                 >
@@ -139,13 +134,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
   },
   linearGradient: {
     flex: 1,
     width: "100%",
-    alignItems: "center",
   },
   blurContainer: {
     width: "100%",
@@ -179,7 +171,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e7f4f6",
     width: "90%",
     alignSelf: "center",
-    marginVertical: 10,
+    marginVertical: 50,
     borderRadius: 20,
     overflow: "hidden",
     marginTop: 140,
@@ -188,6 +180,8 @@ const styles = StyleSheet.create({
   backHeader: {
     flexDirection: "row",
     justifyContent: "flex-start",
+    position: "absolute",
+    zIndex: 1,
   },
 })
 export default ConfirmCancelation

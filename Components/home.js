@@ -99,6 +99,7 @@ const Home = ({ navigation }) => {
                 size="medium"
                 onPress={() => {
                   console.log("new booking")
+                  navigation.navigate("New Booking Navigator")
                 }}
               >
                 {() => <Text style={styles.buttonText}>New booking</Text>}
