@@ -18,7 +18,7 @@ const NewPassSaved = ({ navigation }) => {
           style={styles.backgroundimg}
           source={require("./../content/backimg.png")}
         />
-        <ArrowBackSvg style={styles.backgroundimg} />
+        <Image style={styles.backgroundimg} />
         <SaluderiaSvg />
         <LinearGradient
           colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
