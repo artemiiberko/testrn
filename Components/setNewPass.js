@@ -1,5 +1,13 @@
 import React from "react"
-import { StyleSheet, Text, View, Image, Modal, Pressable } from "react-native"
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Modal,
+  Pressable,
+  SafeAreaView,
+} from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import { Button, Input } from "@ui-kitten/components"
@@ -42,10 +50,22 @@ const SetNewPass = ({ navigation }) => {
         />
         <SaluderiaSvg />
         <LinearGradient
-          colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
+          colors={["rgba(240, 290, 260, 1)", "rgba(70, 125, 200, 1)"]}
           style={styles.formbodyContainer}
         >
-          <BlurView intensity={100} style={styles.formbody}>
+          <Image
+            style={{
+              position: "absolute",
+              bottom: -65,
+              resizeMode: "contain",
+              height: "93%",
+              alignSelf: "center",
+              opacity: 0.4,
+            }}
+            blurRadius={20}
+            source={require("./../content/backimg.png")}
+          />
+          <View style={styles.formbody}>
             <Button
               style={styles.backButton}
               appearance="ghost"
@@ -68,6 +88,7 @@ const SetNewPass = ({ navigation }) => {
             </Text>
             <View style={styles.inputContainer}>
               <Input
+                placeholderTextColor="#454545"
                 secureTextEntry={true}
                 textContentType="newPassword"
                 style={styles.input}
@@ -81,6 +102,7 @@ const SetNewPass = ({ navigation }) => {
                 placeholder="New password"
               />
               <Input
+                placeholderTextColor="#454545"
                 secureTextEntry={true}
                 textContentType="newPassword"
                 style={styles.input}
@@ -106,7 +128,7 @@ const SetNewPass = ({ navigation }) => {
             >
               {() => <Text style={styles.buttonText}>Save</Text>}
             </Button>
-          </BlurView>
+          </View>
         </LinearGradient>
         <Text style={{ padding: 20, color: "grey" }}>Powered by Bookly</Text>
       </LinearGradient>
@@ -127,10 +149,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   backgroundimg: {
+    height: "70%",
+    resizeMode: "contain",
     position: "absolute",
     bottom: 0,
-    height: 600,
-    resizeMode: "contain",
   },
   formbodyContainer: {
     width: "90%",
@@ -176,7 +198,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    paddingVertical: 50,
+    height: "15%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -188,6 +210,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     alignItems: "center",
+    justifyContent: "center",
   },
 })
 export default SetNewPass

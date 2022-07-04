@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { StyleSheet, View, Text, SafeAreaView, StatusBar } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button } from "@ui-kitten/components"
@@ -7,13 +7,14 @@ import { BlurView } from "expo-blur"
 import ArrowBackSvg from "./../content/arrow-back.svg"
 
 const ConfirmCancelation = ({ navigation, route }) => {
+  const [headerHeight, setHeaderHeight] = useState()
+
   useEffect(() => {
     console.log(route.params.id)
     /* getting object of booking by id from API - route.params.id */
   }, [])
   return (
     <View style={styles.container}>
-      <StatusBar barStyle={"dark-content"} />
       <LinearGradient
         colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.35)"]}
         style={styles.linearGradient}
@@ -25,6 +26,10 @@ const ConfirmCancelation = ({ navigation, route }) => {
             "rgba(228, 244, 245, 0.5)",
           ]}
           style={styles.blurContainer}
+          onLayout={(event) => {
+            const { height } = event.nativeEvent.layout
+            setHeaderHeight(height)
+          }}
         >
           <SafeAreaView>
             <View style={styles.blurContainerTop}>
@@ -45,6 +50,7 @@ const ConfirmCancelation = ({ navigation, route }) => {
           style={{
             width: "100%",
             flex: 1,
+            paddingTop: headerHeight,
           }}
         >
           <LinearGradient colors={["#D3DADB", "#D3DADB00"]} style={styles.card}>
@@ -134,6 +140,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
+    alignItems: "center",
   },
   linearGradient: {
     flex: 1,
@@ -141,7 +148,7 @@ const styles = StyleSheet.create({
   },
   blurContainer: {
     width: "100%",
-    height: 140,
+    height: "15%",
     justifyContent: "center",
     paddingHorizontal: 30,
     position: "absolute",
@@ -160,7 +167,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   button: {
-    width: "40%",
+    width: "45%",
   },
   buttonText: {
     fontSize: 18,
@@ -171,10 +178,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#e7f4f6",
     width: "90%",
     alignSelf: "center",
-    marginVertical: 50,
+    marginBottom: 30,
     borderRadius: 20,
     overflow: "hidden",
-    marginTop: 140,
     flex: 1,
   },
   backHeader: {

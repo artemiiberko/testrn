@@ -1,6 +1,12 @@
-import React, { useEffect } from "react"
-import { useState } from "react"
-import { StyleSheet, View, Text, SafeAreaView, StatusBar } from "react-native"
+import React, { useEffect, useState } from "react"
+import {
+  StyleSheet,
+  View,
+  Text,
+  SafeAreaView,
+  StatusBar,
+  Platform,
+} from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button } from "@ui-kitten/components"
 import SalderiaCleanSvg from "./../content/saluderia-clean.svg"
@@ -8,6 +14,7 @@ import BookingComponentMore from "./bookingComponentMore"
 
 const BookingInfo = ({ navigation, route }) => {
   const [bookingObject, setBookingObject] = useState({})
+  const [headerHeight, setHeaderHeight] = useState()
 
   useEffect(() => {
     console.log(route.params.id)
@@ -25,7 +32,6 @@ const BookingInfo = ({ navigation, route }) => {
   }, [])
   return (
     <View style={styles.container}>
-      <StatusBar barStyle={"dark-content"} />
       <LinearGradient
         colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.35)"]}
         style={styles.linearGradient}
@@ -37,6 +43,10 @@ const BookingInfo = ({ navigation, route }) => {
             "rgba(228, 244, 245, 0.5)",
           ]}
           style={styles.blurContainer}
+          onLayout={(event) => {
+            const { height } = event.nativeEvent.layout
+            setHeaderHeight(height)
+          }}
         >
           <SafeAreaView>
             <View style={styles.blurContainerTop}>
@@ -53,7 +63,9 @@ const BookingInfo = ({ navigation, route }) => {
             </View>
           </SafeAreaView>
         </LinearGradient>
-        <BookingComponentMore id={route.params.id} navigation={navigation} />
+        <View style={{ flex: 1, paddingTop: headerHeight }}>
+          <BookingComponentMore id={route.params.id} navigation={navigation} />
+        </View>
       </LinearGradient>
     </View>
   )
@@ -70,7 +82,7 @@ const styles = StyleSheet.create({
   },
   blurContainer: {
     width: "100%",
-    height: 140,
+    height: "15%",
     justifyContent: "center",
     paddingHorizontal: 30,
     position: "absolute",
@@ -89,7 +101,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   button: {
-    width: "40%",
+    width: "45%",
   },
   buttonText: {
     fontSize: 18,

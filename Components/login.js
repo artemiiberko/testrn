@@ -1,7 +1,15 @@
 import React from "react"
-import { StyleSheet, Text, View, Image, Modal, Pressable } from "react-native"
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Modal,
+  Pressable,
+  ScrollView,
+  SafeAreaView,
+} from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
-import { BlurView } from "expo-blur"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
 import { StackActions } from "@react-navigation/native"
@@ -11,6 +19,8 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState("")
   const [pass, setPass] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
+  const [cardHeight, setCardHeight] = useState({})
+  const [scrollHeight, setScrollHeight] = useState({})
   return (
     <View style={styles.container}>
       <Modal
@@ -40,114 +50,150 @@ const Login = ({ navigation }) => {
           style={styles.backgroundimg}
           source={require("./../content/backimg.png")}
         />
-        <SaluderiaSvg />
+        <SafeAreaView>
+          <SaluderiaSvg />
+        </SafeAreaView>
         <LinearGradient
-          colors={["rgba(240, 290, 260, 0.5)", "rgba(70, 125, 200, 0.5)"]}
+          colors={["rgba(240, 290, 260, 1)", "rgba(70, 125, 200, 1)"]}
           style={styles.formbodyContainer}
+          onLayout={(event) => {
+            const { height } = event.nativeEvent.layout
+            setCardHeight(height)
+          }}
         >
-          <BlurView intensity={100} style={styles.formbody}>
-            <Text
+          <Image
+            style={{
+              position: "absolute",
+              bottom: -65,
+              resizeMode: "contain",
+              height: "93%",
+              alignSelf: "center",
+              opacity: 0.4,
+            }}
+            blurRadius={20}
+            source={require("./../content/backimg.png")}
+          />
+          <ScrollView
+            contentContainerStyle={styles.formbody}
+            scrollEnabled={scrollHeight > cardHeight ? true : false}
+          >
+            <View
               style={{
-                fontSize: 26,
-                alignSelf: "flex-start",
-                color: "#454545",
+                width: "100%",
+                justifyContent: "space-between",
+                alignItems: "center",
+                minHeight: "95%",
+              }}
+              onLayout={(event) => {
+                const { height } = event.nativeEvent.layout
+                setScrollHeight(height)
               }}
             >
-              Sign-in
-            </Text>
-            <View style={styles.inputContainer}>
-              <Input
-                textContentType="emailAddress"
-                style={styles.input}
-                textStyle={{ fontSize: 20 }}
-                size="large"
-                color="rgba(69, 69, 69, 1)"
-                value={email}
-                onChangeText={(nextValue) => {
-                  setEmail(nextValue)
+              <Text
+                style={{
+                  fontSize: 26,
+                  alignSelf: "flex-start",
+                  color: "#454545",
                 }}
-                placeholder="Email"
-              />
-              <Input
-                textContentType="password"
-                style={styles.input}
-                textStyle={{ fontSize: 20 }}
-                size="large"
-                value={pass}
-                onChangeText={(nextValue) => {
-                  setPass(nextValue)
-                }}
-                secureTextEntry={true}
-                placeholder="Password"
-              />
-            </View>
-            <Button
-              style={styles.button}
-              size="medium"
-              onPress={() => {
-                email === "admin" && pass === "pass"
-                  ? navigation.dispatch(StackActions.replace("Main"))
-                  : setModalVisible(true)
-              }}
-            >
-              {() => <Text style={styles.buttonText}>Login</Text>}
-            </Button>
-            <Text
-              style={{ textAlign: "center", fontSize: 18, color: "#454545" }}
-            >
-              or
-            </Text>
-            <View style={styles.buttonsocialContainer}>
+              >
+                Sign-in
+              </Text>
+              <View style={styles.inputContainer}>
+                <Input
+                  placeholderTextColor="#454545"
+                  textContentType="emailAddress"
+                  style={styles.input}
+                  textStyle={{ fontSize: 20 }}
+                  size="large"
+                  color="rgba(69, 69, 69, 1)"
+                  value={email}
+                  onChangeText={(nextValue) => {
+                    setEmail(nextValue)
+                  }}
+                  placeholder="Email"
+                />
+                <Input
+                  placeholderTextColor="#454545"
+                  textContentType="password"
+                  style={styles.input}
+                  textStyle={{ fontSize: 20 }}
+                  size="large"
+                  value={pass}
+                  onChangeText={(nextValue) => {
+                    setPass(nextValue)
+                  }}
+                  secureTextEntry={true}
+                  placeholder="Password"
+                />
+              </View>
               <Button
-                style={styles.buttonsocial}
+                style={styles.button}
                 size="medium"
-                status="success"
+                onPress={() => {
+                  email === "admin" && pass === "pass"
+                    ? navigation.dispatch(StackActions.replace("Main"))
+                    : setModalVisible(true)
+                }}
+              >
+                {() => <Text style={styles.buttonText}>Login</Text>}
+              </Button>
+              <Text
+                style={{ textAlign: "center", fontSize: 18, color: "#454545" }}
+              >
+                or
+              </Text>
+              <View style={styles.buttonsocialContainer}>
+                <Button
+                  style={styles.buttonsocial}
+                  size="medium"
+                  status="success"
+                >
+                  {() => (
+                    <Text style={styles.buttonTextSocial}>
+                      Continue with Google
+                    </Text>
+                  )}
+                </Button>
+                <Button
+                  style={styles.buttonsocial}
+                  size="medium"
+                  status="success"
+                >
+                  {() => (
+                    <Text style={styles.buttonTextSocial}>
+                      Continue with Facebook
+                    </Text>
+                  )}
+                </Button>
+              </View>
+              <Text
+                style={{ textAlign: "center", fontSize: 18, color: "#454545" }}
+              >
+                Dont't have an account?
+              </Text>
+              <Button
+                style={styles.button}
+                onPress={() => navigation.navigate("Signup")}
+                size="medium"
+              >
+                {() => <Text style={styles.buttonText}>Create account</Text>}
+              </Button>
+              <Button
+                style={{
+                  marginTop: 25,
+                }}
+                appearance="ghost"
+                onPress={() => navigation.navigate("Password Recovery")}
+                size="medium"
               >
                 {() => (
-                  <Text style={styles.buttonTextSocial}>
-                    Continue with Google
+                  <Text style={{ color: "white", fontWeight: "600" }}>
+                    Forgot your password ?
                   </Text>
                 )}
               </Button>
-              <Button
-                style={styles.buttonsocial}
-                size="medium"
-                status="success"
-              >
-                {() => (
-                  <Text style={styles.buttonTextSocial}>
-                    Continue with Facebook
-                  </Text>
-                )}
-              </Button>
             </View>
-            <Text
-              style={{ textAlign: "center", fontSize: 18, color: "#454545" }}
-            >
-              Dont't have an account?
-            </Text>
-            <Button
-              style={styles.button}
-              onPress={() => navigation.navigate("Signup")}
-              size="medium"
-            >
-              {() => <Text style={styles.buttonText}>Create account</Text>}
-            </Button>
-            <Button
-              style={{
-                marginTop: 25,
-              }}
-              appearance="ghost"
-              onPress={() => navigation.navigate("Password Recovery")}
-              size="medium"
-            >
-              {() => (
-                <Text style={{ color: "white", fontWeight: "600" }}>
-                  Forgot your password ?
-                </Text>
-              )}
-            </Button>
-          </BlurView>
+          </ScrollView>
         </LinearGradient>
         <Text style={{ padding: 20, color: "grey" }}>Powered by Bookly</Text>
       </LinearGradient>
@@ -168,10 +214,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   backgroundimg: {
+    height: "70%",
+    resizeMode: "contain",
     position: "absolute",
     bottom: 0,
-    height: 600,
-    resizeMode: "contain",
   },
   formbodyContainer: {
     width: "90%",
@@ -182,9 +228,6 @@ const styles = StyleSheet.create({
   formbody: {
     width: "100%",
     padding: 20,
-    height: "100%",
-    justifyContent: "space-between",
-    alignItems: "center",
   },
   inputContainer: {
     width: "85%",
@@ -204,7 +247,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   buttonsocialContainer: {
-    width: "85%",
+    width: "100%",
     alignItems: "center",
   },
   buttonsocial: {
@@ -223,7 +266,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    paddingVertical: 50,
+    height: "15%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -235,6 +278,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     alignItems: "center",
+    justifyContent: "center",
   },
 })
 export default Login
