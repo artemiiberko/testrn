@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { LogBox, Image } from "react-native"
+import { LogBox, Platform, StatusBar } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { ApplicationProvider } from "@ui-kitten/components"
@@ -60,7 +60,7 @@ export default function App() {
           headerShown: false,
           tabBarShowLabel: false,
           tabBarStyle: {
-            height: 90,
+            height: Platform.OS === "ios" ? 90 : 60,
             paddingHorizontal: 0,
             paddingTop: 0,
             backgroundColor: "#EAF6F7",
@@ -148,6 +148,9 @@ export default function App() {
 
   return (
     <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+      <StatusBar
+        barStyle={Platform.OS === "ios" ? "dark-content" : "default"}
+      />
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen

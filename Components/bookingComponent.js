@@ -39,7 +39,7 @@ const AwaitingConfirmation = () => {
     >
       <View style={{ flexDirection: "row" }}>
         <TimeSvg
-          height="auto"
+          height="100%"
           style={{ resizeMode: "contain", height: "auto" }}
         />
         <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
@@ -77,7 +77,7 @@ const FullRefund = () => {
       <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
         Cancelation in 24 hours or more full refund
       </Text>
-      <SmallCheckSvg height="auto" style={{ resizeMode: "contain" }} />
+      <SmallCheckSvg height="100%" style={{ resizeMode: "contain" }} />
     </View>
   )
 }
@@ -93,7 +93,7 @@ const NoRefund = () => {
       <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
         Cancelation in 24 hours or less no refund
       </Text>
-      <SmallCheckSvg height="auto" style={{ resizeMode: "contain" }} />
+      <SmallCheckSvg height="100%" style={{ resizeMode: "contain" }} />
     </View>
   )
 }
