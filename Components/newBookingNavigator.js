@@ -1,10 +1,9 @@
 import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { StyleSheet } from "react-native"
 import NewBooking from "./newBooking"
 import FilterTherapy from "./filterTherapy"
 
-const NewBookingNavigator = ({ navigation }) => {
+const NewBookingNavigator = () => {
   const Stack = createNativeStackNavigator()
   return (
     <Stack.Navigator>
