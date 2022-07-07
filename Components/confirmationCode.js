@@ -1,142 +1,78 @@
 import React from "react"
-import { StyleSheet, Text, View, Image, SafeAreaView } from "react-native"
-import { LinearGradient } from "expo-linear-gradient"
-import { BlurView } from "expo-blur"
+import { StyleSheet, Text, View } from "react-native"
 import { Button } from "@ui-kitten/components"
 import { useState } from "react"
 import CodeInput from "react-native-confirmation-code-input"
-import SaluderiaSvg from "./../content/saluderia.svg"
 import ArrowBackSvg from "./../content/arrow-back.svg"
+import LayoutLogin from "./LayoutLogin"
 
 const ConfirmCode = ({ navigation }) => {
   const [code, setCode] = useState("")
   const [isEmpty, setIsEmpty] = useState(true)
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.35)"]}
-        style={styles.linearGradient}
+    <LayoutLogin scroller={false}>
+      <Button
+        style={styles.backButton}
+        appearance="ghost"
+        size="giant"
+        accessoryLeft={() => <ArrowBackSvg />}
+        onPress={() => {
+          navigation.goBack()
+        }}
+      />
+      <Text
+        style={{
+          fontSize: 26,
+          color: "#454545",
+        }}
       >
-        <Image
-          style={styles.backgroundimg}
-          source={require("./../content/backimg.png")}
+        Password Recovery
+      </Text>
+      <Text
+        style={{
+          fontSize: 22,
+          color: "#A8A8A8",
+          marginTop: 40,
+        }}
+      >
+        Sent to you confirmation code by Email
+      </Text>
+      <View style={styles.inputContainer}>
+        <CodeInput
+          keyboardType="numeric"
+          codeLength={5}
+          autoFocus={false}
+          size={50}
+          activeColor="#00ABB9"
+          containerStyle={{
+            marginTop: 0,
+            marginBottom: 50,
+          }}
+          codeInputStyle={{
+            fontWeight: "400",
+            fontSize: 22,
+            color: "#454545",
+            borderRadius: 3,
+            backgroundColor: "#6D6D6D26",
+          }}
+          onFulfill={(code) => {
+            setCode(code)
+            setIsEmpty(false)
+          }}
         />
-        <SafeAreaView>
-          <SaluderiaSvg />
-        </SafeAreaView>
-        <LinearGradient
-          colors={["rgba(240, 290, 260, 1)", "rgba(70, 125, 200, 1)"]}
-          style={styles.formbodyContainer}
-        >
-          <Image
-            style={{
-              position: "absolute",
-              bottom: -65,
-              resizeMode: "contain",
-              height: "93%",
-              alignSelf: "center",
-              opacity: 0.4,
-            }}
-            blurRadius={20}
-            source={require("./../content/backimg.png")}
-          />
-          <View style={styles.formbody}>
-            <Button
-              style={styles.backButton}
-              appearance="ghost"
-              size="giant"
-              accessoryLeft={() => <ArrowBackSvg />}
-              onPress={() => {
-                navigation.goBack()
-              }}
-            />
-            <Text
-              style={{
-                fontSize: 26,
-                color: "#454545",
-              }}
-            >
-              Password Recovery
-            </Text>
-            <Text
-              style={{
-                fontSize: 22,
-                color: "#A8A8A8",
-                marginTop: 40,
-              }}
-            >
-              Sent to you confirmation code by Email
-            </Text>
-            <View style={styles.inputContainer}>
-              <CodeInput
-                keyboardType="numeric"
-                codeLength={5}
-                autoFocus={false}
-                size={50}
-                activeColor="#00ABB9"
-                containerStyle={{
-                  marginTop: 0,
-                  marginBottom: 50,
-                }}
-                codeInputStyle={{
-                  fontWeight: "400",
-                  fontSize: 22,
-                  color: "#454545",
-                  borderRadius: 3,
-                  backgroundColor: "#6D6D6D26",
-                }}
-                onFulfill={(code) => {
-                  setCode(code)
-                  setIsEmpty(false)
-                }}
-              />
-            </View>
-            <Button
-              style={styles.button}
-              size="medium"
-              disabled={isEmpty}
-              onPress={() => navigation.navigate("Set New Password")}
-            >
-              {() => <Text style={styles.buttonText}>Confirm</Text>}
-            </Button>
-          </View>
-        </LinearGradient>
-        <Text style={{ padding: 20, color: "grey" }}>Powered by Bookly</Text>
-      </LinearGradient>
-    </View>
+      </View>
+      <Button
+        style={styles.button}
+        size="medium"
+        disabled={isEmpty}
+        onPress={() => navigation.navigate("Set New Password")}
+      >
+        {() => <Text style={styles.buttonText}>Confirm</Text>}
+      </Button>
+    </LayoutLogin>
   )
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  linearGradient: {
-    flex: 1,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  backgroundimg: {
-    height: "70%",
-    resizeMode: "contain",
-    position: "absolute",
-    bottom: 0,
-  },
-  formbodyContainer: {
-    width: "90%",
-    borderRadius: 25,
-    height: "75%",
-    overflow: "hidden",
-  },
-  formbody: {
-    width: "100%",
-    padding: 20,
-    height: "100%",
-    alignItems: "center",
-  },
   inputContainer: {
     width: "85%",
     marginVertical: 10,

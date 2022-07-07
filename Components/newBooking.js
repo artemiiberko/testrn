@@ -3,8 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView,
-  StatusBar,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
@@ -18,10 +16,10 @@ import {
   Radio,
   Input,
 } from "@ui-kitten/components"
-import SalderiaCleanSvg from "./../content/saluderia-clean.svg"
 import FilterSvg from "./../content/filter.svg"
 import DeleteCrossSvg from "./../content/deletecross.svg"
 import LocateSvg from "./../content/locate.svg"
+import LayoutMore from "./LayoutMore"
 
 const NewBooking = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
@@ -39,327 +37,288 @@ const NewBooking = ({ navigation }) => {
   const [addAdress, setAddAdress] = useState("")
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={[
-          "rgba(0, 171, 185, 0)",
-          "rgba(0, 171, 185, 0.15)",
-          "rgba(0, 171, 185, 0)",
-        ]}
-        start={{ x: -1, y: 0 }}
-        end={{ x: 1, y: 1.5 }}
-        style={styles.linearGradient}
+    <LayoutMore
+      navigation={navigation}
+      setHeaderHeight={setHeaderHeight}
+      button={false}
+      white={true}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "none"}
       >
-        <LinearGradient
-          colors={[
-            "rgba(228, 244, 245, 1)",
-            "rgba(228, 244, 245, 1)",
-            "rgba(228, 244, 245, 0.5)",
-          ]}
-          style={styles.blurContainer}
-          onLayout={(event) => {
-            const { height } = event.nativeEvent.layout
-            setHeaderHeight(height)
+        <ScrollView
+          style={{
+            width: "100%",
+          }}
+          contentContainerStyle={{
+            paddingTop: headerHeight,
+
+            paddingBottom: Platform.OS === "ios" ? 90 : 60,
           }}
         >
-          <SafeAreaView>
-            <View style={styles.blurContainerTop}>
-              <SalderiaCleanSvg style={styles.logo} width="50%" />
+          <View style={styles.filterSection}>
+            <Button
+              style={styles.button}
+              size="medium"
+              accessoryRight={() => (
+                <FilterSvg
+                  height="16px"
+                  style={{ marginLeft: 10, resizeMode: "contain" }}
+                />
+              )}
+              onPress={() => {
+                console.log("filter")
+                navigation.navigate("Therapy Filter")
+              }}
+            >
+              {() => <Text style={styles.buttonText}>Therapy</Text>}
+            </Button>
+            <View style={styles.filterItemsContainer}>
+              {filterList.map((i) => (
+                <View style={styles.filterItem} key={i}>
+                  <Text style={styles.filterItemText}>{i}</Text>
+                  <Button
+                    style={styles.deleteButton}
+                    size="medium"
+                    accessoryRight={() => (
+                      <DeleteCrossSvg
+                        height="16px"
+                        style={{ resizeMode: "contain" }}
+                      />
+                    )}
+                    onPress={() => {
+                      console.log("delete filter")
+                    }}
+                  ></Button>
+                </View>
+              ))}
             </View>
-            <View style={styles.blurContainerBottom}>
-              <Text
-                style={{ color: "#00ABB9", fontSize: 28, fontWeight: "700" }}
-              >
-                Bookings
-              </Text>
-              <Text
-                style={{ color: "#454545", fontSize: 28, fontWeight: "700" }}
-              >
-                0 €
-              </Text>
+          </View>
+          <LinearGradient
+            colors={["#00ABB9FF", "#00ABB900"]}
+            start={{ x: -1, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ height: 1 }}
+          />
+          <View style={styles.timePlaceSection}>
+            <View style={styles.timeWhereContainer}>
+              <Text style={styles.timeWhereText}>Длительность</Text>
+              <ButtonGroup style={styles.buttonGroup} appearance="outline">
+                <Button
+                  style={
+                    timeButtonGroup === 1
+                      ? styles.selectedButton
+                      : styles.unseletedButton
+                  }
+                  onPress={() => setTimeButtonGroup(1)}
+                >
+                  {() => (
+                    <Text
+                      style={
+                        timeButtonGroup === 1
+                          ? styles.selectedButtonGroupText
+                          : styles.unselectedButtonGroupText
+                      }
+                    >
+                      1 час
+                    </Text>
+                  )}
+                </Button>
+                <Button
+                  style={
+                    timeButtonGroup === 2
+                      ? styles.selectedButton
+                      : styles.unseletedButton
+                  }
+                  onPress={() => setTimeButtonGroup(2)}
+                >
+                  {() => (
+                    <Text
+                      style={
+                        timeButtonGroup === 2
+                          ? styles.selectedButtonGroupText
+                          : styles.unselectedButtonGroupText
+                      }
+                    >
+                      1,5 часа
+                    </Text>
+                  )}
+                </Button>
+                <Button
+                  style={
+                    timeButtonGroup === 3
+                      ? styles.selectedButton
+                      : styles.unseletedButton
+                  }
+                  onPress={() => setTimeButtonGroup(3)}
+                >
+                  {() => (
+                    <Text
+                      style={
+                        timeButtonGroup === 3
+                          ? styles.selectedButtonGroupText
+                          : styles.unselectedButtonGroupText
+                      }
+                    >
+                      2 часа
+                    </Text>
+                  )}
+                </Button>
+              </ButtonGroup>
             </View>
-          </SafeAreaView>
-        </LinearGradient>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "none"}
-        >
-          <ScrollView
-            style={{
-              width: "100%",
-            }}
-            contentContainerStyle={{
-              paddingTop: headerHeight,
-
-              paddingBottom: Platform.OS === "ios" ? 90 : 60,
-            }}
-          >
-            <View style={styles.filterSection}>
+            <View style={styles.timeWhereContainer}>
+              <Text style={styles.timeWhereText}>Место</Text>
+              <ButtonGroup style={styles.buttonGroup} appearance="outline">
+                <Button
+                  style={
+                    placeButtonGroup === 1
+                      ? styles.selectedButton
+                      : styles.unseletedButton
+                  }
+                  onPress={() => setPlaceButtonGroup(1)}
+                >
+                  {() => (
+                    <Text
+                      style={
+                        placeButtonGroup === 1
+                          ? styles.selectedButtonGroupText
+                          : styles.unselectedButtonGroupText
+                      }
+                    >
+                      к себе
+                    </Text>
+                  )}
+                </Button>
+                <Button
+                  style={
+                    placeButtonGroup === 2
+                      ? styles.selectedButton
+                      : styles.unseletedButton
+                  }
+                  onPress={() => setPlaceButtonGroup(2)}
+                >
+                  {() => (
+                    <Text
+                      style={
+                        placeButtonGroup === 2
+                          ? styles.selectedButtonGroupText
+                          : styles.unselectedButtonGroupText
+                      }
+                    >
+                      к терапевту
+                    </Text>
+                  )}
+                </Button>
+              </ButtonGroup>
+            </View>
+          </View>
+          <LinearGradient
+            colors={["#00ABB9FF", "#00ABB900"]}
+            start={{ x: -1, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ height: 1 }}
+          />
+          <View style={styles.adressSection}>
+            <RadioGroup
+              selectedIndex={adressRadioIndex}
+              onChange={(index) => setAdressRadioIndex(index)}
+            >
+              {adressList.map((i, index) => (
+                <Radio key={i} style={{ alignItems: "flex-start" }}>
+                  {() => (
+                    <View>
+                      <Text style={styles.adressRadioTextTop}>
+                        Адрес {index + 1}
+                      </Text>
+                      <Text style={styles.adressRadioTextBottom}>{i}</Text>
+                    </View>
+                  )}
+                </Radio>
+              ))}
+            </RadioGroup>
+            <View style={styles.newAdress}>
+              <Input
+                style={styles.input}
+                textStyle={{ fontSize: 18 }}
+                size="large"
+                color="rgba(69, 69, 69, 1)"
+                value={addAdress}
+                onChangeText={(nextValue) => {
+                  setAddAdress(nextValue)
+                }}
+                placeholder="Укажите другой адрес"
+              />
               <Button
-                style={styles.button}
+                style={styles.locateButton}
                 size="medium"
-                accessoryRight={() => (
-                  <FilterSvg
-                    height="16px"
-                    style={{ marginLeft: 10, resizeMode: "contain" }}
-                  />
+                accessoryLeft={() => (
+                  <LocateSvg height="22px" style={{ resizeMode: "contain" }} />
                 )}
                 onPress={() => {
-                  console.log("filter")
-                  navigation.navigate("Therapy Filter")
+                  console.log("find me")
                 }}
-              >
-                {() => <Text style={styles.buttonText}>Therapy</Text>}
-              </Button>
-              <View style={styles.filterItemsContainer}>
-                {filterList.map((i) => (
-                  <View style={styles.filterItem} key={i}>
-                    <Text style={styles.filterItemText}>{i}</Text>
-                    <Button
-                      style={styles.deleteButton}
-                      size="medium"
-                      accessoryRight={() => (
-                        <DeleteCrossSvg
-                          height="16px"
-                          style={{ resizeMode: "contain" }}
-                        />
-                      )}
-                      onPress={() => {
-                        console.log("delete filter")
-                      }}
-                    ></Button>
-                  </View>
-                ))}
-              </View>
+              />
             </View>
-            <LinearGradient
-              colors={["#00ABB9FF", "#00ABB900"]}
-              start={{ x: -1, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={{ height: 1 }}
-            />
-            <View style={styles.timePlaceSection}>
-              <View style={styles.timeWhereContainer}>
-                <Text style={styles.timeWhereText}>Длительность</Text>
-                <ButtonGroup style={styles.buttonGroup} appearance="outline">
-                  <Button
-                    style={
-                      timeButtonGroup === 1
-                        ? styles.selectedButton
-                        : styles.unseletedButton
-                    }
-                    onPress={() => setTimeButtonGroup(1)}
-                  >
-                    {() => (
-                      <Text
-                        style={
-                          timeButtonGroup === 1
-                            ? styles.selectedButtonGroupText
-                            : styles.unselectedButtonGroupText
-                        }
-                      >
-                        1 час
-                      </Text>
-                    )}
-                  </Button>
-                  <Button
-                    style={
-                      timeButtonGroup === 2
-                        ? styles.selectedButton
-                        : styles.unseletedButton
-                    }
-                    onPress={() => setTimeButtonGroup(2)}
-                  >
-                    {() => (
-                      <Text
-                        style={
-                          timeButtonGroup === 2
-                            ? styles.selectedButtonGroupText
-                            : styles.unselectedButtonGroupText
-                        }
-                      >
-                        1,5 часа
-                      </Text>
-                    )}
-                  </Button>
-                  <Button
-                    style={
-                      timeButtonGroup === 3
-                        ? styles.selectedButton
-                        : styles.unseletedButton
-                    }
-                    onPress={() => setTimeButtonGroup(3)}
-                  >
-                    {() => (
-                      <Text
-                        style={
-                          timeButtonGroup === 3
-                            ? styles.selectedButtonGroupText
-                            : styles.unselectedButtonGroupText
-                        }
-                      >
-                        2 часа
-                      </Text>
-                    )}
-                  </Button>
-                </ButtonGroup>
-              </View>
-              <View style={styles.timeWhereContainer}>
-                <Text style={styles.timeWhereText}>Место</Text>
-                <ButtonGroup style={styles.buttonGroup} appearance="outline">
-                  <Button
-                    style={
-                      placeButtonGroup === 1
-                        ? styles.selectedButton
-                        : styles.unseletedButton
-                    }
-                    onPress={() => setPlaceButtonGroup(1)}
-                  >
-                    {() => (
-                      <Text
-                        style={
-                          placeButtonGroup === 1
-                            ? styles.selectedButtonGroupText
-                            : styles.unselectedButtonGroupText
-                        }
-                      >
-                        к себе
-                      </Text>
-                    )}
-                  </Button>
-                  <Button
-                    style={
-                      placeButtonGroup === 2
-                        ? styles.selectedButton
-                        : styles.unseletedButton
-                    }
-                    onPress={() => setPlaceButtonGroup(2)}
-                  >
-                    {() => (
-                      <Text
-                        style={
-                          placeButtonGroup === 2
-                            ? styles.selectedButtonGroupText
-                            : styles.unselectedButtonGroupText
-                        }
-                      >
-                        к терапевту
-                      </Text>
-                    )}
-                  </Button>
-                </ButtonGroup>
-              </View>
-            </View>
-            <LinearGradient
-              colors={["#00ABB9FF", "#00ABB900"]}
-              start={{ x: -1, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={{ height: 1 }}
-            />
-            <View style={styles.adressSection}>
-              <RadioGroup
-                selectedIndex={adressRadioIndex}
-                onChange={(index) => setAdressRadioIndex(index)}
-              >
-                {adressList.map((i, index) => (
-                  <Radio key={i} style={{ alignItems: "flex-start" }}>
-                    {() => (
-                      <View>
-                        <Text style={styles.adressRadioTextTop}>
-                          Адрес {index + 1}
-                        </Text>
-                        <Text style={styles.adressRadioTextBottom}>{i}</Text>
-                      </View>
-                    )}
-                  </Radio>
-                ))}
-              </RadioGroup>
-              <View style={styles.newAdress}>
-                <Input
-                  style={styles.input}
-                  textStyle={{ fontSize: 18 }}
-                  size="large"
-                  color="rgba(69, 69, 69, 1)"
-                  value={addAdress}
-                  onChangeText={(nextValue) => {
-                    setAddAdress(nextValue)
-                  }}
-                  placeholder="Укажите другой адрес"
-                />
-                <Button
-                  style={styles.locateButton}
-                  size="medium"
-                  accessoryLeft={() => (
-                    <LocateSvg
-                      height="22px"
-                      style={{ resizeMode: "contain" }}
-                    />
-                  )}
-                  onPress={() => {
-                    console.log("find me")
-                  }}
-                />
-              </View>
-            </View>
-            <LinearGradient
-              colors={["#00ABB9FF", "#00ABB900"]}
-              start={{ x: -1, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={{ height: 1 }}
-            />
+          </View>
+          <LinearGradient
+            colors={["#00ABB9FF", "#00ABB900"]}
+            start={{ x: -1, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ height: 1 }}
+          />
 
-            <View style={styles.dateSection}>
-              <LinearGradient
-                colors={["rgba(216,237,239,1)", "rgba(216,237,239,0)"]}
-                start={{ x: 0.5, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={{
-                  height: 500,
-                  zIndex: 1,
-                  width: 30,
-                  position: "absolute",
-                  left: 0,
+          <View style={styles.dateSection}>
+            <LinearGradient
+              colors={["rgba(216,237,239,1)", "rgba(216,237,239,0)"]}
+              start={{ x: 0.5, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{
+                height: 500,
+                zIndex: 1,
+                width: 30,
+                position: "absolute",
+                left: 0,
+              }}
+            />
+            <LinearGradient
+              colors={["rgba(216,237,239,0)", "rgba(216,237,239,1)"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0.5, y: 0 }}
+              style={{
+                height: 500,
+                zIndex: 1,
+                width: 30,
+                position: "absolute",
+                right: 0,
+              }}
+            />
+            <View>
+              <CalendarStrip
+                scrollable
+                numDaysInWeek={7}
+                style={styles.calendarStrip}
+                calendarColor={"transparent"}
+                calendarHeaderStyle={{
+                  color: "#454545",
+                  alignSelf: "flex-start",
+                  paddingLeft: 30,
                 }}
-              />
-              <LinearGradient
-                colors={["rgba(216,237,239,0)", "rgba(216,237,239,1)"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0.5, y: 0 }}
-                style={{
-                  height: 500,
-                  zIndex: 1,
-                  width: 30,
-                  position: "absolute",
-                  right: 0,
+                dateNumberStyle={{ color: "#454545" }}
+                dayContainerStyle={{
+                  flexDirection: "column-reverse",
                 }}
+                highlightDateContainerStyle={{
+                  backgroundColor: "#00ABB9",
+                  borderRadius: 5,
+                }}
+                iconStyle={{ display: "none" }}
+                dateNameStyle={{ color: "#A8A8A8" }}
               />
-              <View>
-                <CalendarStrip
-                  scrollable
-                  numDaysInWeek={7}
-                  style={styles.calendarStrip}
-                  calendarColor={"transparent"}
-                  calendarHeaderStyle={{
-                    color: "#454545",
-                    alignSelf: "flex-start",
-                    paddingLeft: 30,
-                  }}
-                  dateNumberStyle={{ color: "#454545" }}
-                  dayContainerStyle={{
-                    flexDirection: "column-reverse",
-                  }}
-                  highlightDateContainerStyle={{
-                    backgroundColor: "#00ABB9",
-                    borderRadius: 5,
-                  }}
-                  iconStyle={{ display: "none" }}
-                  dateNameStyle={{ color: "#A8A8A8" }}
-                />
-              </View>
             </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </LinearGradient>
-    </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </LayoutMore>
   )
 }
 const styles = StyleSheet.create({

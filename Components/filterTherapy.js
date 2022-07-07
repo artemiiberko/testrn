@@ -1,10 +1,10 @@
 import React, { useState } from "react"
-import { StyleSheet, View, Text, SafeAreaView, ScrollView } from "react-native"
+import { StyleSheet, View, Text, ScrollView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button, RadioGroup, Radio } from "@ui-kitten/components"
-import SalderiaCleanSvg from "./../content/saluderia-clean.svg"
 import { BlurView } from "expo-blur"
 import ArrowBackSvg from "./../content/arrow-back.svg"
+import LayoutMore from "./LayoutMore"
 
 const FilterTherapy = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
@@ -14,107 +14,54 @@ const FilterTherapy = ({ navigation }) => {
   const [secondRadioIndex, setSecondRadioIndex] = useState(0)
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={[
-          "rgba(0, 171, 185, 0)",
-          "rgba(0, 171, 185, 0.15)",
-          "rgba(0, 171, 185, 0)",
-        ]}
-        start={{ x: -1, y: 0 }}
-        end={{ x: 1, y: 1.5 }}
-        style={styles.linearGradient}
+    <LayoutMore
+      navigation={navigation}
+      setHeaderHeight={setHeaderHeight}
+      button={false}
+      white={true}
+    >
+      <View
+        style={{
+          width: "100%",
+          flex: 1,
+          paddingTop: headerHeight,
+          marginBottom: Platform.OS === "ios" ? 90 : 60,
+        }}
       >
         <LinearGradient
-          colors={[
-            "rgba(228, 244, 245, 1)",
-            "rgba(228, 244, 245, 1)",
-            "rgba(228, 244, 245, 0.5)",
-          ]}
-          style={styles.blurContainer}
+          colors={["#D3DADB", "#D3DADB00"]}
+          style={styles.card}
           onLayout={(event) => {
             const { height } = event.nativeEvent.layout
-            setHeaderHeight(height)
+            setCardHeight(height)
           }}
         >
-          <SafeAreaView>
-            <View style={styles.blurContainerTop}>
-              <SalderiaCleanSvg style={styles.logo} width="50%" />
-            </View>
-            <View style={styles.blurContainerBottom}>
-              <Text
-                style={{ color: "#00ABB9", fontSize: 28, fontWeight: "700" }}
+          <BlurView intensity={50}>
+            <ScrollView
+              scrollEnabled={scrollHeight > cardHeight ? true : false}
+            >
+              <View
+                onLayout={(event) => {
+                  const { height } = event.nativeEvent.layout
+                  setScrollHeight(height)
+                }}
               >
-                Bookings
-              </Text>
-              <Text
-                style={{ color: "#454545", fontSize: 28, fontWeight: "700" }}
-              >
-                0 €
-              </Text>
-            </View>
-          </SafeAreaView>
-        </LinearGradient>
-        <View
-          style={{
-            width: "100%",
-            flex: 1,
-            paddingTop: headerHeight,
-            marginBottom: Platform.OS === "ios" ? 90 : 60,
-          }}
-        >
-          <LinearGradient
-            colors={["#D3DADB", "#D3DADB00"]}
-            style={styles.card}
-            onLayout={(event) => {
-              const { height } = event.nativeEvent.layout
-              setCardHeight(height)
-            }}
-          >
-            <BlurView intensity={50}>
-              <ScrollView
-                scrollEnabled={scrollHeight > cardHeight ? true : false}
-              >
-                <View
-                  onLayout={(event) => {
-                    const { height } = event.nativeEvent.layout
-                    setScrollHeight(height)
-                  }}
-                >
-                  <View style={styles.backHeader}>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
+                <View style={styles.backHeader}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Button
+                      style={styles.backButton}
+                      appearance="ghost"
+                      size="giant"
+                      accessoryLeft={() => <ArrowBackSvg />}
+                      onPress={() => {
+                        navigation.goBack()
                       }}
-                    >
-                      <Button
-                        style={styles.backButton}
-                        appearance="ghost"
-                        size="giant"
-                        accessoryLeft={() => <ArrowBackSvg />}
-                        onPress={() => {
-                          navigation.goBack()
-                        }}
-                      />
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: "700",
-                          color: "#454545",
-                        }}
-                      >
-                        Therapy
-                      </Text>
-                    </View>
-                  </View>
-                  <LinearGradient
-                    colors={["#00ABB9FF", "#00ABB900"]}
-                    start={{ x: -1, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={{ height: 1 }}
-                  />
-                  <View style={styles.firstSection}>
+                    />
                     <Text
                       style={{
                         fontSize: 20,
@@ -122,103 +69,116 @@ const FilterTherapy = ({ navigation }) => {
                         color: "#454545",
                       }}
                     >
-                      Massage
+                      Therapy
                     </Text>
-                    <RadioGroup
-                      selectedIndex={firstRadioIndex}
-                      onChange={(index) => setFirstRadioIndex(index)}
-                    >
-                      <Radio>
-                        {() => (
-                          <Text style={styles.firstRadioText}>Classical</Text>
-                        )}
-                      </Radio>
-                      <Radio>
-                        {() => (
-                          <Text style={styles.firstRadioText}>Medical</Text>
-                        )}
-                      </Radio>
-                      <Radio>
-                        {() => (
-                          <Text style={styles.firstRadioText}>Deep-tissue</Text>
-                        )}
-                      </Radio>
-                      <Radio>
-                        {() => (
-                          <Text style={styles.firstRadioText}>Sweedish</Text>
-                        )}
-                      </Radio>
-                    </RadioGroup>
                   </View>
-                  <LinearGradient
-                    colors={["#00ABB9FF", "#00ABB900"]}
-                    start={{ x: -1, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={{ height: 1 }}
-                  />
-                  <View style={styles.secondSection}>
-                    <RadioGroup
-                      selectedIndex={secondRadioIndex}
-                      onChange={(index) => setSecondRadioIndex(index)}
-                    >
-                      <Radio>
-                        {() => (
-                          <Text style={styles.secondRadioText}>Osteopathy</Text>
-                        )}
-                      </Radio>
-                      <Radio>
-                        {() => (
-                          <Text style={styles.secondRadioText}>
-                            Physiotherapie
-                          </Text>
-                        )}
-                      </Radio>
-                      <Radio>
-                        {() => (
-                          <Text style={styles.secondRadioText}>
-                            Acupuncture
-                          </Text>
-                        )}
-                      </Radio>
-                    </RadioGroup>
-                  </View>
-                  <LinearGradient
-                    colors={["#00ABB9FF", "#00ABB900"]}
-                    start={{ x: -1, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={{ height: 1 }}
-                  />
-                  <Button
+                </View>
+                <LinearGradient
+                  colors={["#00ABB9FF", "#00ABB900"]}
+                  start={{ x: -1, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ height: 1 }}
+                />
+                <View style={styles.firstSection}>
+                  <Text
                     style={{
-                      width: "50%",
-                      alignSelf: "center",
-                      margin: 20,
-                    }}
-                    size="medium"
-                    onPress={() => {
-                      console.log("confirm")
-                      navigation.goBack()
+                      fontSize: 20,
+                      fontWeight: "700",
+                      color: "#454545",
                     }}
                   >
-                    {() => (
-                      <Text
-                        style={{
-                          fontSize: 18,
-                          color: "white",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Confirm
-                      </Text>
-                    )}
-                  </Button>
+                    Massage
+                  </Text>
+                  <RadioGroup
+                    selectedIndex={firstRadioIndex}
+                    onChange={(index) => setFirstRadioIndex(index)}
+                  >
+                    <Radio>
+                      {() => (
+                        <Text style={styles.firstRadioText}>Classical</Text>
+                      )}
+                    </Radio>
+                    <Radio>
+                      {() => <Text style={styles.firstRadioText}>Medical</Text>}
+                    </Radio>
+                    <Radio>
+                      {() => (
+                        <Text style={styles.firstRadioText}>Deep-tissue</Text>
+                      )}
+                    </Radio>
+                    <Radio>
+                      {() => (
+                        <Text style={styles.firstRadioText}>Sweedish</Text>
+                      )}
+                    </Radio>
+                  </RadioGroup>
                 </View>
-              </ScrollView>
-            </BlurView>
-          </LinearGradient>
-        </View>
-      </LinearGradient>
-    </View>
+                <LinearGradient
+                  colors={["#00ABB9FF", "#00ABB900"]}
+                  start={{ x: -1, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ height: 1 }}
+                />
+                <View style={styles.secondSection}>
+                  <RadioGroup
+                    selectedIndex={secondRadioIndex}
+                    onChange={(index) => setSecondRadioIndex(index)}
+                  >
+                    <Radio>
+                      {() => (
+                        <Text style={styles.secondRadioText}>Osteopathy</Text>
+                      )}
+                    </Radio>
+                    <Radio>
+                      {() => (
+                        <Text style={styles.secondRadioText}>
+                          Physiotherapie
+                        </Text>
+                      )}
+                    </Radio>
+                    <Radio>
+                      {() => (
+                        <Text style={styles.secondRadioText}>Acupuncture</Text>
+                      )}
+                    </Radio>
+                  </RadioGroup>
+                </View>
+                <LinearGradient
+                  colors={["#00ABB9FF", "#00ABB900"]}
+                  start={{ x: -1, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ height: 1 }}
+                />
+                <Button
+                  style={{
+                    width: "50%",
+                    alignSelf: "center",
+                    margin: 20,
+                  }}
+                  size="medium"
+                  onPress={() => {
+                    console.log("confirm")
+                    navigation.goBack()
+                  }}
+                >
+                  {() => (
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: "white",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Confirm
+                    </Text>
+                  )}
+                </Button>
+              </View>
+            </ScrollView>
+          </BlurView>
+        </LinearGradient>
+      </View>
+    </LayoutMore>
   )
 }
 const styles = StyleSheet.create({
