@@ -55,7 +55,7 @@ export default function App() {
   function Main() {
     return (
       <Tab.Navigator
-        initialRouteName={"Home"}
+        initialRouteName={"New Booking Navigator"}
         screenOptions={({ route, navigation }) => ({
           headerShown: false,
           tabBarShowLabel: false,
@@ -152,7 +152,7 @@ export default function App() {
         barStyle={Platform.OS === "ios" ? "dark-content" : "default"}
       />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Main">
           <Stack.Screen
             name="Login"
             children={({ navigation, route }) => (

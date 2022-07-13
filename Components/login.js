@@ -44,6 +44,10 @@ const Login = ({ navigation }) => {
           <Input
             placeholderTextColor="#454545"
             textContentType="emailAddress"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoCompleteType="email"
             style={styles.input}
             textStyle={{ fontSize: 20 }}
             size="large"

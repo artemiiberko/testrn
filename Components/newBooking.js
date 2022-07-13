@@ -8,6 +8,7 @@ import {
   Platform,
 } from "react-native"
 import CalendarStrip from "react-native-calendar-strip"
+import moment from "moment"
 import { LinearGradient } from "expo-linear-gradient"
 import {
   Button,
@@ -20,6 +21,16 @@ import FilterSvg from "./../content/filter.svg"
 import DeleteCrossSvg from "./../content/deletecross.svg"
 import LocateSvg from "./../content/locate.svg"
 import LayoutMore from "./LayoutMore"
+import TimeStrip from "./timeStripComponent"
+
+let AvailableTimeItems = []
+for (let i = 8; i < 17; i++) {
+  AvailableTimeItems.push(`${i}:00`, `${i}:30`)
+}
+let AllTimeItems = []
+for (let i = 8; i < 24; i++) {
+  AllTimeItems.push(`${i}:00`, `${i}:30`)
+}
 
 const NewBooking = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
@@ -35,6 +46,8 @@ const NewBooking = ({ navigation }) => {
   const [placeButtonGroup, setPlaceButtonGroup] = useState(2)
   const [adressRadioIndex, setAdressRadioIndex] = useState(0)
   const [addAdress, setAddAdress] = useState("")
+  const [selectedDate, setSelectedDate] = useState()
+  const [selectedTime, setSelectedTime] = useState("8:00")
 
   return (
     <LayoutMore
@@ -266,7 +279,6 @@ const NewBooking = ({ navigation }) => {
             end={{ x: 1, y: 0 }}
             style={{ height: 1 }}
           />
-
           <View style={styles.dateSection}>
             <LinearGradient
               colors={["rgba(216,237,239,1)", "rgba(216,237,239,0)"]}
@@ -302,6 +314,8 @@ const NewBooking = ({ navigation }) => {
                   color: "#454545",
                   alignSelf: "flex-start",
                   paddingLeft: 30,
+                  fontSize: 18,
+                  fontWeight: "500",
                 }}
                 dateNumberStyle={{ color: "#454545" }}
                 dayContainerStyle={{
@@ -313,9 +327,63 @@ const NewBooking = ({ navigation }) => {
                 }}
                 iconStyle={{ display: "none" }}
                 dateNameStyle={{ color: "#A8A8A8" }}
+                selectedDate={moment()}
+                onDateSelected={(date) => setSelectedDate(date)}
+              />
+            </View>
+            <View>
+              <View style={styles.timeHeader}>
+                <Text style={styles.timeH}>Time</Text>
+                <Text style={styles.timesub}>
+                  {moment(selectedDate).format("MMMM Do")}
+                </Text>
+                <Text style={styles.timesub}>
+                  {selectedTime}-
+                  {
+                    AllTimeItems[
+                      AllTimeItems.findIndex((e) => e === selectedTime) +
+                        (timeButtonGroup === 3
+                          ? 4
+                          : timeButtonGroup === 2
+                          ? 3
+                          : 2)
+                    ]
+                  }
+                </Text>
+              </View>
+              <TimeStrip
+                timeButtonGroup={timeButtonGroup}
+                setSelectedTime={setSelectedTime}
+                AvailableTimeItems={AvailableTimeItems}
               />
             </View>
           </View>
+          <Text style={styles.docsHeader}>Терапевты</Text>
+          <View>
+            <LinearGradient
+              colors={["#00ABB9FF", "#00ABB900"]}
+              start={{ x: -1, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{
+                height: 1,
+                position: "absolute",
+                width: "50%",
+                left: 0,
+              }}
+            />
+            <LinearGradient
+              colors={["#00ABB9FF", "#00ABB900"]}
+              start={{ x: 2, y: 0 }}
+              end={{ x: 0, y: 0 }}
+              style={{
+                height: 1,
+                position: "absolute",
+                width: "50%",
+                right: 0,
+              }}
+            />
+          </View>
+          <View style={styles.docsSection}></View>
         </ScrollView>
       </KeyboardAvoidingView>
     </LayoutMore>
@@ -463,6 +531,34 @@ const styles = StyleSheet.create({
   },
   calendarStrip: {
     height: 100,
+  },
+  timeHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 30,
+  },
+  timeH: {
+    color: "#454545",
+    fontSize: 18,
+    fontWeight: "500",
+  },
+  timesub: {
+    color: "#454545",
+    fontSize: 18,
+    fontWeight: "400",
+  },
+  docsHeader: {
+    fontSize: 20,
+    color: "#222222",
+    fontWeight: "700",
+    alignItems: "flex-start",
+    paddingHorizontal: 30,
+    paddingBottom: 20,
+  },
+  docsSection: {
+    alignItems: "flex-start",
+    paddingHorizontal: 30,
+    paddingVertical: 10,
   },
 })
 export default NewBooking
