@@ -2,6 +2,7 @@ import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import NewBooking from "./newBooking"
 import FilterTherapy from "./filterTherapy"
+import FilterTherapist from "./filterTherapist"
 
 const NewBookingNavigator = () => {
   const Stack = createNativeStackNavigator()
@@ -22,7 +23,7 @@ const NewBookingNavigator = () => {
       <Stack.Screen
         name="Therapist Filter"
         children={({ navigation, route }) => (
-          <NewBooking navigation={navigation} route={route} />
+          <FilterTherapist navigation={navigation} route={route} />
         )}
         options={{ headerShown: false }}
       />

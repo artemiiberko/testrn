@@ -10,6 +10,7 @@ const LayoutMore = ({
   setHeaderHeight,
   button = true,
   white = false,
+  title,
 }) => {
   return (
     <View style={styles.container}>
@@ -56,18 +57,28 @@ const LayoutMore = ({
                 true
               )}
             </View>
-            <View style={styles.blurContainerBottom}>
-              <Text
-                style={{ color: "#00ABB9", fontSize: 28, fontWeight: "700" }}
-              >
-                Bookings <Text style={{ fontWeight: "400" }}> 5 </Text>
-              </Text>
-              <Text
-                style={{ color: "#454545", fontSize: 28, fontWeight: "700" }}
-              >
-                478 €
-              </Text>
-            </View>
+            {title ? (
+              <View style={styles.blurContainerBottom}>
+                <Text
+                  style={{ color: "#00ABB9", fontSize: 28, fontWeight: "700" }}
+                >
+                  Messages
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.blurContainerBottom}>
+                <Text
+                  style={{ color: "#00ABB9", fontSize: 28, fontWeight: "700" }}
+                >
+                  Bookings <Text style={{ fontWeight: "400" }}> 5 </Text>
+                </Text>
+                <Text
+                  style={{ color: "#454545", fontSize: 28, fontWeight: "700" }}
+                >
+                  478 €
+                </Text>
+              </View>
+            )}
           </SafeAreaView>
         </LinearGradient>
         {children}

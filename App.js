@@ -19,6 +19,8 @@ import MessagesSvg from "./content/messages.svg"
 import BookingInfo from "./Components/bookingInfo"
 import ConfirmCancelation from "./Components/confirmCancelation"
 import NewBookingNavigator from "./Components/newBookingNavigator"
+import Messages from "./Components/messages"
+import MessagesNavigator from "./Components/messagesNavigator"
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -55,7 +57,7 @@ export default function App() {
   function Main() {
     return (
       <Tab.Navigator
-        initialRouteName={"New Booking Navigator"}
+        initialRouteName={"Home"}
         screenOptions={({ route, navigation }) => ({
           headerShown: false,
           tabBarShowLabel: false,
@@ -94,9 +96,9 @@ export default function App() {
         />
 
         <Tab.Screen
-          name="Messages"
+          name="Messages Navigator"
           children={({ navigation, route }) => (
-            <Home route={route} navigation={navigation} />
+            <MessagesNavigator route={route} navigation={navigation} />
           )}
           options={
             isNotification
@@ -152,7 +154,7 @@ export default function App() {
         barStyle={Platform.OS === "ios" ? "dark-content" : "default"}
       />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Login"
             children={({ navigation, route }) => (
