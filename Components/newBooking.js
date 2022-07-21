@@ -22,6 +22,50 @@ import DeleteCrossSvg from "./../content/deletecross.svg"
 import LocateSvg from "./../content/locate.svg"
 import LayoutMore from "./LayoutMore"
 import TimeStrip from "./timeStripComponent"
+import DocsList from "./docsList"
+
+const docsData = [
+  {
+    name: "Потапов Ким Серапионович",
+    id: 1,
+    rating: 4.8,
+  },
+  {
+    name: "Дементьев Кондрат Федорович",
+    id: 2,
+    rating: 4.7,
+  },
+  {
+    name: "Герасимова Верона Иринеевна",
+    id: 3,
+    rating: 4.8,
+  },
+  {
+    name: "Михеева Жасмин Петровна",
+    id: 4,
+    rating: 4.9,
+  },
+  {
+    name: "Потапов Ким Серапионович",
+    id: 5,
+    rating: 4.8,
+  },
+  {
+    name: "Дементьев Кондрат Федорович",
+    id: 6,
+    rating: 4.7,
+  },
+  {
+    name: "Герасимова Верона Иринеевна",
+    id: 7,
+    rating: 4.8,
+  },
+  {
+    name: "Михеева Жасмин Петровна",
+    id: 8,
+    rating: 4.9,
+  },
+]
 
 let AvailableTimeItems = []
 for (let i = 8; i < 17; i++) {
@@ -80,7 +124,6 @@ const NewBooking = ({ navigation }) => {
                 />
               )}
               onPress={() => {
-                console.log("filter")
                 navigation.navigate("Therapy Filter")
               }}
             >
@@ -358,7 +401,24 @@ const NewBooking = ({ navigation }) => {
               />
             </View>
           </View>
-          <Text style={styles.docsHeader}>Терапевты</Text>
+          <View style={styles.docsHeader}>
+            <Text style={styles.docsHeaderText}>Терапевты</Text>
+            <Button
+              style={styles.button}
+              size="medium"
+              accessoryRight={() => (
+                <FilterSvg
+                  height="16px"
+                  style={{ marginLeft: 10, resizeMode: "contain" }}
+                />
+              )}
+              onPress={() => {
+                navigation.navigate("Therapist Filter")
+              }}
+            >
+              {() => <Text style={styles.buttonText}>Filter</Text>}
+            </Button>
+          </View>
           <View>
             <LinearGradient
               colors={["#00ABB9FF", "#00ABB900"]}
@@ -383,7 +443,9 @@ const NewBooking = ({ navigation }) => {
               }}
             />
           </View>
-          <View style={styles.docsSection}></View>
+          <View style={styles.docsSection}>
+            <DocsList data={docsData} />
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </LayoutMore>
@@ -547,13 +609,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "400",
   },
+
   docsHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 30,
+    paddingBottom: 20,
+  },
+  docsHeaderText: {
     fontSize: 20,
     color: "#222222",
     fontWeight: "700",
-    alignItems: "flex-start",
-    paddingHorizontal: 30,
-    paddingBottom: 20,
+    alignSelf: "center",
   },
   docsSection: {
     alignItems: "flex-start",
