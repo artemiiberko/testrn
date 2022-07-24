@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from "react-native"
 import { Button } from "@ui-kitten/components"
 import { useState } from "react"
 import CodeInput from "react-native-confirmation-code-input"
-import ArrowBackSvg from "./../content/arrow-back.svg"
-import LayoutLogin from "./LayoutLogin"
+import ArrowBackSvg from "./../../content/arrow-back.svg"
+import LayoutLogin from "../Layouts/LayoutLogin"
 
 const ConfirmCode = ({ navigation }) => {
   const [code, setCode] = useState("")

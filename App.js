@@ -5,22 +5,22 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { ApplicationProvider } from "@ui-kitten/components"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import * as eva from "@eva-design/eva"
-import Login from "./Components/login"
-import Signup from "./Components/signup"
-import PasswordRecovery from "./Components/passRecovery"
+import Login from "./Components/Screens/login"
+import Signup from "./Components/Screens/signup"
+import PasswordRecovery from "./Components/Screens/passRecovery"
 import { default as theme } from "./custom-theme.json"
-import ConfirmCode from "./Components/confirmationCode"
-import SetNewPass from "./Components/setNewPass"
-import NewPassSaved from "./Components/newPassSaved"
-import Home from "./Components/home"
+import ConfirmCode from "./Components/Screens/confirmationCode"
+import SetNewPass from "./Components/Screens/setNewPass"
+import NewPassSaved from "./Components/Screens/newPassSaved"
+import Home from "./Components/Screens/home"
 import HomeSvg from "./content/home.svg"
 import ProfileSvg from "./content/profile.svg"
 import MessagesSvg from "./content/messages.svg"
-import BookingInfo from "./Components/bookingInfo"
-import ConfirmCancelation from "./Components/confirmCancelation"
-import NewBookingNavigator from "./Components/newBookingNavigator"
-import Messages from "./Components/messages"
-import MessagesNavigator from "./Components/messagesNavigator"
+import BookingInfo from "./Components/Screens/bookingInfo"
+import ConfirmCancelation from "./Components/Screens/confirmCancelation"
+import NewBookingNavigator from "./Components/Navigators/newBookingNavigator"
+import MessagesNavigator from "./Components/Navigators/messagesNavigator"
+import ProfileNavigator from "./Components/Navigators/profileNavigator"
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -57,7 +57,7 @@ export default function App() {
   function Main() {
     return (
       <Tab.Navigator
-        initialRouteName={"Home"}
+        initialRouteName="Profile Navigator"
         screenOptions={({ route, navigation }) => ({
           headerShown: false,
           tabBarShowLabel: false,
@@ -118,9 +118,9 @@ export default function App() {
         />
 
         <Tab.Screen
-          name="Profile"
+          name="Profile Navigator"
           children={({ navigation, route }) => (
-            <Home route={route} navigation={navigation} />
+            <ProfileNavigator route={route} navigation={navigation} />
           )}
           options={{
             tabBarIcon: (tab) => (
@@ -154,7 +154,7 @@ export default function App() {
         barStyle={Platform.OS === "ios" ? "dark-content" : "default"}
       />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Main">
           <Stack.Screen
             name="Login"
             children={({ navigation, route }) => (

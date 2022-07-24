@@ -8,9 +8,9 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native"
-import LayoutMore from "./LayoutMore"
-import ChatCheckSvg from "./../content/chat-check.svg"
-import ChatDoubleCheckSvg from "./../content/chat-doublecheck.svg"
+import LayoutMore from "../Layouts/LayoutMore"
+import ChatCheckSvg from "./../../content/chat-check.svg"
+import ChatDoubleCheckSvg from "./../../content/chat-doublecheck.svg"
 
 const dialogs = [
   {
@@ -56,7 +56,7 @@ const Dialog = ({
       }}
     >
       <Image
-        source={require("./../content/profile-photo.png")}
+        source={require("./../../content/profile-photo.png")}
         style={styles.photo}
       />
       <View style={styles.contentContainer}>

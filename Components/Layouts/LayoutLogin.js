@@ -11,7 +11,7 @@ import {
 } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { useState } from "react"
-import SaluderiaSvg from "./../content/saluderia.svg"
+import SaluderiaSvg from "./../../content/saluderia.svg"
 
 const LayoutLogin = ({
   scrollHeight,
@@ -52,7 +52,7 @@ const LayoutLogin = ({
       >
         <Image
           style={styles.backgroundimg}
-          source={require("./../content/backimg.png")}
+          source={require("./../../content/backimg.png")}
         />
         <SafeAreaView>
           <SaluderiaSvg />
@@ -75,7 +75,7 @@ const LayoutLogin = ({
               opacity: 0.4,
             }}
             blurRadius={20}
-            source={require("./../content/backimg.png")}
+            source={require("./../../content/backimg.png")}
           />
 
           {scroller ? (

@@ -17,12 +17,12 @@ import {
   Radio,
   Input,
 } from "@ui-kitten/components"
-import FilterSvg from "./../content/filter.svg"
-import DeleteCrossSvg from "./../content/deletecross.svg"
-import LocateSvg from "./../content/locate.svg"
-import LayoutMore from "./LayoutMore"
-import TimeStrip from "./timeStripComponent"
-import DocsList from "./docsList"
+import FilterSvg from "./../../content/filter.svg"
+import DeleteCrossSvg from "./../../content/deletecross.svg"
+import LocateSvg from "./../../content/locate.svg"
+import LayoutMore from "../Layouts/LayoutMore"
+import TimeStrip from "../Elements/timeStripComponent"
+import DocsList from "../Elements/docsList"
 
 const docsData = [
   {

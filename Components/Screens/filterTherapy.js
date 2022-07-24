@@ -3,8 +3,8 @@ import { StyleSheet, View, Text, ScrollView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button, RadioGroup, Radio } from "@ui-kitten/components"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../content/arrow-back.svg"
-import LayoutMore from "./LayoutMore"
+import ArrowBackSvg from "./../../content/arrow-back.svg"
+import LayoutMore from "../Layouts/LayoutMore"
 
 const FilterTherapy = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()

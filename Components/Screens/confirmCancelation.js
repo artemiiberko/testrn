@@ -3,8 +3,8 @@ import { StyleSheet, View, Text } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button } from "@ui-kitten/components"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../content/arrow-back.svg"
-import LayoutMin from "./LayoutMin"
+import ArrowBackSvg from "./../../content/arrow-back.svg"
+import LayoutMin from "../Layouts/LayoutMin"
 
 const ConfirmCancelation = ({ navigation, route }) => {
   const [headerHeight, setHeaderHeight] = useState()

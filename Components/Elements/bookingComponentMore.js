@@ -3,9 +3,9 @@ import { StyleSheet, View, Image, Text, ScrollView } from "react-native"
 import { Button } from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
-import SmallCheckSvg from "./../content/small-check.svg"
-import ArrowBackSvg from "./../content/arrow-back.svg"
-import RoadSvg from "./../content/road.svg"
+import SmallCheckSvg from "./../../content/small-check.svg"
+import ArrowBackSvg from "./../../content/arrow-back.svg"
+import RoadSvg from "./../../content/road.svg"
 
 const BookingComponentMore = ({ id, navigation }) => {
   const [bookingObject, setBookingObject] = useState({})
@@ -82,7 +82,7 @@ const BookingComponentMore = ({ id, navigation }) => {
             />
             <View style={styles.infoSection}>
               <Image
-                source={require("./../content/profile-photo.png")}
+                source={require("./../../content/profile-photo.png")}
                 style={styles.photo}
               />
               <View style={styles.infoTextSection}>
@@ -144,7 +144,7 @@ const BookingComponentMore = ({ id, navigation }) => {
                 </Text>
               </LinearGradient>
               <Image
-                source={require("./../content/adress.jpg")}
+                source={require("./../../content/adress.jpg")}
                 style={{ resizeMode: "cover", height: 200, marginTop: 50 }}
               />
               <RoadSvg

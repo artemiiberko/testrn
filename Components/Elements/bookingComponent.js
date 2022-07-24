@@ -2,9 +2,9 @@ import React from "react"
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
-import TimeSvg from "./../content/time.svg"
-import StarSvg from "./../content/star.svg"
-import SmallCheckSvg from "./../content/small-check.svg"
+import TimeSvg from "./../../content/time.svg"
+import StarSvg from "./../../content/star.svg"
+import SmallCheckSvg from "./../../content/small-check.svg"
 
 const Completed = () => {
   return (
@@ -142,7 +142,7 @@ const BookingComponent = ({
         >
           <View style={styles.infoSection}>
             <Image
-              source={require("./../content/profile-photo.png")}
+              source={require("./../../content/profile-photo.png")}
               style={styles.photo}
             />
             <View style={styles.infoText}>
