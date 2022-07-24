@@ -1,8 +1,8 @@
 import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import NewBooking from "./newBooking"
-import FilterTherapy from "./filterTherapy"
-import FilterTherapist from "./filterTherapist"
+import NewBooking from "../Screens/newBooking"
+import FilterTherapy from "../Screens/filterTherapy"
+import FilterTherapist from "../Screens/filterTherapist"
 
 const NewBookingNavigator = () => {
   const Stack = createNativeStackNavigator()

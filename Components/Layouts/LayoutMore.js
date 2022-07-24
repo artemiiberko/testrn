@@ -2,7 +2,7 @@ import React from "react"
 import { StyleSheet, View, Text, SafeAreaView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button } from "@ui-kitten/components"
-import SalderiaCleanSvg from "./../content/saluderia-clean.svg"
+import SalderiaCleanSvg from "./../../content/saluderia-clean.svg"
 
 const LayoutMore = ({
   navigation,
@@ -62,7 +62,7 @@ const LayoutMore = ({
                 <Text
                   style={{ color: "#00ABB9", fontSize: 28, fontWeight: "700" }}
                 >
-                  Messages
+                  {title}
                 </Text>
               </View>
             ) : (
@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
     width: "100%",
-    alignItems: "center",
   },
   blurContainer: {
     width: "100%",

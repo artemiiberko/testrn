@@ -2,7 +2,7 @@ import React from "react"
 import { StyleSheet, View, Text, SafeAreaView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button } from "@ui-kitten/components"
-import SalderiaCleanSvg from "./../content/saluderia-clean.svg"
+import SalderiaCleanSvg from "./../../content/saluderia-clean.svg"
 
 const LayoutMin = ({ navigation, setHeaderHeight, children }) => {
   return (

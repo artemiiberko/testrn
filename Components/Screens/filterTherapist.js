@@ -10,8 +10,8 @@ import {
 import { LinearGradient } from "expo-linear-gradient"
 import { Button, RadioGroup, Radio, Input } from "@ui-kitten/components"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../content/arrow-back.svg"
-import LayoutMore from "./LayoutMore"
+import ArrowBackSvg from "./../../content/arrow-back.svg"
+import LayoutMore from "../Layouts/LayoutMore"
 
 const FilterTherapist = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()

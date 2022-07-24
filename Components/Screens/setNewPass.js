@@ -2,13 +2,21 @@ import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
-import ArrowBackSvg from "./../content/arrow-back.svg"
-import LayoutLogin from "./LayoutLogin"
+import ArrowBackSvg from "./../../content/arrow-back.svg"
+import LayoutLogin from "../Layouts/LayoutLogin"
 
-const PassRecovery = ({ navigation }) => {
-  const [email, setEmail] = useState("")
+const SetNewPass = ({ navigation }) => {
+  const [newPass, setNewPass] = useState("")
+  const [confirmPass, setConfirmPass] = useState("")
+  const [modalVisible, setModalVisible] = useState(false)
+  const [modalText, setModalText] = useState("Passwords do not match!")
   return (
-    <LayoutLogin scroller={false}>
+    <LayoutLogin
+      modalVisible={modalVisible}
+      setModalVisible={setModalVisible}
+      modal={modalText}
+      scroller={false}
+    >
       <Button
         style={styles.backButton}
         appearance="ghost"
@@ -27,30 +35,49 @@ const PassRecovery = ({ navigation }) => {
         Password Recovery
       </Text>
       <Text style={{ fontSize: 22, color: "#A8A8A8", marginTop: 40 }}>
-        Enter the email you provided during registration
+        Enter a new password, different from the past
       </Text>
       <View style={styles.inputContainer}>
         <Input
           placeholderTextColor="#454545"
-          textContentType="emailAddress"
+          secureTextEntry={true}
+          textContentType="newPassword"
           style={styles.input}
           textStyle={{ fontSize: 20 }}
           size="large"
           color="rgba(69, 69, 69, 1)"
-          value={email}
+          value={newPass}
           onChangeText={(nextValue) => {
-            setEmail(nextValue)
+            setNewPass(nextValue)
           }}
-          placeholder="Email"
+          placeholder="New password"
+        />
+        <Input
+          placeholderTextColor="#454545"
+          secureTextEntry={true}
+          textContentType="newPassword"
+          style={styles.input}
+          textStyle={{ fontSize: 20 }}
+          size="large"
+          color="rgba(69, 69, 69, 1)"
+          value={confirmPass}
+          onChangeText={(nextValue) => {
+            setConfirmPass(nextValue)
+          }}
+          placeholder="Repeat password"
         />
       </View>
       <Button
         style={styles.button}
         size="medium"
-        disabled={email ? false : true}
-        onPress={() => navigation.navigate("Confirmation Code")}
+        disabled={newPass && confirmPass ? false : true}
+        onPress={() => {
+          newPass === confirmPass
+            ? navigation.navigate("New Password Saved")
+            : setModalVisible(true)
+        }}
       >
-        {() => <Text style={styles.buttonText}>Recover</Text>}
+        {() => <Text style={styles.buttonText}>Save</Text>}
       </Button>
     </LayoutLogin>
   )
@@ -82,4 +109,4 @@ const styles = StyleSheet.create({
     margin: 7,
   },
 })
-export default PassRecovery
+export default SetNewPass

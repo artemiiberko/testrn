@@ -2,7 +2,7 @@ import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
-import LayoutLogin from "./LayoutLogin"
+import LayoutLogin from "../Layouts/LayoutLogin"
 
 const Signup = ({ navigation }) => {
   const [email, setEmail] = useState("")

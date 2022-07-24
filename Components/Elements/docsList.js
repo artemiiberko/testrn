@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native"
-import RecipeSvg from "./../content/recipe.svg"
+import RecipeSvg from "./../../content/recipe.svg"
 
 const DocComponent = ({ name, rating, id, setChooseId, chooseId }) => {
   return (
@@ -17,7 +17,7 @@ const DocComponent = ({ name, rating, id, setChooseId, chooseId }) => {
         </View>
         <View style={styles.photoSection}>
           <Image
-            source={require("./../content/profile-photo.png")}
+            source={require("./../../content/profile-photo.png")}
             style={
               chooseId === id
                 ? [styles.photo, { borderColor: "#00ABB9" }]

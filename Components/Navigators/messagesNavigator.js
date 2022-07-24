@@ -1,7 +1,7 @@
 import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import Messages from "./messages"
-import Dialog from "./dialog"
+import Messages from "../Screens/messages"
+import Dialog from "../Screens/dialog"
 
 const MessagesNavigator = () => {
   const Stack = createNativeStackNavigator()

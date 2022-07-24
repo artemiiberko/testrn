@@ -11,12 +11,12 @@ import {
 } from "react-native"
 import { Button, Input, Popover } from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
-import LayoutMore from "./LayoutMore"
-import ChatCheckSvg from "./../content/chat-check.svg"
-import ChatDoubleCheckSvg from "./../content/chat-doublecheck.svg"
-import ArrowBackSvg from "./../content/arrow-back.svg"
-import ThreeDotsSvg from "./../content/three-dots.svg"
-import SendSvg from "./../content/send.svg"
+import LayoutMore from "../Layouts/LayoutMore"
+import ChatCheckSvg from "./../../content/chat-check.svg"
+import ChatDoubleCheckSvg from "./../../content/chat-doublecheck.svg"
+import ArrowBackSvg from "./../../content/arrow-back.svg"
+import ThreeDotsSvg from "./../../content/three-dots.svg"
+import SendSvg from "./../../content/send.svg"
 
 const Message = ({ userId, messageBy, text, time, messageStatus }) => {
   return (
@@ -140,7 +140,7 @@ const Dialog = ({ navigation, route }) => {
               />
               <View style={styles.headerInfo}>
                 <Image
-                  source={require("./../content/profile-photo.png")}
+                  source={require("./../../content/profile-photo.png")}
                   style={styles.photo}
                 />
                 <View style={styles.info}>

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
 import { StackActions } from "@react-navigation/native"
-import LayoutLogin from "./LayoutLogin"
+import LayoutLogin from "../Layouts/LayoutLogin"
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("")
