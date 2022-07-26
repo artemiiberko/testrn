@@ -13,12 +13,13 @@ import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import ArrowBackSvg from "./../../content/arrow-back.svg"
 
-const SettingsAccountDelete = ({ navigation }) => {
+const SettingsNewPassword = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
   const [scrollHeight, setScrollHeight] = useState({})
   const [cardHeight, setCardHeight] = useState()
   const [screenHeight, setScreenHeight] = useState()
-  const [confirmWord, setConfirmWord] = useState("")
+  const [newPass, setNewPass] = useState("")
+  const [repeatPass, setRepeatPass] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
   const [errorText, setErrorText] = useState("")
 
@@ -84,9 +85,7 @@ const SettingsAccountDelete = ({ navigation }) => {
                     navigation.goBack()
                   }}
                 />
-                <Text style={styles.headerText}>
-                  Settings / Account deleting
-                </Text>
+                <Text style={styles.headerText}>Settings / Password</Text>
               </View>
             </View>
             <LinearGradient
@@ -108,35 +107,47 @@ const SettingsAccountDelete = ({ navigation }) => {
                 }}
                 style={{
                   alignItems: "flex-start",
-
+                  maxWidth: 250,
                   padding: 20,
                   paddingTop: 30,
                 }}
               >
-                <Text style={styles.text}>
-                  Enter the word "delete" to confirm the deletion of the account
-                </Text>
                 <Input
                   style={styles.input}
                   textStyle={{ fontSize: 18 }}
                   size="medium"
                   color="rgba(69, 69, 69, 1)"
-                  value={confirmWord}
+                  value={newPass}
                   onChangeText={(nextValue) => {
-                    setConfirmWord(nextValue)
+                    setNewPass(nextValue)
                   }}
-                  placeholder='"delete"'
-                  autoCapitalize="none"
+                  placeholder="New password"
+                  textContentType="newPassword"
+                  secureTextEntry={true}
+                />
+                <Input
+                  style={styles.input}
+                  textStyle={{ fontSize: 18 }}
+                  size="medium"
+                  color="rgba(69, 69, 69, 1)"
+                  value={repeatPass}
+                  onChangeText={(nextValue) => {
+                    setRepeatPass(nextValue)
+                  }}
+                  placeholder="Repeat password"
+                  textContentType="newPassword"
+                  secureTextEntry={true}
                 />
                 <Button
                   style={styles.button}
                   onPress={() =>
-                    confirmWord === "delete"
-                      ? console.log("delete")
-                      : (setErrorText("NO!"), setModalVisible(true))
+                    newPass === repeatPass
+                      ? console.log("save")
+                      : (setErrorText("Passwords do not match!"),
+                        setModalVisible(true))
                   }
                 >
-                  Delete account
+                  Save password
                 </Button>
               </View>
             </ScrollView>
@@ -177,14 +188,8 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#6D6D6D26",
     marginBottom: 20,
-    maxWidth: 230,
   },
   button: {},
-  text: {
-    color: "#454545",
-    fontSize: 22,
-    paddingBottom: 20,
-  },
   modalview: {
     width: "90%",
     justifyContent: "space-between",
@@ -208,4 +213,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SettingsAccountDelete
+export default SettingsNewPassword

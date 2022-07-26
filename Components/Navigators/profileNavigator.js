@@ -11,6 +11,7 @@ import PersonalDataEdit from "./../Screens/personalDataEdit"
 import PaymentEdit from "./../Screens/paymentInfoEdit"
 import SettingsAccountDelete from "./../Screens/settingsAccountDelete"
 import SettingsChangePassword from "./../Screens/settingsChangePass"
+import SettingsNewPassword from "./../Screens/settingsNewPass"
 import SettingsNotification from "./../Screens/settingsNotification"
 
 const ProfileNavigator = () => {
@@ -75,6 +76,13 @@ const ProfileNavigator = () => {
         name="Settings Change Pass"
         children={({ navigation, route }) => (
           <SettingsChangePassword navigation={navigation} route={route} />
+        )}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Settings New Pass"
+        children={({ navigation, route }) => (
+          <SettingsNewPassword navigation={navigation} route={route} />
         )}
         options={{ headerShown: false }}
       />
