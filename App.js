@@ -57,7 +57,7 @@ export default function App() {
   function Main() {
     return (
       <Tab.Navigator
-        initialRouteName="New Booking Navigator"
+        initialRouteName="Home"
         screenOptions={({ route, navigation }) => ({
           headerShown: false,
           tabBarShowLabel: false,
