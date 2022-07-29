@@ -1,8 +1,9 @@
 import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import NewBooking from "../Screens/newBooking"
-import FilterTherapy from "../Screens/filterTherapy"
-import FilterTherapist from "../Screens/filterTherapist"
+import NewBooking from "../Screens/newbooking/newBooking"
+import FilterTherapy from "../Screens/newbooking/filterTherapy"
+import FilterTherapist from "../Screens/newbooking/filterTherapist"
+import RepeatSettings from "./../Screens/newbooking/repeatSettings"
 
 const NewBookingNavigator = () => {
   const Stack = createNativeStackNavigator()
@@ -24,6 +25,13 @@ const NewBookingNavigator = () => {
         name="Therapist Filter"
         children={({ navigation, route }) => (
           <FilterTherapist navigation={navigation} route={route} />
+        )}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Repeat Settings"
+        children={({ navigation, route }) => (
+          <RepeatSettings navigation={navigation} route={route} />
         )}
         options={{ headerShown: false }}
       />

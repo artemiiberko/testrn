@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native"
 import { Button } from "@ui-kitten/components"
-import LayoutMin from "../Layouts/LayoutMin"
+import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../../content/arrow-back.svg"
+import ArrowBackSvg from "./../../../content/arrow-back.svg"
 
 const PersonalData = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
@@ -113,7 +113,7 @@ const PersonalData = ({ navigation }) => {
                 <View style={styles.mainSection}>
                   <View style={styles.mainInfo}>
                     <Image
-                      source={require("./../../content/profile-photo.png")}
+                      source={require("./../../../content/profile-photo.png")}
                       style={styles.photo}
                     />
                     <View style={styles.info}>
@@ -134,18 +134,10 @@ const PersonalData = ({ navigation }) => {
                 />
                 <View style={styles.addressSection}>
                   <Text style={styles.addressSectionHeader}>Address</Text>
-                  {personalData.addresses.map((i) => (
-                    <View style={styles.addressItem}>
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          fontWeight: "500",
-                          color: "#454545",
-                        }}
-                      >
-                        {i.name}
-                      </Text>
-                      <Text style={{ fontSize: 14, color: "#454545" }}>
+                  {personalData.addresses.map((i, index) => (
+                    <View key={index} style={styles.addressItem}>
+                      <Text style={styles.addressName}>{i.name}</Text>
+                      <Text style={styles.addressItemText}>
                         {`${i.street}, ${i.city} ${i.postcode} ${i.country}`}
                       </Text>
                     </View>
@@ -178,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
     color: "#454545",
   },
@@ -219,6 +211,15 @@ const styles = StyleSheet.create({
   },
   addressItem: {
     paddingBottom: 20,
+  },
+  addressName: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#454545",
+  },
+  addressItemText: {
+    fontSize: 14,
+    color: "#454545",
   },
 })
 

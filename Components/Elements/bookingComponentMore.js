@@ -6,6 +6,7 @@ import { BlurView } from "expo-blur"
 import SmallCheckSvg from "./../../content/small-check.svg"
 import ArrowBackSvg from "./../../content/arrow-back.svg"
 import RoadSvg from "./../../content/road.svg"
+import MessagesSvg from "./../../content/messages.svg"
 
 const BookingComponentMore = ({ id, navigation }) => {
   const [bookingObject, setBookingObject] = useState({})
@@ -41,45 +42,60 @@ const BookingComponentMore = ({ id, navigation }) => {
       }}
     >
       <BlurView intensity={100}>
-        <ScrollView scrollEnabled={scrollHeight > cardHeight ? true : false}>
+        <View
+          style={[
+            styles.backHeader,
+            {
+              backgroundColor:
+                scrollHeight + 70 > cardHeight ? "#e0f1f3FA" : "transparent",
+            },
+          ]}
+        >
+          <View style={styles.backHeaderContainer}>
+            <View style={styles.backHeaderLeft}>
+              <Button
+                style={styles.backButton}
+                appearance="ghost"
+                size="giant"
+                accessoryLeft={() => <ArrowBackSvg />}
+                onPress={() => {
+                  navigation.goBack()
+                }}
+              />
+              <Text style={styles.headerText}>Kim's booking</Text>
+            </View>
+            <View style={styles.backHeaderRight}>
+              <Text
+                style={{
+                  color: "#454545",
+                  fontSize: 16,
+                  paddingRight: 10,
+                }}
+              >
+                Confirmed
+              </Text>
+              <SmallCheckSvg />
+            </View>
+          </View>
+          <LinearGradient
+            colors={["#00ABB9FF", "#00ABB900"]}
+            start={{ x: -1, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ height: 1 }}
+          />
+        </View>
+        <ScrollView
+          scrollEnabled={scrollHeight + 70 > cardHeight}
+          contentContainerStyle={{
+            paddingTop: 70,
+          }}
+        >
           <View
             onLayout={(event) => {
               const { height } = event.nativeEvent.layout
               setScrollHeight(height)
             }}
           >
-            <View style={styles.backHeader}>
-              <View style={styles.backHeaderLeft}>
-                <Button
-                  style={styles.backButton}
-                  appearance="ghost"
-                  size="giant"
-                  accessoryLeft={() => <ArrowBackSvg />}
-                  onPress={() => {
-                    navigation.goBack()
-                  }}
-                />
-                <Text style={styles.headerText}>Kim's booking</Text>
-              </View>
-              <View style={styles.backHeaderRight}>
-                <Text
-                  style={{
-                    color: "#454545",
-                    fontSize: 16,
-                    paddingRight: 10,
-                  }}
-                >
-                  Confirmed
-                </Text>
-                <SmallCheckSvg />
-              </View>
-            </View>
-            <LinearGradient
-              colors={["#00ABB9FF", "#00ABB900"]}
-              start={{ x: -1, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={{ height: 1 }}
-            />
             <View style={styles.infoSection}>
               <Image
                 source={require("./../../content/profile-photo.png")}
@@ -97,6 +113,22 @@ const BookingComponentMore = ({ id, navigation }) => {
                   <Text style={styles.whereText}>{bookingObject.where}</Text>
                 </View>
               </View>
+              <Button
+                style={{
+                  position: "absolute",
+                  top: 20,
+                  right: 0,
+                  backgroundColor: "#00ABB90D",
+                  borderTopLeftRadius: 15,
+                  borderBottomLeftRadius: 15,
+                  paddingHorizontal: 5,
+                }}
+                appearance="ghost"
+                accessoryLeft={() => <MessagesSvg height={30} />}
+                onPress={() => {
+                  navigation.navigate("Messages Navigator")
+                }}
+              />
             </View>
             <LinearGradient
               colors={["#00ABB9FF", "#00ABB900"]}
@@ -192,6 +224,12 @@ const styles = StyleSheet.create({
     maxHeight: "95%",
   },
   backHeader: {
+    justifyContent: "flex-start",
+    position: "absolute",
+    width: "100%",
+    zIndex: 1,
+  },
+  backHeaderContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -200,7 +238,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
     color: "#454545",
   },

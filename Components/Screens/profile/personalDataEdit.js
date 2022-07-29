@@ -10,17 +10,16 @@ import {
   Pressable,
 } from "react-native"
 import { Button, Input } from "@ui-kitten/components"
-import LayoutMin from "../Layouts/LayoutMin"
+import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../../content/arrow-back.svg"
-import TrashSvg from "./../../content/trash.svg"
+import ArrowBackSvg from "./../../../content/arrow-back.svg"
+import TrashSvg from "./../../../content/trash.svg"
 
 const PersonalDataEdit = ({ navigation, route }) => {
   const [headerHeight, setHeaderHeight] = useState()
   const [scrollHeight, setScrollHeight] = useState({})
   const [cardHeight, setCardHeight] = useState()
-  const [screenHeight, setScreenHeight] = useState()
   const [modalVisible, setModalVisible] = useState(false)
   const [errorText, setErrorText] = useState("")
   const [name, setName] = useState(route.params.personalData.name)
@@ -58,67 +57,67 @@ const PersonalDataEdit = ({ navigation, route }) => {
         </Pressable>
       </Modal>
       <View
-        style={{ flex: 1, paddingTop: headerHeight }}
-        onLayout={(event) => {
-          const { height } = event.nativeEvent.layout
-          setScreenHeight(height)
+        style={{
+          width: "100%",
+          flex: 1,
+          paddingTop: headerHeight,
+          marginBottom: Platform.OS === "ios" ? 90 : 60,
         }}
       >
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "none"}
+          behavior={Platform.OS === "ios" ? "padding" : "padding"}
           style={{ flex: 1 }}
         >
           <LinearGradient
             colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]}
-            style={[
-              styles.card,
-              {
-                maxHeight:
-                  Platform.OS === "ios"
-                    ? screenHeight && headerHeight
-                      ? screenHeight - headerHeight - 90 - 20
-                      : "100%"
-                    : screenHeight && headerHeight
-                    ? screenHeight - headerHeight - 60 - 20
-                    : "100%",
-              },
-            ]}
+            style={styles.card}
             onLayout={(event) => {
               const { height } = event.nativeEvent.layout
               setCardHeight(height)
             }}
           >
             <BlurView intensity={100}>
-              <View style={styles.backHeader}>
-                <View style={styles.backHeaderLeft}>
-                  <Button
-                    style={styles.backButton}
-                    appearance="ghost"
-                    size="giant"
-                    accessoryLeft={() => <ArrowBackSvg />}
-                    onPress={() => {
-                      navigation.goBack()
-                    }}
-                  />
-                  <Text style={styles.headerText}>Personal Data</Text>
+              <View
+                style={[
+                  styles.backHeader,
+                  {
+                    backgroundColor:
+                      scrollHeight + 70 > cardHeight
+                        ? "#e9f5f6FA"
+                        : "transparent",
+                  },
+                ]}
+              >
+                <View style={styles.backHeaderContainer}>
+                  <View style={styles.backHeaderLeft}>
+                    <Button
+                      style={styles.backButton}
+                      appearance="ghost"
+                      size="giant"
+                      accessoryLeft={() => <ArrowBackSvg />}
+                      onPress={() => {
+                        navigation.goBack()
+                      }}
+                    />
+                    <Text style={styles.headerText}>Personal Data</Text>
+                  </View>
+                  <View style={styles.backHeaderRight}>
+                    <Button size="small" onPress={() => console.log("save")}>
+                      Save
+                    </Button>
+                  </View>
                 </View>
-                <View style={styles.backHeaderRight}>
-                  <Button size="small" onPress={() => console.log("save")}>
-                    Save
-                  </Button>
-                </View>
+                <LinearGradient
+                  colors={["#00ABB9FF", "#00ABB900"]}
+                  start={{ x: -1, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ height: 1 }}
+                />
               </View>
-              <LinearGradient
-                colors={["#00ABB9FF", "#00ABB900"]}
-                start={{ x: -1, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={{ height: 1 }}
-              />
-
               <ScrollView
-                scrollEnabled={scrollHeight > cardHeight ? true : false}
+                scrollEnabled={scrollHeight + 70 > cardHeight}
                 contentContainerStyle={{
-                  paddingBottom: 50,
+                  paddingTop: 70,
                 }}
               >
                 <View
@@ -130,7 +129,7 @@ const PersonalDataEdit = ({ navigation, route }) => {
                   <View style={styles.mainSection}>
                     <View style={styles.mainInfo}>
                       <Image
-                        source={require("./../../content/profile-photo.png")}
+                        source={require("./../../../content/profile-photo.png")}
                         style={styles.photo}
                       />
                       <View style={styles.info}>
@@ -207,14 +206,10 @@ const PersonalDataEdit = ({ navigation, route }) => {
                     style={{ height: 1 }}
                   />
                   <View style={styles.addressSection}>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        paddingBottom: 20,
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Text style={styles.addressSectionHeader}>Address</Text>
+                    <View style={styles.addressSectionHeader}>
+                      <Text style={styles.addressSectionHeaderText}>
+                        Address
+                      </Text>
                       <Button
                         size="small"
                         onPress={() =>
@@ -229,17 +224,14 @@ const PersonalDataEdit = ({ navigation, route }) => {
                     <View style={styles.addressButtons}>
                       {addresses.map((item, index) => (
                         <Button
+                          key={index}
                           status={
                             selectedAddress === index ? "primary" : "warning"
                           }
                           onPress={() => {
                             setSelectedAddress(index)
                           }}
-                          style={{
-                            paddingHorizontal: 0,
-                            marginRight: 10,
-                            borderColor: "transparent",
-                          }}
+                          style={styles.addressButton}
                         >
                           {index + 1}
                         </Button>
@@ -301,17 +293,9 @@ const PersonalDataEdit = ({ navigation, route }) => {
                             textContentType="postalCode"
                           />
                         </View>
-                        <View
-                          style={{
-                            flexBasis: "50%",
-                            justifyContent: "space-between",
-                          }}
-                        >
+                        <View style={styles.rightInputsContainer}>
                           <Button
-                            style={{
-                              alignSelf: "flex-end",
-                              paddingHorizontal: 0,
-                            }}
+                            style={styles.deleteButton}
                             status="danger"
                             onPress={() => {
                               if (addresses.length > 1) {
@@ -389,6 +373,12 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   backHeader: {
+    justifyContent: "flex-start",
+    position: "absolute",
+    width: "100%",
+    zIndex: 1,
+  },
+  backHeaderContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -397,7 +387,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
     color: "#454545",
   },
@@ -432,12 +422,30 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   addressSectionHeader: {
+    flexDirection: "row",
+    paddingBottom: 20,
+    justifyContent: "space-between",
+  },
+  addressSectionHeaderText: {
     fontSize: 20,
     color: "#454545",
   },
   addressButtons: {
     flexDirection: "row",
     paddingBottom: 10,
+  },
+  addressButton: {
+    paddingHorizontal: 0,
+    marginRight: 10,
+    borderColor: "transparent",
+  },
+  rightInputsContainer: {
+    flexBasis: "50%",
+    justifyContent: "space-between",
+  },
+  deleteButton: {
+    alignSelf: "flex-end",
+    paddingHorizontal: 0,
   },
   modalview: {
     width: "90%",

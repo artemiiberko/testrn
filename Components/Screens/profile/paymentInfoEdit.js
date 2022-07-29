@@ -9,19 +9,18 @@ import {
   Pressable,
 } from "react-native"
 import { Button, Input } from "@ui-kitten/components"
-import LayoutMin from "../Layouts/LayoutMin"
+import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../../content/arrow-back.svg"
-import MasterCardSvg from "./../../content/mastercard.svg"
-import VisaSvg from "./../../content/visa.svg"
-import TrashSvg from "./../../content/trash.svg"
+import ArrowBackSvg from "./../../../content/arrow-back.svg"
+import MasterCardSvg from "./../../../content/mastercard.svg"
+import VisaSvg from "./../../../content/visa.svg"
+import TrashSvg from "./../../../content/trash.svg"
 
 const PaymentEdit = ({ navigation, route }) => {
   const [headerHeight, setHeaderHeight] = useState()
   const [scrollHeight, setScrollHeight] = useState({})
   const [cardHeight, setCardHeight] = useState()
-  const [screenHeight, setScreenHeight] = useState()
   const [modalVisible, setModalVisible] = useState(false)
   const [errorText, setErrorText] = useState("")
   const [cards, setCards] = useState(route.params.cards)
@@ -50,66 +49,70 @@ const PaymentEdit = ({ navigation, route }) => {
         </Pressable>
       </Modal>
       <View
-        style={{ flex: 1, paddingTop: headerHeight }}
-        onLayout={(event) => {
-          const { height } = event.nativeEvent.layout
-          setScreenHeight(height)
+        style={{
+          width: "100%",
+          flex: 1,
+          paddingTop: headerHeight,
+          marginBottom: Platform.OS === "ios" ? 90 : 60,
         }}
       >
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "none"}
+          behavior={Platform.OS === "ios" ? "padding" : "padding"}
           style={{ flex: 1 }}
         >
           <LinearGradient
             colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]}
-            style={[
-              styles.card,
-              {
-                maxHeight:
-                  Platform.OS === "ios"
-                    ? screenHeight && headerHeight
-                      ? screenHeight - headerHeight - 90 - 20
-                      : "100%"
-                    : screenHeight && headerHeight
-                    ? screenHeight - headerHeight - 60 - 20
-                    : "100%",
-              },
-            ]}
+            style={styles.card}
             onLayout={(event) => {
               const { height } = event.nativeEvent.layout
               setCardHeight(height)
             }}
           >
             <BlurView intensity={100}>
-              <View style={styles.backHeader}>
-                <View style={styles.backHeaderLeft}>
-                  <Button
-                    style={styles.backButton}
-                    appearance="ghost"
-                    size="giant"
-                    accessoryLeft={() => <ArrowBackSvg />}
-                    onPress={() => {
-                      navigation.goBack()
-                    }}
-                  />
-                  <Text style={styles.headerText}>Payment Information</Text>
+              <View
+                style={[
+                  styles.backHeader,
+                  {
+                    backgroundColor:
+                      scrollHeight + 70 > cardHeight
+                        ? "#e9f5f6FA"
+                        : "transparent",
+                  },
+                ]}
+              >
+                <View style={styles.backHeaderContainer}>
+                  <View style={styles.backHeaderLeft}>
+                    <Button
+                      style={styles.backButton}
+                      appearance="ghost"
+                      size="giant"
+                      accessoryLeft={() => <ArrowBackSvg />}
+                      onPress={() => {
+                        navigation.goBack()
+                      }}
+                    />
+                    <Text style={styles.headerText}>Payment Information</Text>
+                  </View>
+                  <View style={styles.backHeaderRight}>
+                    <Button
+                      onPress={() => console.log(cardHeight)}
+                      size="small"
+                    >
+                      Save
+                    </Button>
+                  </View>
                 </View>
-                <View style={styles.backHeaderRight}>
-                  <Button onPress={() => console.log(cards)} size="small">
-                    Save
-                  </Button>
-                </View>
+                <LinearGradient
+                  colors={["#00ABB9FF", "#00ABB900"]}
+                  start={{ x: -1, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ height: 1 }}
+                />
               </View>
-              <LinearGradient
-                colors={["#00ABB9FF", "#00ABB900"]}
-                start={{ x: -1, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={{ height: 1 }}
-              />
               <ScrollView
-                scrollEnabled={scrollHeight + 35 > cardHeight ? true : false}
+                scrollEnabled={scrollHeight + 70 > cardHeight ? true : false}
                 contentContainerStyle={{
-                  paddingBottom: 50,
+                  paddingTop: 70,
                 }}
               >
                 <View
@@ -120,14 +123,9 @@ const PaymentEdit = ({ navigation, route }) => {
                 >
                   <View style={styles.selectContainer}>
                     {cards.map((item, index) => (
-                      <View style={styles.cardContainer}>
+                      <View key={index} style={styles.cardContainer}>
                         <View style={styles.cardHeader}>
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              alignItems: "center",
-                            }}
-                          >
+                          <View style={styles.cardHeaderContainer}>
                             <View>
                               {item.type === "mastercard" ? (
                                 <MasterCardSvg height={22} />
@@ -135,24 +133,14 @@ const PaymentEdit = ({ navigation, route }) => {
                                 <VisaSvg height={22} />
                               )}
                             </View>
-                            <Text
-                              style={{
-                                fontSize: 22,
-                                color: "#A8A8A8",
-                                paddingLeft: 5,
-                              }}
-                            >
+                            <Text style={styles.cardType}>
                               {item.type === "mastercard"
                                 ? "Master Card"
                                 : "Visa"}
                             </Text>
                           </View>
                           <Button
-                            style={{
-                              alignSelf: "flex-end",
-                              paddingHorizontal: 0,
-                              marginHorizontal: 10,
-                            }}
+                            style={styles.deleteButton}
                             status="danger"
                             onPress={() => {
                               if (cards.length > 1) {
@@ -271,6 +259,12 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   backHeader: {
+    justifyContent: "flex-start",
+    position: "absolute",
+    width: "100%",
+    zIndex: 1,
+  },
+  backHeaderContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -279,7 +273,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
     color: "#454545",
   },
@@ -301,6 +295,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  cardHeaderContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  cardType: {
+    fontSize: 22,
+    color: "#A8A8A8",
+    paddingLeft: 5,
+  },
+  deleteButton: {
+    alignSelf: "flex-end",
+    paddingHorizontal: 0,
+    marginHorizontal: 10,
   },
   input: {
     width: 230,

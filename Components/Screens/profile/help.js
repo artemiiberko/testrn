@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { View, Text, StyleSheet } from "react-native"
-import LayoutMore from "../Layouts/LayoutMore"
+import LayoutMore from "../../Layouts/LayoutMore"
 import { LinearGradient } from "expo-linear-gradient"
 
-const Invoice = ({ navigation }) => {
+const Help = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
 
   return (
@@ -13,7 +13,7 @@ const Invoice = ({ navigation }) => {
       navigation={navigation}
     >
       <View style={{ flex: 1, paddingTop: headerHeight }}>
-        <Text>Invoice</Text>
+        <Text>Help</Text>
       </View>
     </LayoutMore>
   )
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Invoice
+export default Help

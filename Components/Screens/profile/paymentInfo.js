@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native"
 import { Button, RadioGroup, Radio } from "@ui-kitten/components"
-import LayoutMin from "../Layouts/LayoutMin"
+import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../../content/arrow-back.svg"
-import MasterCardSvg from "./../../content/mastercard.svg"
-import VisaSvg from "./../../content/visa.svg"
-import CardChooseSvg from "./../../content/cardchoose.svg"
+import ArrowBackSvg from "./../../../content/arrow-back.svg"
+import MasterCardSvg from "./../../../content/mastercard.svg"
+import VisaSvg from "./../../../content/visa.svg"
+import CardChooseSvg from "./../../../content/cardchoose.svg"
 
 const PaymentInfo = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
@@ -21,12 +21,6 @@ const PaymentInfo = ({ navigation }) => {
       digits: "5422 0087 0022 0071",
       expireDate: "08/24",
       cvv: "998",
-    },
-    {
-      type: "mastercard",
-      digits: "4752 1234 1234 5632",
-      expireDate: "07/24",
-      cvv: "997",
     },
     {
       type: "mastercard",
@@ -116,7 +110,7 @@ const PaymentInfo = ({ navigation }) => {
                   style={styles.selectContainer}
                 >
                   {cards.map((item, index) => (
-                    <Radio style={{ alignItems: "flex-start" }}>
+                    <Radio key={index} style={{ alignItems: "flex-start" }}>
                       {() => (
                         <View style={styles.cardContainer}>
                           <View style={styles.cardHeader}>
@@ -127,42 +121,20 @@ const PaymentInfo = ({ navigation }) => {
                                 <VisaSvg height={22} />
                               )}
                               {index === radioIndex ? (
-                                <View
-                                  style={{
-                                    position: "absolute",
-                                    top: -10,
-                                    right: -5,
-                                    backgroundColor: "#ddfafa",
-                                    borderRadius: 20,
-                                    borderColor: "#ddfafa",
-                                    borderWidth: 2,
-                                  }}
-                                >
+                                <View style={styles.checkedSvg}>
                                   <CardChooseSvg />
                                 </View>
                               ) : (
                                 true
                               )}
                             </View>
-                            <Text
-                              style={{
-                                fontSize: 22,
-                                color: "#A8A8A8",
-                                paddingLeft: 5,
-                              }}
-                            >
+                            <Text style={styles.cardType}>
                               {item.type === "mastercard"
                                 ? "Master Card"
                                 : "Visa"}
                             </Text>
                           </View>
-                          <Text
-                            style={{
-                              color: "#222222",
-                              fontSize: 22,
-                              paddingVertical: 5,
-                            }}
-                          >
+                          <Text style={styles.cardDigits}>
                             {`${item.digits.substring(
                               0,
                               4
@@ -173,14 +145,7 @@ const PaymentInfo = ({ navigation }) => {
                     </Radio>
                   ))}
                 </RadioGroup>
-                <Button
-                  style={{
-                    alignSelf: "flex-start",
-                    marginLeft: 20,
-                  }}
-                >
-                  Add card
-                </Button>
+                <Button style={styles.addCardButton}>Add card</Button>
               </View>
             </ScrollView>
           </BlurView>
@@ -208,7 +173,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
     color: "#454545",
   },
@@ -223,6 +188,29 @@ const styles = StyleSheet.create({
   },
   cardContainer: { paddingLeft: 10, paddingBottom: 30 },
   cardHeader: { flexDirection: "row", alignItems: "center" },
+  checkedSvg: {
+    position: "absolute",
+    top: -10,
+    right: -5,
+    backgroundColor: "#ddfafa",
+    borderRadius: 20,
+    borderColor: "#ddfafa",
+    borderWidth: 2,
+  },
+  cardType: {
+    fontSize: 22,
+    color: "#A8A8A8",
+    paddingLeft: 5,
+  },
+  cardDigits: {
+    color: "#222222",
+    fontSize: 22,
+    paddingVertical: 5,
+  },
+  addCardButton: {
+    alignSelf: "flex-start",
+    marginLeft: 20,
+  },
 })
 
 export default PaymentInfo

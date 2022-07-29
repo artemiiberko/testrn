@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { View } from "react-native"
-import BookingComponentMore from "../Elements/bookingComponentMore"
-import LayoutMin from "../Layouts/LayoutMin"
+import BookingComponentMore from "../../Elements/bookingComponentMore"
+import LayoutMin from "../../Layouts/LayoutMin"
 
 const BookingInfo = ({ navigation, route }) => {
   const [bookingObject, setBookingObject] = useState({})

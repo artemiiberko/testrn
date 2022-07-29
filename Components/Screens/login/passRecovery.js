@@ -2,8 +2,8 @@ import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
-import ArrowBackSvg from "./../../content/arrow-back.svg"
-import LayoutLogin from "../Layouts/LayoutLogin"
+import ArrowBackSvg from "./../../../content/arrow-back.svg"
+import LayoutLogin from "../../Layouts/LayoutLogin"
 
 const PassRecovery = ({ navigation }) => {
   const [email, setEmail] = useState("")
