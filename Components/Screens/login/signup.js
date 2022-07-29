@@ -2,7 +2,8 @@ import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { Button, Input } from "@ui-kitten/components"
 import { useState } from "react"
-import LayoutLogin from "../Layouts/LayoutLogin"
+import LayoutLogin from "../../Layouts/LayoutLogin"
+import validator from "validator"
 
 const Signup = ({ navigation }) => {
   const [email, setEmail] = useState("")
@@ -15,12 +16,12 @@ const Signup = ({ navigation }) => {
 
   const showError = () => {
     let errortext = ""
-    if (repeatpass !== pass) {
-      errortext = "Password do not match"
+    if (!validator.isEmail(email)) {
+      errortext = "Incorrect email"
     } else if (pass === "incorrectpass") {
       errortext = "Incorrect password"
-    } else if (email === "incorrectemail") {
-      errortext = "Incorrect email"
+    } else if (repeatpass !== pass) {
+      errortext = "Passwords do not match"
     } else if (email === "emailinuse") {
       errortext = "This Email is already in use"
     } else {
@@ -28,7 +29,7 @@ const Signup = ({ navigation }) => {
     }
     errortext === ""
       ? setModalVisible(false)
-      : setModalText(errortext) || setModalVisible(true)
+      : (setModalText(errortext), setModalVisible(true))
   }
 
   return (
@@ -116,6 +117,7 @@ const Signup = ({ navigation }) => {
             showError()
           }}
           size="medium"
+          disabled={!repeatpass || !userName || !pass || !email}
         >
           {() => <Text style={styles.buttonText}>Sign up</Text>}
         </Button>

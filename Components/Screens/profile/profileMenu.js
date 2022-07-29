@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
-import LayoutMore from "../Layouts/LayoutMore"
+import LayoutMore from "../../Layouts/LayoutMore"
 import { LinearGradient } from "expo-linear-gradient"
-import ArrowForwardSvg from "../../content/arrow-forward.svg"
+import ArrowForwardSvg from "../../../content/arrow-forward.svg"
 
 const ProfileMenu = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()

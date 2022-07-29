@@ -46,7 +46,13 @@ const AwaitingConfirmation = () => {
           Awaiting confirmation
         </Text>
       </View>
-      <Text style={{ fontSize: 16, fontWeight: "500" }}>May be amended</Text>
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={{ fontSize: 16, fontWeight: "500", maxWidth: "40%" }}
+      >
+        May be amended
+      </Text>
     </View>
   )
 }
@@ -74,7 +80,16 @@ const FullRefund = () => {
         padding: 15,
       }}
     >
-      <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={{
+          fontSize: 16,
+          fontWeight: "500",
+          color: "#454545",
+          maxWidth: "90%",
+        }}
+      >
         Cancelation in 24 hours or more full refund
       </Text>
       <SmallCheckSvg height="100%" style={{ resizeMode: "contain" }} />
@@ -90,7 +105,16 @@ const NoRefund = () => {
         padding: 15,
       }}
     >
-      <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={{
+          fontSize: 16,
+          fontWeight: "500",
+          color: "#454545",
+          maxWidth: "90%",
+        }}
+      >
         Cancelation in 24 hours or less no refund
       </Text>
       <SmallCheckSvg height="100%" style={{ resizeMode: "contain" }} />

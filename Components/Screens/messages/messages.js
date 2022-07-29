@@ -8,9 +8,9 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native"
-import LayoutMore from "../Layouts/LayoutMore"
-import ChatCheckSvg from "./../../content/chat-check.svg"
-import ChatDoubleCheckSvg from "./../../content/chat-doublecheck.svg"
+import LayoutMore from "../../Layouts/LayoutMore"
+import ChatCheckSvg from "./../../../content/chat-check.svg"
+import ChatDoubleCheckSvg from "./../../../content/chat-doublecheck.svg"
 
 const dialogs = [
   {
@@ -56,7 +56,7 @@ const Dialog = ({
       }}
     >
       <Image
-        source={require("./../../content/profile-photo.png")}
+        source={require("./../../../content/profile-photo.png")}
         style={styles.photo}
       />
       <View style={styles.contentContainer}>
@@ -101,7 +101,7 @@ const Messages = ({ navigation }) => {
       title="Messages"
     >
       <ScrollView
-        style={[styles.container, { paddingTop: headerHeight, width: "100%" }]}
+        style={{ paddingTop: headerHeight, width: "100%" }}
         contentContainerStyle={
           headerHeight
             ? {
@@ -111,8 +111,9 @@ const Messages = ({ navigation }) => {
             : {}
         }
       >
-        {dialogs.map((i) => (
+        {dialogs.map((i, index) => (
           <Dialog
+            key={index}
             userId={userId}
             dialogWith={i.dialogWith}
             text={i.lastMessage}
@@ -129,7 +130,6 @@ const Messages = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   block: {
-    backgroundColor: "red",
     justifyContent: "center",
     width: "85%",
     maxWidth: "86%",

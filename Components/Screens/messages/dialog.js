@@ -11,12 +11,12 @@ import {
 } from "react-native"
 import { Button, Input, Popover } from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
-import LayoutMore from "../Layouts/LayoutMore"
-import ChatCheckSvg from "./../../content/chat-check.svg"
-import ChatDoubleCheckSvg from "./../../content/chat-doublecheck.svg"
-import ArrowBackSvg from "./../../content/arrow-back.svg"
-import ThreeDotsSvg from "./../../content/three-dots.svg"
-import SendSvg from "./../../content/send.svg"
+import LayoutMore from "../../Layouts/LayoutMore"
+import ChatCheckSvg from "./../../../content/chat-check.svg"
+import ChatDoubleCheckSvg from "./../../../content/chat-doublecheck.svg"
+import ArrowBackSvg from "./../../../content/arrow-back.svg"
+import ThreeDotsSvg from "./../../../content/three-dots.svg"
+import SendSvg from "./../../../content/send.svg"
 
 const Message = ({ userId, messageBy, text, time, messageStatus }) => {
   return (
@@ -58,10 +58,8 @@ const Dialog = ({ navigation, route }) => {
   const [headerHeight, setHeaderHeight] = useState()
   const [userId, setUserId] = useState(5)
   const [newMessage, setNewMessage] = useState("")
-  const [inputMargin, setInputMargin] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
   const [dialog, setDialog] = useState({})
-
   useEffect(() => {
     console.log(route.params.dialogId)
     /* getting dialog by id from API - route.params.dialogId */
@@ -116,12 +114,12 @@ const Dialog = ({ navigation, route }) => {
       title="Messages"
     >
       <View
-        style={[
-          styles.contentContainer,
-          {
-            marginTop: headerHeight,
-          },
-        ]}
+        style={{
+          width: "100%",
+          flex: 1,
+          paddingTop: headerHeight,
+          marginBottom: Platform.OS === "ios" ? 90 : 60,
+        }}
       >
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "none"}
@@ -130,7 +128,7 @@ const Dialog = ({ navigation, route }) => {
           <View style={styles.dialogContainer}>
             <View style={styles.dialogHeader}>
               <Button
-                style={{ alignSelf: "center", height: "100%" }}
+                style={styles.backButton}
                 appearance="ghost"
                 size="medium"
                 accessoryLeft={() => <ArrowBackSvg height={20} />}
@@ -140,7 +138,7 @@ const Dialog = ({ navigation, route }) => {
               />
               <View style={styles.headerInfo}>
                 <Image
-                  source={require("./../../content/profile-photo.png")}
+                  source={require("./../../../content/profile-photo.png")}
                   style={styles.photo}
                 />
                 <View style={styles.info}>
@@ -152,7 +150,7 @@ const Dialog = ({ navigation, route }) => {
                 visible={modalVisible}
                 anchor={() => (
                   <Button
-                    style={{ alignSelf: "center", height: "100%" }}
+                    style={styles.moreButton}
                     appearance="ghost"
                     size="medium"
                     accessoryLeft={() => <ThreeDotsSvg height={20} />}
@@ -163,39 +161,18 @@ const Dialog = ({ navigation, route }) => {
                 )}
                 placement="bottom start"
                 onBackdropPress={() => setModalVisible(false)}
-                style={{
-                  top: -70,
-                  maxWidth: "70%",
-                  backgroundColor: "#ffffffe6",
-                  borderRadius: 20,
-                  borderTopLeftRadius: 0,
-                  borderWidth: 0,
-                  height: 195,
-                  width: 400,
-                }}
+                style={styles.popup}
               >
-                <View
-                  style={{
-                    backgroundColor: "#00ABB980",
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: 20,
-                    borderTopLeftRadius: 0,
-                  }}
-                >
+                <View style={styles.popupBody}>
                   <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => {
+                      setModalVisible(false)
                       console.log("clear the history")
                     }}
-                    style={{ padding: 20, paddingLeft: 30 }}
+                    style={styles.popupMenuItem}
                   >
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 20,
-                      }}
-                    >
+                    <Text numberOfLines={1} style={styles.popupMenuItemText}>
                       clear the history
                     </Text>
                   </TouchableOpacity>
@@ -208,13 +185,12 @@ const Dialog = ({ navigation, route }) => {
                   <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => {
+                      setModalVisible(false)
                       console.log("delete chat")
                     }}
-                    style={{ padding: 20, paddingLeft: 30 }}
+                    style={styles.popupMenuItem}
                   >
-                    <Text style={{ color: "white", fontSize: 20 }}>
-                      delete chat
-                    </Text>
+                    <Text style={styles.popupMenuItemText}>delete chat</Text>
                   </TouchableOpacity>
                   <LinearGradient
                     colors={["#00ABB9FF", "#00ABB900"]}
@@ -225,40 +201,25 @@ const Dialog = ({ navigation, route }) => {
                   <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => {
+                      setModalVisible(false)
                       console.log("block user")
                     }}
-                    style={{ padding: 20, paddingLeft: 30 }}
+                    style={styles.popupMenuItem}
                   >
-                    <Text style={{ color: "#DC8D8D", fontSize: 20 }}>
+                    <Text
+                      style={[styles.popupMenuItemText, { color: "#DC8D8D" }]}
+                    >
                       block user
                     </Text>
                   </TouchableOpacity>
                 </View>
               </Popover>
             </View>
-            <ScrollView
-              style={[styles.container, { width: "100%" }]}
-              contentContainerStyle={
-                headerHeight
-                  ? inputMargin
-                    ? {
-                        paddingBottom:
-                          Platform.OS === "ios"
-                            ? headerHeight + 90 + 50
-                            : headerHeight + 60 + 50,
-                      }
-                    : {
-                        paddingBottom:
-                          Platform.OS === "ios"
-                            ? headerHeight + 50
-                            : headerHeight + 50,
-                      }
-                  : {}
-              }
-            >
+            <ScrollView style={styles.container}>
               {Object.keys(dialog).length !== 0
-                ? dialog.messages.map((i) => (
+                ? dialog.messages.map((i, index) => (
                     <Message
+                      key={index}
                       userId={userId}
                       messageBy={i.messageBy}
                       text={i.text}
@@ -268,29 +229,7 @@ const Dialog = ({ navigation, route }) => {
                   ))
                 : true}
             </ScrollView>
-            <View
-              style={
-                headerHeight
-                  ? inputMargin
-                    ? [
-                        styles.inputContainer,
-                        {
-                          bottom:
-                            Platform.OS === "ios"
-                              ? headerHeight + 90
-                              : headerHeight + 60,
-                        },
-                      ]
-                    : [
-                        styles.inputContainer,
-                        {
-                          bottom:
-                            Platform.OS === "ios" ? headerHeight : headerHeight,
-                        },
-                      ]
-                  : {}
-              }
-            >
+            <View style={styles.inputContainer}>
               <Input
                 style={[
                   styles.input,
@@ -304,23 +243,20 @@ const Dialog = ({ navigation, route }) => {
                   setNewMessage(nextValue)
                 }}
                 placeholder="Write a message..."
-                multiline
-                numberOfLines={3}
-                maxHeight={70}
+                multiline={true}
+                maxHeight={Platform.OS === "ios" ? 70 : 60}
                 showsVerticalScrollIndicator={true}
                 showsHorizontalScrollIndicator={true}
                 blurOnSubmit
-                onBlur={() => setInputMargin(true)}
-                onFocus={() => setInputMargin(false)}
               />
               {newMessage ? (
                 <Button
-                  style={{ alignSelf: "flex-end", width: "20%" }}
+                  style={styles.sendButton}
                   appearance="ghost"
                   size="small"
                   accessoryLeft={() => <SendSvg height={30} width={30} />}
                   onPress={() => {
-                    console.log("send")
+                    setNewMessage("")
                   }}
                 />
               ) : (
@@ -339,9 +275,39 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+  backButton: {
+    alignSelf: "center",
+    height: "100%",
+  },
+  moreButton: {
+    alignSelf: "center",
+    height: "100%",
+  },
+  popup: {
+    marginTop: -70,
+    backgroundColor: "#ffffffe6",
+    borderRadius: 20,
+    borderTopLeftRadius: 0,
+    borderWidth: 0,
+  },
+  popupBody: {
+    backgroundColor: "#00ABB980",
+    width: "100%",
+    height: "100%",
+    borderRadius: 20,
+    borderTopLeftRadius: 0,
+  },
+  popupMenuItem: {
+    padding: 20,
+    paddingLeft: 30,
+  },
+  popupMenuItemText: {
+    color: "white",
+    fontSize: 20,
+  },
   dialogContainer: {
     marginHorizontal: 20,
-    marginTop: 10,
+    marginVertical: 10,
     backgroundColor: "#00ABB90D",
     borderRadius: 20,
     flex: 1,
@@ -351,7 +317,7 @@ const styles = StyleSheet.create({
     height: 70,
     width: "100%",
     zIndex: 1,
-    backgroundColor: "#c0e3e7",
+    backgroundColor: "#c0e3e7f2",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
@@ -381,7 +347,6 @@ const styles = StyleSheet.create({
     color: "#454545",
   },
   block: {
-    backgroundColor: "red",
     justifyContent: "center",
     maxWidth: "90%",
     margin: 10,
@@ -405,41 +370,23 @@ const styles = StyleSheet.create({
   },
   time: { fontSize: 12, color: "#454545" },
   inputContainer: {
-    position: "absolute",
     width: "90%",
     alignSelf: "center",
-    marginBottom: 15,
+    marginBottom: 5,
     backgroundColor: "#a0d5dcf7",
     borderColor: "#00ABB9",
     borderWidth: 1,
     borderRadius: 5,
     flexDirection: "row",
-    justifyContent: "space-between",
   },
   input: {
     backgroundColor: "transparent",
     borderColor: "transparent",
     flexGrow: 1,
   },
-  modalview: {
-    width: "90%",
-    backgroundColor: "#ebb1b8",
-    borderRadius: 20,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    height: "15%",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    position: "absolute",
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
+  sendButton: {
+    alignSelf: "flex-end",
+    width: "20%",
   },
 })
 export default Dialog

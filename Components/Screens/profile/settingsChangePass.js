@@ -1,26 +1,16 @@
 import React, { useState } from "react"
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Modal,
-  Pressable,
-} from "react-native"
-import { Button, Input } from "@ui-kitten/components"
-import LayoutMin from "../Layouts/LayoutMin"
+import { View, Text, StyleSheet, ScrollView } from "react-native"
+import { Button } from "@ui-kitten/components"
+import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../../content/arrow-back.svg"
+import ArrowBackSvg from "./../../../content/arrow-back.svg"
 
-const SettingsAccountDelete = ({ navigation }) => {
+const SettingsChangePassword = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
   const [scrollHeight, setScrollHeight] = useState({})
   const [cardHeight, setCardHeight] = useState()
   const [screenHeight, setScreenHeight] = useState()
-  const [confirmWord, setConfirmWord] = useState("")
-  const [modalVisible, setModalVisible] = useState(false)
-  const [errorText, setErrorText] = useState("")
 
   return (
     <LayoutMin
@@ -28,23 +18,6 @@ const SettingsAccountDelete = ({ navigation }) => {
       setHeaderHeight={setHeaderHeight}
       navigation={navigation}
     >
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible)
-        }}
-      >
-        <Pressable
-          style={{ flex: 1 }}
-          onPress={() => setModalVisible(!modalVisible)}
-        >
-          <View style={styles.modalview}>
-            <Text style={{ color: "#FF4B2B", fontSize: 22 }}>{errorText}</Text>
-          </View>
-        </Pressable>
-      </Modal>
       <View
         style={{ flex: 1, paddingTop: headerHeight }}
         onLayout={(event) => {
@@ -84,9 +57,7 @@ const SettingsAccountDelete = ({ navigation }) => {
                     navigation.goBack()
                   }}
                 />
-                <Text style={styles.headerText}>
-                  Settings / Account deleting
-                </Text>
+                <Text style={styles.headerText}>Settings / Password</Text>
               </View>
             </View>
             <LinearGradient
@@ -106,37 +77,13 @@ const SettingsAccountDelete = ({ navigation }) => {
                   const { height } = event.nativeEvent.layout
                   setScrollHeight(height)
                 }}
-                style={{
-                  alignItems: "flex-start",
-
-                  padding: 20,
-                  paddingTop: 30,
-                }}
+                style={{ alignItems: "flex-start" }}
               >
-                <Text style={styles.text}>
-                  Enter the word "delete" to confirm the deletion of the account
-                </Text>
-                <Input
-                  style={styles.input}
-                  textStyle={{ fontSize: 18 }}
-                  size="medium"
-                  color="rgba(69, 69, 69, 1)"
-                  value={confirmWord}
-                  onChangeText={(nextValue) => {
-                    setConfirmWord(nextValue)
-                  }}
-                  placeholder='"delete"'
-                  autoCapitalize="none"
-                />
                 <Button
                   style={styles.button}
-                  onPress={() =>
-                    confirmWord === "delete"
-                      ? console.log("delete")
-                      : (setErrorText("NO!"), setModalVisible(true))
-                  }
+                  onPress={() => navigation.navigate("Settings New Pass")}
                 >
-                  Delete account
+                  Change password
                 </Button>
               </View>
             </ScrollView>
@@ -165,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
     color: "#454545",
   },
@@ -174,38 +121,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
   },
-  input: {
-    backgroundColor: "#6D6D6D26",
-    marginBottom: 20,
-    maxWidth: 230,
-  },
-  button: {},
-  text: {
-    color: "#454545",
-    fontSize: 22,
-    paddingBottom: 20,
-  },
-  modalview: {
-    width: "90%",
-    justifyContent: "space-between",
-    backgroundColor: "#ebb1b8",
-    borderRadius: 20,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    height: "15%",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    position: "absolute",
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
+  button: {
+    margin: 20,
+    marginTop: 30,
   },
 })
 
-export default SettingsAccountDelete
+export default SettingsChangePassword

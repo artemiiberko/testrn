@@ -4,24 +4,20 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Modal,
-  Pressable,
+  TouchableOpacity,
 } from "react-native"
-import { Button, Input } from "@ui-kitten/components"
-import LayoutMin from "../Layouts/LayoutMin"
+import { Button } from "@ui-kitten/components"
+import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../../content/arrow-back.svg"
+import ArrowBackSvg from "./../../../content/arrow-back.svg"
+import ArrowForwardSvg from "../../../content/arrow-forward.svg"
 
-const SettingsNewPassword = ({ navigation }) => {
+const SettingsMenu = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
   const [scrollHeight, setScrollHeight] = useState({})
   const [cardHeight, setCardHeight] = useState()
   const [screenHeight, setScreenHeight] = useState()
-  const [newPass, setNewPass] = useState("")
-  const [repeatPass, setRepeatPass] = useState("")
-  const [modalVisible, setModalVisible] = useState(false)
-  const [errorText, setErrorText] = useState("")
 
   return (
     <LayoutMin
@@ -29,23 +25,6 @@ const SettingsNewPassword = ({ navigation }) => {
       setHeaderHeight={setHeaderHeight}
       navigation={navigation}
     >
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible)
-        }}
-      >
-        <Pressable
-          style={{ flex: 1 }}
-          onPress={() => setModalVisible(!modalVisible)}
-        >
-          <View style={styles.modalview}>
-            <Text style={{ color: "#FF4B2B", fontSize: 22 }}>{errorText}</Text>
-          </View>
-        </Pressable>
-      </Modal>
       <View
         style={{ flex: 1, paddingTop: headerHeight }}
         onLayout={(event) => {
@@ -85,7 +64,7 @@ const SettingsNewPassword = ({ navigation }) => {
                     navigation.goBack()
                   }}
                 />
-                <Text style={styles.headerText}>Settings / Password</Text>
+                <Text style={styles.headerText}>Settings</Text>
               </View>
             </View>
             <LinearGradient
@@ -96,59 +75,54 @@ const SettingsNewPassword = ({ navigation }) => {
             />
             <ScrollView
               scrollEnabled={scrollHeight + 35 > cardHeight ? true : false}
-              contentContainerStyle={{
-                paddingBottom: 50,
-              }}
+              contentContainerStyle={
+                {
+                  /* paddingBottom: 50, */
+                }
+              }
             >
               <View
                 onLayout={(event) => {
                   const { height } = event.nativeEvent.layout
                   setScrollHeight(height)
                 }}
-                style={{
-                  alignItems: "flex-start",
-                  maxWidth: 250,
-                  padding: 20,
-                  paddingTop: 30,
-                }}
               >
-                <Input
-                  style={styles.input}
-                  textStyle={{ fontSize: 18 }}
-                  size="medium"
-                  color="rgba(69, 69, 69, 1)"
-                  value={newPass}
-                  onChangeText={(nextValue) => {
-                    setNewPass(nextValue)
-                  }}
-                  placeholder="New password"
-                  textContentType="newPassword"
-                  secureTextEntry={true}
-                />
-                <Input
-                  style={styles.input}
-                  textStyle={{ fontSize: 18 }}
-                  size="medium"
-                  color="rgba(69, 69, 69, 1)"
-                  value={repeatPass}
-                  onChangeText={(nextValue) => {
-                    setRepeatPass(nextValue)
-                  }}
-                  placeholder="Repeat password"
-                  textContentType="newPassword"
-                  secureTextEntry={true}
-                />
-                <Button
-                  style={styles.button}
-                  onPress={() =>
-                    newPass === repeatPass
-                      ? console.log("save")
-                      : (setErrorText("Passwords do not match!"),
-                        setModalVisible(true))
-                  }
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Settings Change Pass")}
+                  style={styles.menuItem}
+                  activeOpacity={0.5}
                 >
-                  Save password
-                </Button>
+                  <Text style={styles.menuItemText}>Password</Text>
+                  <ArrowForwardSvg height={20} />
+                </TouchableOpacity>
+                <LinearGradient
+                  colors={["#00ABB9FF", "#00ABB900"]}
+                  start={{ x: -1, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ height: 1 }}
+                />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Settings Notification")}
+                  style={styles.menuItem}
+                  activeOpacity={0.5}
+                >
+                  <Text style={styles.menuItemText}>Notification</Text>
+                  <ArrowForwardSvg height={20} />
+                </TouchableOpacity>
+                <LinearGradient
+                  colors={["#00ABB9FF", "#00ABB900"]}
+                  start={{ x: -1, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ height: 1 }}
+                />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Settings Account Delete")}
+                  style={styles.menuItem}
+                  activeOpacity={0.5}
+                >
+                  <Text style={styles.menuItemText}>Account deleting</Text>
+                  <ArrowForwardSvg height={20} />
+                </TouchableOpacity>
               </View>
             </ScrollView>
           </BlurView>
@@ -176,7 +150,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "700",
     color: "#454545",
   },
@@ -185,32 +159,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
   },
-  input: {
-    backgroundColor: "#6D6D6D26",
-    marginBottom: 20,
-  },
-  button: {},
-  modalview: {
-    width: "90%",
+  menuItem: {
+    flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#ebb1b8",
-    borderRadius: 20,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    height: "15%",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    position: "absolute",
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+  },
+  menuItemText: {
+    fontSize: 18,
+    fontWeight: "500",
   },
 })
 
-export default SettingsNewPassword
+export default SettingsMenu

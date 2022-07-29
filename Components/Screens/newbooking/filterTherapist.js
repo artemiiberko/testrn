@@ -10,8 +10,8 @@ import {
 import { LinearGradient } from "expo-linear-gradient"
 import { Button, RadioGroup, Radio, Input } from "@ui-kitten/components"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../../content/arrow-back.svg"
-import LayoutMore from "../Layouts/LayoutMore"
+import ArrowBackSvg from "./../../../content/arrow-back.svg"
+import LayoutMore from "../../Layouts/LayoutMore"
 
 const FilterTherapist = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
@@ -38,9 +38,10 @@ const FilterTherapist = ({ navigation }) => {
       >
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "none"}
+          style={{ flex: 1 }}
         >
           <LinearGradient
-            colors={["#D3DADB", "#D3DADB00"]}
+            colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]}
             style={styles.card}
             onLayout={(event) => {
               const { height } = event.nativeEvent.layout
@@ -48,8 +49,55 @@ const FilterTherapist = ({ navigation }) => {
             }}
           >
             <BlurView intensity={50}>
+              <View
+                style={[
+                  styles.backHeader,
+                  {
+                    backgroundColor:
+                      scrollHeight + 70 > cardHeight
+                        ? "#e9f5f6FA"
+                        : "transparent",
+                  },
+                ]}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    style={styles.backButton}
+                    appearance="ghost"
+                    size="giant"
+                    accessoryLeft={() => <ArrowBackSvg />}
+                    onPress={() => {
+                      navigation.goBack()
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "700",
+                      color: "#454545",
+                    }}
+                  >
+                    Therapist
+                  </Text>
+                </View>
+                <LinearGradient
+                  colors={["#00ABB9FF", "#00ABB900"]}
+                  start={{ x: -1, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ height: 1 }}
+                />
+              </View>
+
               <ScrollView
-                scrollEnabled={scrollHeight > cardHeight ? true : false}
+                scrollEnabled={scrollHeight + 70 > cardHeight ? true : false}
+                contentContainerStyle={{
+                  paddingTop: 70,
+                }}
               >
                 <View
                   onLayout={(event) => {
@@ -57,39 +105,6 @@ const FilterTherapist = ({ navigation }) => {
                     setScrollHeight(height)
                   }}
                 >
-                  <View style={styles.backHeader}>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Button
-                        style={styles.backButton}
-                        appearance="ghost"
-                        size="giant"
-                        accessoryLeft={() => <ArrowBackSvg />}
-                        onPress={() => {
-                          navigation.goBack()
-                        }}
-                      />
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: "700",
-                          color: "#454545",
-                        }}
-                      >
-                        Therapist
-                      </Text>
-                    </View>
-                  </View>
-                  <LinearGradient
-                    colors={["#00ABB9FF", "#00ABB900"]}
-                    start={{ x: -1, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={{ height: 1 }}
-                  />
                   <View style={styles.firstSection}>
                     <Text
                       style={{
@@ -255,8 +270,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   backHeader: {
-    flexDirection: "row",
     justifyContent: "flex-start",
+    position: "absolute",
+    width: "100%",
+    zIndex: 1,
   },
   firstSection: {
     paddingHorizontal: 60,

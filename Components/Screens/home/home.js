@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { FlatList, Platform } from "react-native"
-import BookingComponent from "../Elements/bookingComponent"
-import LayoutMore from "../Layouts/LayoutMore"
+import BookingComponent from "../../Elements/bookingComponent"
+import LayoutMore from "../../Layouts/LayoutMore"
 
 bookings_data = [
   {
