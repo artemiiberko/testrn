@@ -3,8 +3,15 @@ import { StyleSheet, View, Text, SafeAreaView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button } from "@ui-kitten/components"
 import SalderiaCleanSvg from "./../../content/saluderia-clean.svg"
+import CartSvg from "./../../content/cart.svg"
 
-const LayoutMin = ({ navigation, setHeaderHeight, children }) => {
+const LayoutMin = ({
+  navigation,
+  setHeaderHeight,
+  children,
+  cart = false,
+  button,
+}) => {
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -26,15 +33,34 @@ const LayoutMin = ({ navigation, setHeaderHeight, children }) => {
           <SafeAreaView>
             <View style={styles.blurContainerTop}>
               <SalderiaCleanSvg style={styles.logo} width="50%" />
-              <Button
-                style={styles.button}
-                size="medium"
-                onPress={() => {
-                  navigation.navigate("New Booking Navigator")
-                }}
-              >
-                {() => <Text style={styles.buttonText}>New booking</Text>}
-              </Button>
+              {cart ? (
+                <Button
+                  style={{}}
+                  size="medium"
+                  onPress={() => {
+                    navigation.navigate("Cart")
+                  }}
+                  accessoryLeft={() => <CartSvg height={20} />}
+                >
+                  {() => (
+                    <Text style={[styles.buttonText, { paddingLeft: 5 }]}>
+                      1 Booking
+                    </Text>
+                  )}
+                </Button>
+              ) : button ? (
+                <Button
+                  style={styles.button}
+                  size="medium"
+                  onPress={() => {
+                    navigation.navigate("New Booking Navigator")
+                  }}
+                >
+                  {() => <Text style={styles.buttonText}>New booking</Text>}
+                </Button>
+              ) : (
+                true
+              )}
             </View>
           </SafeAreaView>
         </LinearGradient>

@@ -92,6 +92,7 @@ const NewBooking = ({ navigation }) => {
   const [addAdress, setAddAdress] = useState("")
   const [selectedDate, setSelectedDate] = useState()
   const [selectedTime, setSelectedTime] = useState("8:00")
+  const [chooseId, setChooseId] = useState()
 
   return (
     <LayoutMore
@@ -447,10 +448,35 @@ const NewBooking = ({ navigation }) => {
               />
             </View>
             <View style={styles.docsSection}>
-              <DocsList data={docsData} />
+              <DocsList
+                setChooseId={setChooseId}
+                chooseId={chooseId}
+                data={docsData}
+              />
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
+        {chooseId ? (
+          <Button
+            size="large"
+            style={styles.confirmButton}
+            onPress={() =>
+              navigation.navigate("Confirm Booking", {
+                /* generated booking */
+                name: "Kim Potapov",
+                date: "13 June",
+                starttime: "15:00",
+                endtime: "16:30",
+                where: "at the therapist",
+                price: 130,
+              })
+            }
+          >
+            Confirm
+          </Button>
+        ) : (
+          true
+        )}
       </View>
     </LayoutMore>
   )
@@ -631,6 +657,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     paddingHorizontal: 30,
     paddingVertical: 10,
+  },
+  confirmButton: {
+    position: "absolute",
+    bottom: 20,
+    alignSelf: "center",
+    width: "60%",
   },
 })
 export default NewBooking

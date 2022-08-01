@@ -94,10 +94,7 @@ const PaymentEdit = ({ navigation, route }) => {
                     <Text style={styles.headerText}>Payment Information</Text>
                   </View>
                   <View style={styles.backHeaderRight}>
-                    <Button
-                      onPress={() => console.log(cardHeight)}
-                      size="small"
-                    >
+                    <Button onPress={() => console.log("save")} size="small">
                       Save
                     </Button>
                   </View>

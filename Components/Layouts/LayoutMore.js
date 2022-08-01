@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, SafeAreaView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button } from "@ui-kitten/components"
 import SalderiaCleanSvg from "./../../content/saluderia-clean.svg"
+import CartSvg from "./../../content/cart.svg"
 
 const LayoutMore = ({
   navigation,
@@ -11,6 +12,7 @@ const LayoutMore = ({
   button = true,
   white = false,
   title,
+  cart = false,
 }) => {
   return (
     <View style={styles.container}>
@@ -43,7 +45,22 @@ const LayoutMore = ({
           <SafeAreaView>
             <View style={styles.blurContainerTop}>
               <SalderiaCleanSvg style={styles.logo} width="50%" />
-              {button ? (
+              {cart ? (
+                <Button
+                  style={{}}
+                  size="medium"
+                  onPress={() => {
+                    navigation.navigate("Cart")
+                  }}
+                  accessoryLeft={() => <CartSvg height={20} />}
+                >
+                  {() => (
+                    <Text style={[styles.buttonText, { paddingLeft: 5 }]}>
+                      1 Booking
+                    </Text>
+                  )}
+                </Button>
+              ) : button ? (
                 <Button
                   style={styles.button}
                   size="medium"

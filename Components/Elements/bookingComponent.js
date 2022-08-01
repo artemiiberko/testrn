@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useState } from "react"
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native"
+import { Input, CheckBox, Button } from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import TimeSvg from "./../../content/time.svg"
@@ -7,24 +8,118 @@ import StarSvg from "./../../content/star.svg"
 import SmallCheckSvg from "./../../content/small-check.svg"
 
 const Completed = () => {
+  const [star, setStar] = useState()
+  const [comment, setComment] = useState()
+  const [isOpenChat, setIsOpenChat] = useState(true)
   return (
-    <View
-      style={{
-        justifyContent: "space-between",
-        flexDirection: "row",
-        padding: 15,
-      }}
-    >
-      <Text style={{ fontSize: 16, fontWeight: "700", color: "#454545" }}>
-        Completed
-      </Text>
-      <View style={{ flexDirection: "row" }}>
-        <StarSvg style={{ marginHorizontal: 3 }} />
-        <StarSvg style={{ marginHorizontal: 3 }} />
-        <StarSvg style={{ marginHorizontal: 3 }} />
-        <StarSvg style={{ marginHorizontal: 3 }} />
-        <StarSvg style={{ marginHorizontal: 3 }} />
+    <View>
+      <View
+        style={{
+          justifyContent: "space-between",
+          flexDirection: "row",
+          padding: 15,
+        }}
+      >
+        <Text style={{ fontSize: 16, fontWeight: "700", color: "#454545" }}>
+          Completed
+        </Text>
+        <View style={{ flexDirection: "row" }}>
+          {[...Array(5)].map((item, index) => (
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                index + 1 === star ? setStar(0) : setStar(index + 1)
+              }}
+            >
+              <StarSvg
+                style={{
+                  marginHorizontal: 3,
+                  backgroundColor: star > index ? "#00ABB9" : "transparent",
+                }}
+              />
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
+      {star > 0 ? (
+        <View>
+          <LinearGradient
+            colors={["#00ABB9FF", "#00ABB900"]}
+            start={{ x: -1, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ height: 1 }}
+          />
+          <View style={{ padding: 20 }}>
+            <Input
+              style={{
+                borderColor: "#00ABB9",
+                borderWidth: 1,
+                borderRadius: 10,
+                backgroundColor: "transparent",
+              }}
+              placeholderTextColor="#454545"
+              textStyle={{ fontSize: 18, fontWeight: "600" }}
+              size="large"
+              color="rgba(69, 69, 69, 1)"
+              value={comment}
+              onChangeText={(nextValue) => {
+                setComment(nextValue)
+              }}
+              placeholder="Leave a coment"
+              multiline
+              height={70}
+              blurOnSubmit
+            />
+            <View
+              style={{
+                flexDirection: "row",
+                paddingTop: 20,
+                justifyContent: "space-between",
+              }}
+            >
+              <CheckBox
+                checked={isOpenChat}
+                onChange={(nextChecked) => {
+                  setIsOpenChat(nextChecked)
+                }}
+              >
+                {() => (
+                  <Text
+                    style={{
+                      paddingLeft: 10,
+                      color: "#454545",
+                      fontWeight: "700",
+                    }}
+                  >
+                    Allow open chat
+                  </Text>
+                )}
+              </CheckBox>
+              <Button
+                style={{ alignSelf: "center" }}
+                size="medium"
+                onPress={() => {
+                  console.log("complete")
+                }}
+              >
+                {() => (
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: "white",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Complete
+                  </Text>
+                )}
+              </Button>
+            </View>
+          </View>
+        </View>
+      ) : (
+        true
+      )}
     </View>
   )
 }

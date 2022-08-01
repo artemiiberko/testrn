@@ -53,8 +53,7 @@ const DocComponent = ({ name, rating, id, setChooseId, chooseId }) => {
   )
 }
 
-const DocsList = ({ data }) => {
-  const [chooseId, setChooseId] = useState()
+const DocsList = ({ data, chooseId, setChooseId }) => {
   return (
     <View style={styles.listBody}>
       {data.map((i, index) => (

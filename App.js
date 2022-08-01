@@ -21,6 +21,7 @@ import ConfirmCancelation from "./Components/Screens/home/confirmCancelation"
 import NewBookingNavigator from "./Components/Navigators/newBookingNavigator"
 import MessagesNavigator from "./Components/Navigators/messagesNavigator"
 import ProfileNavigator from "./Components/Navigators/profileNavigator"
+import Cart from "./Components/Screens/cart"
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -139,6 +140,15 @@ export default function App() {
           name="New Booking Navigator"
           children={({ navigation, route }) => (
             <NewBookingNavigator route={route} navigation={navigation} />
+          )}
+          options={{
+            tabBarButton: () => null,
+          }}
+        />
+        <Tab.Screen
+          name="Cart"
+          children={({ navigation, route }) => (
+            <Cart route={route} navigation={navigation} />
           )}
           options={{
             tabBarButton: () => null,
