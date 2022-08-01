@@ -1,40 +1,32 @@
-import React, { useEffect, useState } from "react"
-import { StyleSheet, View, Image, Text, ScrollView } from "react-native"
+import React, { useState, useEffect } from "react"
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native"
 import { Button } from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
-import SmallCheckSvg from "./../../content/small-check.svg"
 import ArrowBackSvg from "./../../content/arrow-back.svg"
 import RoadSvg from "./../../content/road.svg"
 import MessagesSvg from "./../../content/messages.svg"
+import RepeatSvg from "./../../content/repeat.svg"
 
-const BookingComponentMore = ({ id, navigation }) => {
+const BookingComponentConfirmation = ({ booking, navigation }) => {
   const [bookingObject, setBookingObject] = useState({})
   const [cardHeight, setCardHeight] = useState({})
   const [scrollHeight, setScrollHeight] = useState({})
 
   useEffect(() => {
-    console.log(id)
-    /* getting object of booking by id from API - id */
-    setBookingObject({
-      id: 1,
-      status: "completed",
-      name: "Kim Potapov",
-      date: "13 June",
-      starttime: "15:00",
-      endtime: "16:30",
-      where: "at the therapist",
-      price: 130,
-    })
+    setBookingObject(booking)
   }, [])
+
   return (
     <LinearGradient
-      colors={
-        bookingObject.status === "canceled by you" ||
-        bookingObject.status === "canceled by therapist"
-          ? ["#D3DADB", "#D3DADB"]
-          : ["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]
-      }
+      colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]}
       style={styles.card}
       onLayout={(event) => {
         const { height } = event.nativeEvent.layout
@@ -63,18 +55,6 @@ const BookingComponentMore = ({ id, navigation }) => {
                 }}
               />
               <Text style={styles.headerText}>Kim's booking</Text>
-            </View>
-            <View style={styles.backHeaderRight}>
-              <Text
-                style={{
-                  color: "#454545",
-                  fontSize: 16,
-                  paddingRight: 10,
-                }}
-              >
-                Confirmed
-              </Text>
-              <SmallCheckSvg />
             </View>
           </View>
           <LinearGradient
@@ -183,16 +163,58 @@ const BookingComponentMore = ({ id, navigation }) => {
                 style={{ position: "absolute", bottom: 10, right: 10 }}
               />
             </View>
+            <LinearGradient
+              colors={["#00ABB9FF", "#00ABB900"]}
+              start={{ x: -1, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{ height: 1 }}
+            />
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate("Repeat Settings")}
+              style={styles.repeatContainer}
+            >
+              <RepeatSvg />
+              <Text
+                style={{
+                  fontSize: 20,
+                  paddingLeft: 20,
+                  color: "#454545",
+                  fontWeight: "500",
+                }}
+              >
+                Repeat
+              </Text>
+            </TouchableOpacity>
+            <LinearGradient
+              colors={["#00ABB9FF", "#00ABB900"]}
+              start={{ x: -1, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{ height: 1 }}
+            />
             <View style={styles.buttonsContainer}>
               <Button
-                style={{ margin: 25, width: "50%" }}
+                style={{}}
                 size="medium"
                 status="danger"
-                onPress={() =>
-                  navigation.navigate("Confirm Cancelation", {
-                    id: id,
-                  })
-                }
+                onPress={() => console.log("cancel")}
+              >
+                {() => (
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: "white",
+                      fontWeight: "400",
+                    }}
+                  >
+                    Cancel
+                  </Text>
+                )}
+              </Button>
+              <Button
+                style={{ width: "50%" }}
+                size="medium"
+                onPress={() => console.log("confirm")}
               >
                 {() => (
                   <Text
@@ -202,7 +224,7 @@ const BookingComponentMore = ({ id, navigation }) => {
                       fontWeight: "500",
                     }}
                   >
-                    Cancel booking
+                    Confirm
                   </Text>
                 )}
               </Button>
@@ -331,8 +353,14 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+    padding: 20,
+  },
+  repeatContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 20,
   },
 })
 
-export default BookingComponentMore
+export default BookingComponentConfirmation
