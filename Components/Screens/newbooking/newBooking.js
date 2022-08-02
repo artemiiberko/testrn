@@ -452,6 +452,7 @@ const NewBooking = ({ navigation }) => {
                 setChooseId={setChooseId}
                 chooseId={chooseId}
                 data={docsData}
+                navigation={navigation}
               />
             </View>
           </ScrollView>

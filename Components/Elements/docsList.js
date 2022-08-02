@@ -2,7 +2,14 @@ import React, { useState } from "react"
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native"
 import RecipeSvg from "./../../content/recipe.svg"
 
-const DocComponent = ({ name, rating, id, setChooseId, chooseId }) => {
+const DocComponent = ({
+  name,
+  rating,
+  id,
+  setChooseId,
+  chooseId,
+  navigation,
+}) => {
   return (
     <View style={styles.card}>
       <View
@@ -26,7 +33,14 @@ const DocComponent = ({ name, rating, id, setChooseId, chooseId }) => {
           />
         </View>
         <View style={styles.nameSection}>
-          <RecipeSvg style={{ resizeMode: "contain", marginHorizontal: 10 }} />
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate("Therapist Info", { id })}
+          >
+            <RecipeSvg
+              style={{ resizeMode: "contain", marginHorizontal: 10 }}
+            />
+          </TouchableOpacity>
           <Text style={styles.name}>{name}</Text>
         </View>
         <TouchableOpacity activeOpacity={0.5} onPress={() => setChooseId(id)}>
@@ -53,7 +67,7 @@ const DocComponent = ({ name, rating, id, setChooseId, chooseId }) => {
   )
 }
 
-const DocsList = ({ data, chooseId, setChooseId }) => {
+const DocsList = ({ data, chooseId, setChooseId, navigation }) => {
   return (
     <View style={styles.listBody}>
       {data.map((i, index) => (
@@ -64,6 +78,7 @@ const DocsList = ({ data, chooseId, setChooseId }) => {
           id={i.id}
           setChooseId={setChooseId}
           chooseId={chooseId}
+          navigation={navigation}
         />
       ))}
     </View>
