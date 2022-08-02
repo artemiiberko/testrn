@@ -108,7 +108,7 @@ const Cart = ({ navigation, route }) => {
                 }}
               >
                 {bookingObjects.map((item, index) => (
-                  <View>
+                  <View key={index}>
                     <Text
                       style={{
                         color: "#454545",

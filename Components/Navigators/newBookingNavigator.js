@@ -5,6 +5,7 @@ import FilterTherapy from "../Screens/newbooking/filterTherapy"
 import FilterTherapist from "../Screens/newbooking/filterTherapist"
 import RepeatSettings from "./../Screens/newbooking/repeatSettings"
 import ConfirmBooking from "../Screens/newbooking/confirmBooking"
+import TherapistInfo from "../Screens/newbooking/therapistInfo"
 
 const NewBookingNavigator = () => {
   const Stack = createNativeStackNavigator()
@@ -40,6 +41,13 @@ const NewBookingNavigator = () => {
         name="Repeat Settings"
         children={({ navigation, route }) => (
           <RepeatSettings navigation={navigation} route={route} />
+        )}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Therapist Info"
+        children={({ navigation, route }) => (
+          <TherapistInfo navigation={navigation} route={route} />
         )}
         options={{ headerShown: false }}
       />
