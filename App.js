@@ -22,6 +22,7 @@ import NewBookingNavigator from "./Components/Navigators/newBookingNavigator"
 import MessagesNavigator from "./Components/Navigators/messagesNavigator"
 import ProfileNavigator from "./Components/Navigators/profileNavigator"
 import Cart from "./Components/Screens/cart"
+import Terminate from "./Components/Screens/home/terminate"
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -58,7 +59,7 @@ export default function App() {
   function Main() {
     return (
       <Tab.Navigator
-        initialRouteName="Login"
+        initialRouteName="Home"
         screenOptions={({ route, navigation }) => ({
           headerShown: false,
           tabBarShowLabel: false,
@@ -164,7 +165,7 @@ export default function App() {
         barStyle={Platform.OS === "ios" ? "dark-content" : "default"}
       />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Login"
             children={({ navigation, route }) => (
@@ -220,6 +221,11 @@ export default function App() {
           <Stack.Screen
             name="Confirm Cancelation"
             component={ConfirmCancelation}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Terminate"
+            component={Terminate}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

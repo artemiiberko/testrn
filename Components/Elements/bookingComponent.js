@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native"
-import { Input, CheckBox, Button } from "@ui-kitten/components"
+import { Input, CheckBox, Button, ButtonGroup } from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import TimeSvg from "./../../content/time.svg"
@@ -229,6 +229,156 @@ const CanceledByYou = () => {
     </View>
   )
 }
+const InProgressExt = ({ remaining, navigation, id }) => {
+  const [timeButtonGroup, setTimeButtonGroup] = useState(1)
+  return (
+    <View>
+      <View
+        style={{
+          justifyContent: "flex-start",
+          flexDirection: "row",
+          padding: 15,
+        }}
+      >
+        <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
+          In progress. Remaining:{" "}
+          <Text style={{ fontWeight: "700" }}>{remaining}</Text>
+        </Text>
+      </View>
+      <LinearGradient
+        colors={["#00ABB9FF", "#00ABB900"]}
+        start={{ x: -1, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={{ height: 1 }}
+      />
+      <View
+        style={{
+          justifyContent: "space-between",
+          flexDirection: "row",
+          padding: 15,
+        }}
+      >
+        <ButtonGroup style={styles.buttonGroup} appearance="outline">
+          <Button
+            style={
+              timeButtonGroup === 1
+                ? styles.selectedButton
+                : styles.unseletedButton
+            }
+            onPress={() => setTimeButtonGroup(1)}
+          >
+            {() => (
+              <Text
+                style={
+                  timeButtonGroup === 1
+                    ? styles.selectedButtonGroupText
+                    : styles.unselectedButtonGroupText
+                }
+              >
+                15 min
+              </Text>
+            )}
+          </Button>
+          <Button
+            style={
+              timeButtonGroup === 2
+                ? styles.selectedButton
+                : styles.unseletedButton
+            }
+            onPress={() => setTimeButtonGroup(2)}
+          >
+            {() => (
+              <Text
+                style={
+                  timeButtonGroup === 2
+                    ? styles.selectedButtonGroupText
+                    : styles.unselectedButtonGroupText
+                }
+              >
+                30 min
+              </Text>
+            )}
+          </Button>
+          <Button
+            style={
+              timeButtonGroup === 3
+                ? styles.selectedButton
+                : styles.unseletedButton
+            }
+            onPress={() => setTimeButtonGroup(3)}
+          >
+            {() => (
+              <Text
+                style={
+                  timeButtonGroup === 3
+                    ? styles.selectedButtonGroupText
+                    : styles.unselectedButtonGroupText
+                }
+              >
+                1 h
+              </Text>
+            )}
+          </Button>
+        </ButtonGroup>
+        <Button
+          size="medium"
+          style={{ paddingHorizontal: 0 }}
+          onPress={() => console.log("extend")}
+        >
+          Extand
+        </Button>
+      </View>
+      <LinearGradient
+        colors={["#00ABB9FF", "#00ABB900"]}
+        start={{ x: -1, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={{ height: 1 }}
+      />
+      <Button
+        status="danger"
+        style={{ alignSelf: "flex-start", margin: 15 }}
+        onPress={() => navigation.navigate("Terminate", { id })}
+      >
+        Terminate
+      </Button>
+    </View>
+  )
+}
+const InProgressNoext = ({ remaining }) => {
+  return (
+    <View>
+      <View
+        style={{
+          justifyContent: "flex-start",
+          flexDirection: "row",
+          padding: 15,
+        }}
+      >
+        <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
+          In progress. Remaining:{" "}
+          <Text style={{ fontWeight: "700" }}>{remaining}</Text>
+        </Text>
+      </View>
+      <LinearGradient
+        colors={["#00ABB9FF", "#00ABB900"]}
+        start={{ x: -1, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={{ height: 1 }}
+      />
+      <View
+        style={{
+          justifyContent: "flex-start",
+          flexDirection: "row",
+          padding: 15,
+        }}
+      >
+        <Text style={{ fontSize: 16, fontWeight: "500" }}>
+          Sorry, extension not possible
+        </Text>
+      </View>
+    </View>
+  )
+}
 
 const BookingComponent = ({
   status,
@@ -240,6 +390,7 @@ const BookingComponent = ({
   price,
   id,
   navigation,
+  remaining,
 }) => {
   return (
     <LinearGradient
@@ -254,6 +405,7 @@ const BookingComponent = ({
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => {
+            console.log(remaining)
             navigation.navigate("Booking Information", {
               id: id,
             })
@@ -339,6 +491,20 @@ const BookingComponent = ({
         {status === "canceled by therapist" ? <CanceledByTherapist /> : true}
         {status === "full refund" ? <FullRefund /> : true}
         {status === "no refund" ? <NoRefund /> : true}
+        {status === "in progress-ext" ? (
+          <InProgressExt
+            remaining={remaining}
+            navigation={navigation}
+            id={id}
+          />
+        ) : (
+          true
+        )}
+        {status === "in progress-noext" ? (
+          <InProgressNoext remaining={remaining} />
+        ) : (
+          true
+        )}
       </BlurView>
     </LinearGradient>
   )
@@ -382,6 +548,27 @@ const styles = StyleSheet.create({
     color: "#fff",
     padding: 5,
     paddingHorizontal: 10,
+  },
+  buttonGroup: {
+    alignSelf: "flex-start",
+    backgroundColor: "transparent",
+    borderRadius: 6,
+  },
+  selectedButton: {
+    backgroundColor: "#00ABB9",
+  },
+  unseletedButton: { backgroundColor: "transparent" },
+  selectedButtonGroupText: {
+    color: "#fff",
+    fontSize: 16,
+    paddingHorizontal: 5,
+    fontWeight: "500",
+  },
+  unselectedButtonGroupText: {
+    color: "#00ABB9",
+    fontSize: 16,
+    paddingHorizontal: 5,
+    fontWeight: "500",
   },
 })
 

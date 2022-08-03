@@ -64,6 +64,28 @@ bookings_data = [
     where: "at the therapist",
     price: 520,
   },
+  {
+    id: 7,
+    status: "in progress-ext",
+    name: "Kim Potapov",
+    date: "13 June",
+    starttime: "15:00",
+    endtime: "16:30",
+    where: "at the therapist",
+    price: 530,
+    remaining: "17 min",
+  },
+  {
+    id: 8,
+    status: "in progress-noext",
+    name: "Kim Potapov",
+    date: "13 June",
+    starttime: "15:00",
+    endtime: "16:30",
+    where: "at the therapist",
+    price: 550,
+    remaining: "13 min",
+  },
 ]
 
 const Home = ({ navigation }) => {
@@ -97,6 +119,7 @@ const Home = ({ navigation }) => {
             price={item.price}
             id={item.id}
             navigation={navigation}
+            remaining={item.remaining}
           />
         )}
       />
