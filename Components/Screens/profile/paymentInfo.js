@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native"
-import { Button, RadioGroup, Radio } from "@ui-kitten/components"
+import { Button, RadioGroup, Radio, useTheme } from "@ui-kitten/components"
 import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
@@ -29,6 +29,7 @@ const PaymentInfo = ({ navigation }) => {
       cvv: "997",
     },
   ])
+  const theme = useTheme()
 
   return (
     <LayoutMin
@@ -70,7 +71,9 @@ const PaymentInfo = ({ navigation }) => {
                   style={styles.backButton}
                   appearance="ghost"
                   size="giant"
-                  accessoryLeft={() => <ArrowBackSvg />}
+                  accessoryLeft={() => (
+                    <ArrowBackSvg fill={theme["color-primary-500"]} />
+                  )}
                   onPress={() => {
                     navigation.goBack()
                   }}
@@ -157,7 +160,7 @@ const PaymentInfo = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

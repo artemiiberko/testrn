@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
-import { Button, Input } from "@ui-kitten/components"
+import { Button, Input, useTheme } from "@ui-kitten/components"
 import { useState } from "react"
 import ArrowBackSvg from "./../../../content/arrow-back.svg"
 import LayoutLogin from "../../Layouts/LayoutLogin"
@@ -10,6 +10,7 @@ const SetNewPass = ({ navigation }) => {
   const [confirmPass, setConfirmPass] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
   const [modalText, setModalText] = useState("Passwords do not match!")
+  const theme = useTheme()
   return (
     <LayoutLogin
       modalVisible={modalVisible}
@@ -21,7 +22,7 @@ const SetNewPass = ({ navigation }) => {
         style={styles.backButton}
         appearance="ghost"
         size="giant"
-        accessoryLeft={() => <ArrowBackSvg />}
+        accessoryLeft={() => <ArrowBackSvg fill={theme["color-primary-500"]} />}
         onPress={() => {
           navigation.goBack()
         }}

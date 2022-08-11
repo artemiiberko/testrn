@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native"
-import { Button } from "@ui-kitten/components"
+import { Button, useTheme } from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import ArrowBackSvg from "./../../../content/arrow-back.svg"
@@ -13,6 +13,7 @@ const TherapistInfo = ({ navigation, route }) => {
   const [cardHeight, setCardHeight] = useState()
   const [screenHeight, setScreenHeight] = useState()
   const [therapist, setTherapist] = useState({})
+  const theme = useTheme()
 
   useEffect(() => {
     console.log(route.params.id)
@@ -71,7 +72,9 @@ const TherapistInfo = ({ navigation, route }) => {
                   style={styles.backButton}
                   appearance="ghost"
                   size="giant"
-                  accessoryLeft={() => <ArrowBackSvg />}
+                  accessoryLeft={() => (
+                    <ArrowBackSvg fill={theme["color-primary-500"]} />
+                  )}
                   onPress={() => {
                     navigation.goBack()
                   }}
@@ -159,7 +162,10 @@ const TherapistInfo = ({ navigation, route }) => {
                       paddingBottom: 10,
                     }}
                   >
-                    <SmallCheckSvg height={20} />
+                    <SmallCheckSvg
+                      fill={theme["color-primary-500"]}
+                      height={20}
+                    />
                     <Text
                       style={{
                         fontSize: 18,
@@ -204,7 +210,7 @@ const TherapistInfo = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

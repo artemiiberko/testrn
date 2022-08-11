@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { View, Text, StyleSheet, ScrollView } from "react-native"
-import { Button } from "@ui-kitten/components"
+import { Button, useTheme } from "@ui-kitten/components"
 import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
@@ -11,6 +11,7 @@ const SettingsChangePassword = ({ navigation }) => {
   const [scrollHeight, setScrollHeight] = useState({})
   const [cardHeight, setCardHeight] = useState()
   const [screenHeight, setScreenHeight] = useState()
+  const theme = useTheme()
 
   return (
     <LayoutMin
@@ -26,7 +27,7 @@ const SettingsChangePassword = ({ navigation }) => {
         }}
       >
         <LinearGradient
-          colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]}
+          colors={[theme["color-primary-100"], theme["color-warning-600"]]}
           style={[
             styles.card,
             {
@@ -52,7 +53,9 @@ const SettingsChangePassword = ({ navigation }) => {
                   style={styles.backButton}
                   appearance="ghost"
                   size="giant"
-                  accessoryLeft={() => <ArrowBackSvg />}
+                  accessoryLeft={() => (
+                    <ArrowBackSvg fill={theme["color-primary-500"]} />
+                  )}
                   onPress={() => {
                     navigation.goBack()
                   }}
@@ -61,7 +64,7 @@ const SettingsChangePassword = ({ navigation }) => {
               </View>
             </View>
             <LinearGradient
-              colors={["#00ABB9FF", "#00ABB900"]}
+              colors={[theme["color-primary-500"], theme["color-primary-100"]]}
               start={{ x: -1, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={{ height: 1 }}
@@ -96,7 +99,7 @@ const SettingsChangePassword = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

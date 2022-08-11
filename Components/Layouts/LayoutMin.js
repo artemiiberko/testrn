@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleSheet, View, Text, SafeAreaView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
-import { Button } from "@ui-kitten/components"
+import { Button, useTheme } from "@ui-kitten/components"
 import SalderiaCleanSvg from "./../../content/saluderia-clean.svg"
 import CartSvg from "./../../content/cart.svg"
 
@@ -12,10 +12,11 @@ const LayoutMin = ({
   cart = false,
   button,
 }) => {
+  const theme = useTheme()
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.35)"]}
+        colors={[theme["color-primary-100"], theme["color-success-500"]]}
         style={styles.linearGradient}
       >
         <LinearGradient
@@ -32,7 +33,11 @@ const LayoutMin = ({
         >
           <SafeAreaView>
             <View style={styles.blurContainerTop}>
-              <SalderiaCleanSvg style={styles.logo} width="50%" />
+              <SalderiaCleanSvg
+                fill={theme["color-primary-500"]}
+                style={styles.logo}
+                width="50%"
+              />
               {cart ? (
                 <Button
                   style={{}}

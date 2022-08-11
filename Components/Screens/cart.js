@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { StyleSheet, View, Image, Text, ScrollView } from "react-native"
-import { Button } from "@ui-kitten/components"
+import { Button, useTheme } from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import ArrowBackSvg from "./../../content/arrow-back.svg"
@@ -30,6 +30,7 @@ const Cart = ({ navigation, route }) => {
       price: 150,
     },
   ])
+  const theme = useTheme()
 
   return (
     <LayoutMin cart setHeaderHeight={setHeaderHeight} navigation={navigation}>
@@ -67,7 +68,9 @@ const Cart = ({ navigation, route }) => {
                     style={styles.backButton}
                     appearance="ghost"
                     size="giant"
-                    accessoryLeft={() => <ArrowBackSvg />}
+                    accessoryLeft={() => (
+                      <ArrowBackSvg fill={theme["color-primary-500"]} />
+                    )}
                     onPress={() => {
                       navigation.goBack()
                     }}
@@ -274,7 +277,7 @@ const Cart = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

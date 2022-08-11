@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
-import { Button } from "@ui-kitten/components"
+import { Button, useTheme } from "@ui-kitten/components"
 import { useState } from "react"
 import CodeInput from "react-native-confirmation-code-input"
 import ArrowBackSvg from "./../../../content/arrow-back.svg"
@@ -9,13 +9,15 @@ import LayoutLogin from "../../Layouts/LayoutLogin"
 const ConfirmCode = ({ navigation }) => {
   const [code, setCode] = useState("")
   const [isEmpty, setIsEmpty] = useState(true)
+  const theme = useTheme()
+
   return (
     <LayoutLogin scroller={false}>
       <Button
         style={styles.backButton}
         appearance="ghost"
         size="giant"
-        accessoryLeft={() => <ArrowBackSvg />}
+        accessoryLeft={() => <ArrowBackSvg fill={theme["color-primary-500"]} />}
         onPress={() => {
           navigation.goBack()
         }}

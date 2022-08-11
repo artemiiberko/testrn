@@ -45,7 +45,7 @@ const Signup = ({ navigation }) => {
           width: "100%",
           justifyContent: "space-between",
           alignItems: "center",
-          minHeight: "95%",
+          height: "100%",
         }}
         onLayout={(event) => {
           const { height } = event.nativeEvent.layout

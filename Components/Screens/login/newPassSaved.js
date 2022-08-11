@@ -1,18 +1,19 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
-import { Button } from "@ui-kitten/components"
+import { Button, useTheme } from "@ui-kitten/components"
 import DoneSvg from "./../../../content/done.svg"
 import ArrowBackSvg from "./../../../content/arrow-back.svg"
 import LayoutLogin from "../../Layouts/LayoutLogin"
 
 const NewPassSaved = ({ navigation }) => {
+  const theme = useTheme()
   return (
     <LayoutLogin scroller={false}>
       <Button
         style={styles.backButton}
         appearance="ghost"
         size="giant"
-        accessoryLeft={() => <ArrowBackSvg />}
+        accessoryLeft={() => <ArrowBackSvg fill={theme["color-primary-500"]} />}
         onPress={() => {
           navigation.goBack()
         }}

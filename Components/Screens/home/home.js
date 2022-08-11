@@ -3,7 +3,7 @@ import { FlatList, Platform } from "react-native"
 import BookingComponent from "../../Elements/bookingComponent"
 import LayoutMore from "../../Layouts/LayoutMore"
 
-bookings_data = [
+const bookings_data = [
   {
     id: 1,
     status: "completed",
@@ -46,7 +46,7 @@ bookings_data = [
   },
   {
     id: 5,
-    status: "canceled by you",
+    status: "canceled by client",
     name: "Kim Potapov",
     date: "13 June",
     starttime: "15:00",
@@ -120,6 +120,7 @@ const Home = ({ navigation }) => {
             id={item.id}
             navigation={navigation}
             remaining={item.remaining}
+            role="client"
           />
         )}
       />

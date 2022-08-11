@@ -1,19 +1,21 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
-import { Button, Input } from "@ui-kitten/components"
+import { Button, Input, useTheme } from "@ui-kitten/components"
 import { useState } from "react"
 import ArrowBackSvg from "./../../../content/arrow-back.svg"
 import LayoutLogin from "../../Layouts/LayoutLogin"
 
 const PassRecovery = ({ navigation }) => {
   const [email, setEmail] = useState("")
+  const theme = useTheme()
+
   return (
     <LayoutLogin scroller={false}>
       <Button
         style={styles.backButton}
         appearance="ghost"
         size="giant"
-        accessoryLeft={() => <ArrowBackSvg />}
+        accessoryLeft={() => <ArrowBackSvg fill={theme["color-primary-500"]} />}
         onPress={() => {
           navigation.goBack()
         }}

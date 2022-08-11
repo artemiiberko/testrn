@@ -8,7 +8,7 @@ import {
   Pressable,
   KeyboardAvoidingView,
 } from "react-native"
-import { Button, Input } from "@ui-kitten/components"
+import { Button, Input, useTheme } from "@ui-kitten/components"
 import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
@@ -21,6 +21,7 @@ const SettingsAccountDelete = ({ navigation }) => {
   const [confirmWord, setConfirmWord] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
   const [errorText, setErrorText] = useState("")
+  const theme = useTheme()
 
   return (
     <LayoutMin
@@ -58,7 +59,7 @@ const SettingsAccountDelete = ({ navigation }) => {
           style={{ flex: 1 }}
         >
           <LinearGradient
-            colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]}
+            colors={[theme["color-primary-100"], theme["color-warning-600"]]}
             style={styles.card}
             onLayout={(event) => {
               const { height } = event.nativeEvent.layout
@@ -82,7 +83,9 @@ const SettingsAccountDelete = ({ navigation }) => {
                     style={styles.backButton}
                     appearance="ghost"
                     size="giant"
-                    accessoryLeft={() => <ArrowBackSvg />}
+                    accessoryLeft={() => (
+                      <ArrowBackSvg fill={theme["color-primary-500"]} />
+                    )}
                     onPress={() => {
                       navigation.goBack()
                     }}
@@ -92,7 +95,10 @@ const SettingsAccountDelete = ({ navigation }) => {
                   </Text>
                 </View>
                 <LinearGradient
-                  colors={["#00ABB9FF", "#00ABB900"]}
+                  colors={[
+                    theme["color-primary-500"],
+                    theme["color-primary-100"],
+                  ]}
                   start={{ x: -1, y: 0 }}
                   end={{ x: 1, y: 0 }}
                   style={{ height: 1 }}
@@ -150,7 +156,7 @@ const SettingsAccountDelete = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

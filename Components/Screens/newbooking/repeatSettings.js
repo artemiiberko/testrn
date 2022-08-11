@@ -8,7 +8,7 @@ import {
   Platform,
 } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
-import { Button, RadioGroup, Radio, Input } from "@ui-kitten/components"
+import { Button, Input, useTheme } from "@ui-kitten/components"
 import { BlurView } from "expo-blur"
 import ArrowBackSvg from "./../../../content/arrow-back.svg"
 import LayoutMore from "../../Layouts/LayoutMore"
@@ -61,6 +61,7 @@ const RepeatSettings = ({ navigation }) => {
       termins: ["13:00 - 14:00", "16:00 - 17:00", "17:00 - 18:00"],
     },
   ])
+  const theme = useTheme()
 
   return (
     <LayoutMore
@@ -100,7 +101,9 @@ const RepeatSettings = ({ navigation }) => {
                     style={styles.backButton}
                     appearance="ghost"
                     size="giant"
-                    accessoryLeft={() => <ArrowBackSvg />}
+                    accessoryLeft={() => (
+                      <ArrowBackSvg fill={theme["color-primary-500"]} />
+                    )}
                     onPress={() => {
                       navigation.goBack()
                     }}
@@ -271,7 +274,7 @@ const RepeatSettings = ({ navigation }) => {
 }
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

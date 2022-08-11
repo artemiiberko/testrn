@@ -7,7 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native"
-import { Button } from "@ui-kitten/components"
+import { Button, useTheme } from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import ArrowBackSvg from "./../../content/arrow-back.svg"
@@ -19,6 +19,7 @@ const BookingComponentConfirmation = ({ booking, navigation }) => {
   const [bookingObject, setBookingObject] = useState({})
   const [cardHeight, setCardHeight] = useState({})
   const [scrollHeight, setScrollHeight] = useState({})
+  const theme = useTheme()
 
   useEffect(() => {
     setBookingObject(booking)
@@ -49,7 +50,9 @@ const BookingComponentConfirmation = ({ booking, navigation }) => {
                 style={styles.backButton}
                 appearance="ghost"
                 size="giant"
-                accessoryLeft={() => <ArrowBackSvg />}
+                accessoryLeft={() => (
+                  <ArrowBackSvg fill={theme["color-primary-500"]} />
+                )}
                 onPress={() => {
                   navigation.goBack()
                 }}
@@ -237,7 +240,7 @@ const BookingComponentConfirmation = ({ booking, navigation }) => {
 }
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

@@ -5,7 +5,7 @@ import { useState } from "react"
 import { StackActions } from "@react-navigation/native"
 import LayoutLogin from "../../Layouts/LayoutLogin"
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation, setUser }) => {
   const [email, setEmail] = useState("")
   const [pass, setPass] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
@@ -24,7 +24,7 @@ const Login = ({ navigation }) => {
           width: "100%",
           justifyContent: "space-between",
           alignItems: "center",
-          minHeight: "95%",
+          height: "100%",
         }}
         onLayout={(event) => {
           const { height } = event.nativeEvent.layout
@@ -61,6 +61,7 @@ const Login = ({ navigation }) => {
           <Input
             placeholderTextColor="#454545"
             textContentType="password"
+            autoCapitalize="none"
             style={styles.input}
             textStyle={{ fontSize: 20 }}
             size="large"
@@ -77,7 +78,11 @@ const Login = ({ navigation }) => {
           size="medium"
           onPress={() => {
             email === "admin" && pass === "pass"
-              ? navigation.dispatch(StackActions.replace("Main"))
+              ? (navigation.dispatch(StackActions.replace("Main")),
+                setUser({ name: "John Smith", role: "client" }))
+              : email === "therapist" && pass === "pass"
+              ? (navigation.dispatch(StackActions.replace("Main Therapist")),
+                setUser({ name: "John Smith", role: "therapist" }))
               : setModalVisible(true)
           }}
         >

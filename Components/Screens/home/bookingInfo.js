@@ -3,7 +3,7 @@ import { View } from "react-native"
 import BookingComponentMore from "../../Elements/bookingComponentMore"
 import LayoutMin from "../../Layouts/LayoutMin"
 
-const BookingInfo = ({ navigation, route }) => {
+const BookingInfo = ({ navigation, route, role }) => {
   const [bookingObject, setBookingObject] = useState({})
   const [headerHeight, setHeaderHeight] = useState()
 
@@ -23,8 +23,19 @@ const BookingInfo = ({ navigation, route }) => {
   }, [])
   return (
     <LayoutMin setHeaderHeight={setHeaderHeight} navigation={navigation}>
-      <View style={{ flex: 1, paddingTop: headerHeight }}>
-        <BookingComponentMore id={route.params.id} navigation={navigation} />
+      <View
+        style={{
+          width: "100%",
+          flex: 1,
+          paddingTop: headerHeight,
+          marginBottom: Platform.OS === "ios" ? 90 : 60,
+        }}
+      >
+        <BookingComponentMore
+          id={route.params.id}
+          navigation={navigation}
+          role={role}
+        />
       </View>
     </LayoutMin>
   )

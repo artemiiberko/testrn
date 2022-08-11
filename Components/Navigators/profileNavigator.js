@@ -5,7 +5,8 @@ import PersonalData from "../Screens/profile/personalData"
 import PaymentInfo from "./../Screens/profile/paymentInfo"
 import Invoice from "./../Screens/profile/invoice"
 import SettingsMenu from "./../Screens/profile/settingsMenu"
-import Help from "./../Screens/profile/help"
+import HelpMenu from "./../Screens/profile/helpMenu"
+import HelpSuspendisse from "../Screens/profile/helpSuspendisse"
 import PersonalDataEdit from "./../Screens/profile/personalDataEdit"
 import PaymentEdit from "./../Screens/profile/paymentInfoEdit"
 import SettingsAccountDelete from "./../Screens/profile/settingsAccountDelete"
@@ -93,9 +94,16 @@ const ProfileNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Help"
+        name="Help Menu"
         children={({ navigation, route }) => (
-          <Help navigation={navigation} route={route} />
+          <HelpMenu navigation={navigation} route={route} />
+        )}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Help Suspendisse"
+        children={({ navigation, route }) => (
+          <HelpSuspendisse navigation={navigation} route={route} />
         )}
         options={{ headerShown: false }}
       />
