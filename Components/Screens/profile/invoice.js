@@ -1,34 +1,196 @@
 import React, { useState } from "react"
-import { View, Text, StyleSheet } from "react-native"
-import LayoutMore from "../../Layouts/LayoutMore"
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native"
+import { Button, useTheme } from "@ui-kitten/components"
+import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
+import { BlurView } from "expo-blur"
+import ArrowBackSvg from "./../../../content/arrow-back.svg"
+import PdfSvg from "./../../../content/pdf.svg"
+import DownloadSvg from "./../../../content/download.svg"
 
 const Invoice = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
+  const [scrollHeight, setScrollHeight] = useState({})
+  const [cardHeight, setCardHeight] = useState()
+  const [screenHeight, setScreenHeight] = useState()
+  const [invoices, setInvoices] = useState([
+    {
+      file: "11.02 - 18.02.2022",
+    },
+    {
+      file: "02.02 - 10.02.2022",
+    },
+    {
+      file: "11.02 - 18.02.2022",
+    },
+    {
+      file: "02.02 - 10.02.2022",
+    },
+    {
+      file: "11.02 - 18.02.2022",
+    },
+    {
+      file: "02.02 - 10.02.2022",
+    },
+    {
+      file: "11.02 - 18.02.2022",
+    },
+    {
+      file: "02.02 - 10.02.2022",
+    },
+    {
+      file: "02.02 - 10.02.2022",
+    },
+    {
+      file: "11.02 - 18.02.2022",
+    },
+    {
+      file: "02.02 - 10.02.2022",
+    },
+  ])
+  const theme = useTheme()
 
   return (
-    <LayoutMore
+    <LayoutMin
       title=" "
       setHeaderHeight={setHeaderHeight}
       navigation={navigation}
     >
-      <View style={{ flex: 1, paddingTop: headerHeight }}>
-        <Text>Invoice</Text>
+      <View
+        style={{ flex: 1, paddingTop: headerHeight }}
+        onLayout={(event) => {
+          const { height } = event.nativeEvent.layout
+          setScreenHeight(height)
+        }}
+      >
+        <LinearGradient
+          colors={[theme["color-primary-100"], theme["color-warning-600"]]}
+          style={[
+            styles.card,
+            {
+              maxHeight:
+                Platform.OS === "ios"
+                  ? screenHeight && headerHeight
+                    ? screenHeight - headerHeight - 90 - 20
+                    : "100%"
+                  : screenHeight && headerHeight
+                  ? screenHeight - headerHeight - 60 - 20
+                  : "100%",
+            },
+          ]}
+          onLayout={(event) => {
+            const { height } = event.nativeEvent.layout
+            setCardHeight(height)
+          }}
+        >
+          <BlurView intensity={100}>
+            <View style={styles.backHeader}>
+              <View style={styles.backHeaderLeft}>
+                <Button
+                  style={styles.backButton}
+                  appearance="ghost"
+                  size="giant"
+                  accessoryLeft={() => (
+                    <ArrowBackSvg fill={theme["color-primary-500"]} />
+                  )}
+                  onPress={() => {
+                    navigation.goBack()
+                  }}
+                />
+                <Text style={styles.headerText}>Payment Information</Text>
+              </View>
+            </View>
+            <LinearGradient
+              colors={[theme["color-primary-500"], theme["color-primary-100"]]}
+              start={{ x: -1, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{ height: 1 }}
+            />
+            <ScrollView
+              scrollEnabled={scrollHeight + 35 > cardHeight ? true : false}
+              contentContainerStyle={{
+                paddingBottom: 50,
+              }}
+            >
+              <View
+                onLayout={(event) => {
+                  const { height } = event.nativeEvent.layout
+                  setScrollHeight(height)
+                }}
+              >
+                <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
+                  {invoices.map((item, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      activeOpacity={0.5}
+                      style={{
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        paddingVertical: 10,
+                      }}
+                    >
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <PdfSvg />
+                        <Text
+                          style={{
+                            paddingLeft: 10,
+                            fontSize: 18,
+                            color: "#454545",
+                          }}
+                        >
+                          {item.file}
+                        </Text>
+                      </View>
+                      <Button appearance="ghost">
+                        <DownloadSvg fill={theme["color-primary-500"]} />
+                      </Button>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            </ScrollView>
+          </BlurView>
+        </LinearGradient>
       </View>
-    </LayoutMore>
+    </LayoutMin>
   )
 }
 
 const styles = StyleSheet.create({
-  menuItem: {
+  card: {
+    backgroundColor: "#e5f6fb",
+    width: "90%",
+    alignSelf: "center",
+    marginVertical: 10,
+    borderRadius: 20,
+    overflow: "hidden",
+  },
+  backHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 30,
-    paddingVertical: 20,
   },
-  menuItemText: {
+  backHeaderLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  headerText: {
     fontSize: 18,
-    fontWeight: "500",
+    fontWeight: "700",
+    color: "#454545",
+  },
+  infoText: {
+    fontSize: 18,
+    color: "#454545",
+    paddingVertical: 5,
   },
 })
 

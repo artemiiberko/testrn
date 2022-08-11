@@ -9,7 +9,7 @@ import {
   Modal,
   Pressable,
 } from "react-native"
-import { Button, Input } from "@ui-kitten/components"
+import { Button, Input, useTheme } from "@ui-kitten/components"
 import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
@@ -32,6 +32,7 @@ const PersonalDataEdit = ({ navigation, route }) => {
     route.params.personalData.addresses
   )
   const [selectedAddress, setSelectedAddress] = useState(0)
+  const theme = useTheme()
 
   return (
     <LayoutMin
@@ -94,7 +95,9 @@ const PersonalDataEdit = ({ navigation, route }) => {
                       style={styles.backButton}
                       appearance="ghost"
                       size="giant"
-                      accessoryLeft={() => <ArrowBackSvg />}
+                      accessoryLeft={() => (
+                        <ArrowBackSvg fill={theme["color-primary-500"]} />
+                      )}
                       onPress={() => {
                         navigation.goBack()
                       }}
@@ -365,7 +368,7 @@ const PersonalDataEdit = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

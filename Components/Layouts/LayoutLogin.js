@@ -81,7 +81,7 @@ const LayoutLogin = ({
           {scroller ? (
             <ScrollView
               contentContainerStyle={styles.formbodyscroller}
-              scrollEnabled={scrollHeight > cardHeight ? true : false}
+              scrollEnabled={scrollHeight + 40 > cardHeight ? true : false}
             >
               {children}
             </ScrollView>
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
   formbodyscroller: {
     width: "100%",
     padding: 20,
+    minHeight: "100%",
   },
   formbody: {
     width: "100%",

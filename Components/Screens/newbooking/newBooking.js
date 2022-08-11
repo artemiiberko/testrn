@@ -101,19 +101,25 @@ const NewBooking = ({ navigation }) => {
       button={false}
       white={true}
     >
-      <View
-        style={{
-          width: "100%",
-          flex: 1,
-          paddingTop: headerHeight,
-          marginBottom: Platform.OS === "ios" ? 90 : 60,
-        }}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "none"}
+        style={{ flex: 1 }}
       >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "none"}
-          style={{ flex: 1 }}
+        <ScrollView
+          style={{ flex: 1, width: "100%", paddingTop: headerHeight }}
         >
-          <ScrollView>
+          <View
+            style={
+              headerHeight
+                ? {
+                    paddingBottom:
+                      Platform.OS === "ios"
+                        ? headerHeight + 90
+                        : headerHeight + 60,
+                  }
+                : {}
+            }
+          >
             <View style={styles.filterSection}>
               <Button
                 style={styles.button}
@@ -455,30 +461,33 @@ const NewBooking = ({ navigation }) => {
                 navigation={navigation}
               />
             </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-        {chooseId ? (
-          <Button
-            size="large"
-            style={styles.confirmButton}
-            onPress={() =>
-              navigation.navigate("Confirm Booking", {
-                /* generated booking */
-                name: "Kim Potapov",
-                date: "13 June",
-                starttime: "15:00",
-                endtime: "16:30",
-                where: "at the therapist",
-                price: 130,
-              })
-            }
-          >
-            Confirm
-          </Button>
-        ) : (
-          true
-        )}
-      </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+      {chooseId ? (
+        <Button
+          size="large"
+          style={[
+            styles.confirmButton,
+            { bottom: Platform.OS === "ios" ? 110 : 80 },
+          ]}
+          onPress={() =>
+            navigation.navigate("Confirm Booking", {
+              /* generated booking */
+              name: "Kim Potapov",
+              date: "13 June",
+              starttime: "15:00",
+              endtime: "16:30",
+              where: "at the therapist",
+              price: 130,
+            })
+          }
+        >
+          Confirm
+        </Button>
+      ) : (
+        true
+      )}
     </LayoutMore>
   )
 }
@@ -661,7 +670,6 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     position: "absolute",
-    bottom: 20,
     alignSelf: "center",
     width: "60%",
   },

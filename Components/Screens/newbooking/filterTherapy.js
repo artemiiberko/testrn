@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { StyleSheet, View, Text, ScrollView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
-import { Button, RadioGroup, Radio } from "@ui-kitten/components"
+import { Button, RadioGroup, Radio, useTheme } from "@ui-kitten/components"
 import { BlurView } from "expo-blur"
 import ArrowBackSvg from "./../../../content/arrow-back.svg"
 import LayoutMore from "../../Layouts/LayoutMore"
@@ -12,6 +12,7 @@ const FilterTherapy = ({ navigation }) => {
   const [scrollHeight, setScrollHeight] = useState({})
   const [firstRadioIndex, setFirstRadioIndex] = useState(0)
   const [secondRadioIndex, setSecondRadioIndex] = useState(0)
+  const theme = useTheme()
 
   return (
     <LayoutMore
@@ -58,7 +59,9 @@ const FilterTherapy = ({ navigation }) => {
                   style={styles.backButton}
                   appearance="ghost"
                   size="giant"
-                  accessoryLeft={() => <ArrowBackSvg />}
+                  accessoryLeft={() => (
+                    <ArrowBackSvg fill={theme["color-primary-500"]} />
+                  )}
                   onPress={() => {
                     navigation.goBack()
                   }}
@@ -232,7 +235,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

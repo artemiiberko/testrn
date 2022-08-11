@@ -8,7 +8,7 @@ import {
   Pressable,
   KeyboardAvoidingView,
 } from "react-native"
-import { Button, Input } from "@ui-kitten/components"
+import { Button, Input, useTheme } from "@ui-kitten/components"
 import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
@@ -22,6 +22,7 @@ const SettingsNewPassword = ({ navigation }) => {
   const [repeatPass, setRepeatPass] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
   const [errorText, setErrorText] = useState("")
+  const theme = useTheme()
 
   return (
     <LayoutMin
@@ -59,7 +60,7 @@ const SettingsNewPassword = ({ navigation }) => {
           style={{ flex: 1 }}
         >
           <LinearGradient
-            colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]}
+            colors={[theme["color-primary-100"], theme["color-warning-600"]]}
             style={styles.card}
             onLayout={(event) => {
               const { height } = event.nativeEvent.layout
@@ -83,7 +84,9 @@ const SettingsNewPassword = ({ navigation }) => {
                     style={styles.backButton}
                     appearance="ghost"
                     size="giant"
-                    accessoryLeft={() => <ArrowBackSvg />}
+                    accessoryLeft={() => (
+                      <ArrowBackSvg fill={theme["color-primary-500"]} />
+                    )}
                     onPress={() => {
                       navigation.goBack()
                     }}
@@ -91,7 +94,10 @@ const SettingsNewPassword = ({ navigation }) => {
                   <Text style={styles.headerText}>Settings / Password</Text>
                 </View>
                 <LinearGradient
-                  colors={["#00ABB9FF", "#00ABB900"]}
+                  colors={[
+                    theme["color-primary-500"],
+                    theme["color-primary-100"],
+                  ]}
                   start={{ x: -1, y: 0 }}
                   end={{ x: 1, y: 0 }}
                   style={{ height: 1 }}
@@ -140,9 +146,12 @@ const SettingsNewPassword = ({ navigation }) => {
                   <Button
                     style={styles.button}
                     onPress={() =>
-                      newPass === repeatPass
-                        ? console.log("save")
-                        : (setErrorText("Passwords do not match!"),
+                      newPass !== ""
+                        ? newPass === repeatPass
+                          ? console.log("save")
+                          : (setErrorText("Passwords do not match!"),
+                            setModalVisible(true))
+                        : (setErrorText("Enter a new password!"),
                           setModalVisible(true))
                     }
                   >
@@ -160,7 +169,7 @@ const SettingsNewPassword = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

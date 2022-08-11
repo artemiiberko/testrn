@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native"
-import { Button, CheckBox, Popover } from "@ui-kitten/components"
+import { Button, CheckBox, Popover, useTheme } from "@ui-kitten/components"
 import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
@@ -19,11 +19,11 @@ const SettingsNotification = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
   const [scrollHeight, setScrollHeight] = useState({})
   const [cardHeight, setCardHeight] = useState()
-  const [screenHeight, setScreenHeight] = useState()
   const [isNotification, setIsNotification] = useState(true)
   const [isReminder, setIsReminder] = useState(true)
   const [selectVisible, setSelectVisible] = useState(false)
   const [selectedReminder, setSelectedReminder] = useState("30 min")
+  const theme = useTheme()
 
   return (
     <LayoutMin
@@ -40,7 +40,7 @@ const SettingsNotification = ({ navigation }) => {
         }}
       >
         <LinearGradient
-          colors={["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]}
+          colors={[theme["color-primary-100"], theme["color-warning-600"]]}
           style={styles.card}
           onLayout={(event) => {
             const { height } = event.nativeEvent.layout
@@ -64,7 +64,9 @@ const SettingsNotification = ({ navigation }) => {
                   style={styles.backButton}
                   appearance="ghost"
                   size="giant"
-                  accessoryLeft={() => <ArrowBackSvg />}
+                  accessoryLeft={() => (
+                    <ArrowBackSvg fill={theme["color-primary-500"]} />
+                  )}
                   onPress={() => {
                     navigation.goBack()
                   }}
@@ -72,7 +74,10 @@ const SettingsNotification = ({ navigation }) => {
                 <Text style={styles.headerText}>Settings / Notification</Text>
               </View>
               <LinearGradient
-                colors={["#00ABB9FF", "#00ABB900"]}
+                colors={[
+                  theme["color-primary-500"],
+                  theme["color-primary-100"],
+                ]}
                 start={{ x: -1, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={{ height: 1 }}
@@ -105,7 +110,10 @@ const SettingsNotification = ({ navigation }) => {
                   </Text>
                 </View>
                 <LinearGradient
-                  colors={["#00ABB9FF", "#00ABB900"]}
+                  colors={[
+                    theme["color-primary-500"],
+                    theme["color-primary-100"],
+                  ]}
                   start={{ x: -1, y: 0 }}
                   end={{ x: 1, y: 0 }}
                   style={{ height: 1 }}
@@ -130,7 +138,10 @@ const SettingsNotification = ({ navigation }) => {
                   </CheckBox>
                 </View>
                 <LinearGradient
-                  colors={["#00ABB9FF", "#00ABB900"]}
+                  colors={[
+                    theme["color-primary-500"],
+                    theme["color-primary-100"],
+                  ]}
                   start={{ x: -1, y: 0 }}
                   end={{ x: 1, y: 0 }}
                   style={{ height: 1 }}
@@ -152,19 +163,35 @@ const SettingsNotification = ({ navigation }) => {
                     anchor={() => (
                       <TouchableOpacity
                         activeOpacity={0.5}
-                        style={styles.selector}
+                        style={[
+                          styles.selector,
+                          { borderColor: theme["color-primary-500"] },
+                        ]}
                         onPress={() => setSelectVisible(true)}
                       >
-                        <Text style={styles.selectedText}>
+                        <Text
+                          style={[
+                            styles.selectedText,
+                            { color: theme["color-primary-500"] },
+                          ]}
+                        >
                           {selectedReminder}
                         </Text>
-                        <ArrowBottomSvg height={12} />
+                        <ArrowBottomSvg
+                          fill={theme["color-primary-500"]}
+                          height={12}
+                        />
                       </TouchableOpacity>
                     )}
                     onBackdropPress={() => setSelectVisible(false)}
                     style={styles.popover}
                   >
-                    <View style={styles.popoverBody}>
+                    <View
+                      style={[
+                        styles.popoverBody,
+                        { backgroundColor: theme["color-warning-500"] },
+                      ]}
+                    >
                       {remindertime.map((item, index) => (
                         <TouchableOpacity
                           key={index}
@@ -174,10 +201,20 @@ const SettingsNotification = ({ navigation }) => {
                             setSelectVisible(false)
                           }}
                         >
-                          <Text style={styles.selectItemText}>{item}</Text>
+                          <Text
+                            style={[
+                              styles.selectItemText,
+                              { color: theme["color-primary-500"] },
+                            ]}
+                          >
+                            {item}
+                          </Text>
                           {index + 1 !== remindertime.length ? (
                             <LinearGradient
-                              colors={["#00ABB9FF", "#00ABB900"]}
+                              colors={[
+                                theme["color-primary-500"],
+                                theme["color-primary-100"],
+                              ]}
                               start={{ x: -1, y: 0 }}
                               end={{ x: 1, y: 0 }}
                               style={{ height: 1 }}
@@ -201,7 +238,7 @@ const SettingsNotification = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,
@@ -255,7 +292,6 @@ const styles = StyleSheet.create({
   selector: {
     flexDirection: "row",
     borderWidth: 1,
-    borderColor: "#00ABB9",
     padding: 10,
     borderRadius: 3,
     width: 120,
@@ -264,7 +300,6 @@ const styles = StyleSheet.create({
   },
   selectedText: {
     fontSize: 18,
-    color: "#00ABB9",
   },
   popover: {
     marginTop: -44,
@@ -272,11 +307,9 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   popoverBody: {
-    backgroundColor: "#00ABB94D",
     borderRadius: 3,
   },
   selectItemText: {
-    color: "#00ABB9",
     fontSize: 18,
     padding: 10,
   },

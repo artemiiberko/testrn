@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native"
-import { Button } from "@ui-kitten/components"
+import { Button, useTheme } from "@ui-kitten/components"
 import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
@@ -33,6 +33,7 @@ const PersonalData = ({ navigation }) => {
       },
     ],
   })
+  const theme = useTheme()
 
   return (
     <LayoutMin
@@ -74,7 +75,9 @@ const PersonalData = ({ navigation }) => {
                   style={styles.backButton}
                   appearance="ghost"
                   size="giant"
-                  accessoryLeft={() => <ArrowBackSvg />}
+                  accessoryLeft={() => (
+                    <ArrowBackSvg fill={theme["color-primary-500"]} />
+                  )}
                   onPress={() => {
                     navigation.goBack()
                   }}
@@ -154,7 +157,7 @@ const PersonalData = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,

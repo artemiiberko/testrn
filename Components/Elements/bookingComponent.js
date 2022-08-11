@@ -1,6 +1,12 @@
 import React, { useState } from "react"
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native"
-import { Input, CheckBox, Button, ButtonGroup } from "@ui-kitten/components"
+import {
+  Input,
+  CheckBox,
+  Button,
+  ButtonGroup,
+  useTheme,
+} from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import TimeSvg from "./../../content/time.svg"
@@ -11,6 +17,8 @@ const Completed = () => {
   const [star, setStar] = useState()
   const [comment, setComment] = useState()
   const [isOpenChat, setIsOpenChat] = useState(true)
+  const theme = useTheme()
+
   return (
     <View>
       <View
@@ -26,6 +34,7 @@ const Completed = () => {
         <View style={{ flexDirection: "row" }}>
           {[...Array(5)].map((item, index) => (
             <TouchableOpacity
+              key={index}
               activeOpacity={0.5}
               onPress={() => {
                 index + 1 === star ? setStar(0) : setStar(index + 1)
@@ -34,7 +43,10 @@ const Completed = () => {
               <StarSvg
                 style={{
                   marginHorizontal: 3,
-                  backgroundColor: star > index ? "#00ABB9" : "transparent",
+                  backgroundColor:
+                    star > index
+                      ? theme["color-primary-500"]
+                      : theme["color-primary-100"],
                 }}
               />
             </TouchableOpacity>
@@ -44,7 +56,7 @@ const Completed = () => {
       {star > 0 ? (
         <View>
           <LinearGradient
-            colors={["#00ABB9FF", "#00ABB900"]}
+            colors={[theme["color-primary-500"], theme["color-primary-100"]]}
             start={{ x: -1, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{ height: 1 }}
@@ -52,7 +64,7 @@ const Completed = () => {
           <View style={{ padding: 20 }}>
             <Input
               style={{
-                borderColor: "#00ABB9",
+                borderColor: theme["color-primary-500"],
                 borderWidth: 1,
                 borderRadius: 10,
                 backgroundColor: "transparent",
@@ -123,7 +135,8 @@ const Completed = () => {
     </View>
   )
 }
-const AwaitingConfirmation = () => {
+const AwaitingConfirmation = ({ role }) => {
+  const theme = useTheme()
   return (
     <View
       style={{
@@ -132,26 +145,76 @@ const AwaitingConfirmation = () => {
         padding: 15,
       }}
     >
-      <View style={{ flexDirection: "row" }}>
-        <TimeSvg
-          height="100%"
-          style={{ resizeMode: "contain", height: "auto" }}
-        />
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <TimeSvg fill={theme["color-primary-500"]} height={25} />
         <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
           Awaiting confirmation
         </Text>
       </View>
-      <Text
-        ellipsizeMode="tail"
-        numberOfLines={1}
-        style={{ fontSize: 16, fontWeight: "500", maxWidth: "40%" }}
-      >
-        May be amended
-      </Text>
+      {role === "client" ? (
+        <Text
+          ellipsizeMode="tail"
+          numberOfLines={1}
+          style={{ fontSize: 16, fontWeight: "500", maxWidth: "40%" }}
+        >
+          May be amended
+        </Text>
+      ) : (
+        <Button size="small" onPress={() => console.log("confirm")}>
+          {() => (
+            <Text
+              style={{
+                color: "#FFF",
+                fontWeight: "500",
+                fontSize: 16,
+                paddingHorizontal: 5,
+              }}
+            >
+              Confirm
+            </Text>
+          )}
+        </Button>
+      )}
     </View>
   )
 }
-const CanceledByTherapist = () => {
+const ToCheckIn = () => {
+  return (
+    <View
+      style={{
+        justifyContent: "flex-end",
+        flexDirection: "row",
+        padding: 15,
+      }}
+    >
+      <Button size="large" onPress={() => console.log("check-in")}>
+        Check-in
+      </Button>
+    </View>
+  )
+}
+const ToCheckOut = ({ finishedat }) => {
+  return (
+    <View
+      style={{
+        justifyContent: "space-between",
+        flexDirection: "row",
+        padding: 15,
+      }}
+    >
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Text style={{ fontSize: 16, fontWeight: "500", color: "#454545" }}>
+          Finished at: <Text style={{ fontWeight: "700" }}>{finishedat}</Text>
+        </Text>
+      </View>
+
+      <Button size="large" onPress={() => console.log("check-out")}>
+        Check-out
+      </Button>
+    </View>
+  )
+}
+const CanceledByTherapist = ({ role }) => {
   return (
     <View
       style={{
@@ -161,7 +224,7 @@ const CanceledByTherapist = () => {
       }}
     >
       <Text style={{ fontSize: 16, fontWeight: "500" }}>
-        Canceled by therapist
+        {role === "therapist" ? "Canceled by you" : "Canceled by therapist"}
       </Text>
     </View>
   )
@@ -216,7 +279,7 @@ const NoRefund = () => {
     </View>
   )
 }
-const CanceledByYou = () => {
+const CanceledByClient = ({ role }) => {
   return (
     <View
       style={{
@@ -225,12 +288,15 @@ const CanceledByYou = () => {
         padding: 15,
       }}
     >
-      <Text style={{ fontSize: 16, fontWeight: "500" }}>Canceled by you</Text>
+      <Text style={{ fontSize: 16, fontWeight: "500" }}>
+        {role === "client" ? "Canceled by you" : "Canceled by client"}
+      </Text>
     </View>
   )
 }
 const InProgressExt = ({ remaining, navigation, id }) => {
   const [timeButtonGroup, setTimeButtonGroup] = useState(1)
+  const theme = useTheme()
   return (
     <View>
       <View
@@ -246,7 +312,7 @@ const InProgressExt = ({ remaining, navigation, id }) => {
         </Text>
       </View>
       <LinearGradient
-        colors={["#00ABB9FF", "#00ABB900"]}
+        colors={[theme["color-primary-500"], theme["color-primary-100"]]}
         start={{ x: -1, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={{ height: 1 }}
@@ -262,8 +328,8 @@ const InProgressExt = ({ remaining, navigation, id }) => {
           <Button
             style={
               timeButtonGroup === 1
-                ? styles.selectedButton
-                : styles.unseletedButton
+                ? { backgroundColor: theme["color-primary-500"] }
+                : { backgroundColor: "transparent" }
             }
             onPress={() => setTimeButtonGroup(1)}
           >
@@ -271,8 +337,11 @@ const InProgressExt = ({ remaining, navigation, id }) => {
               <Text
                 style={
                   timeButtonGroup === 1
-                    ? styles.selectedButtonGroupText
-                    : styles.unselectedButtonGroupText
+                    ? [styles.buttonGroupText, { color: "#FFF" }]
+                    : [
+                        styles.buttonGroupText,
+                        { color: theme["color-primary-500"] },
+                      ]
                 }
               >
                 15 min
@@ -282,8 +351,8 @@ const InProgressExt = ({ remaining, navigation, id }) => {
           <Button
             style={
               timeButtonGroup === 2
-                ? styles.selectedButton
-                : styles.unseletedButton
+                ? { backgroundColor: theme["color-primary-500"] }
+                : { backgroundColor: "transparent" }
             }
             onPress={() => setTimeButtonGroup(2)}
           >
@@ -291,8 +360,11 @@ const InProgressExt = ({ remaining, navigation, id }) => {
               <Text
                 style={
                   timeButtonGroup === 2
-                    ? styles.selectedButtonGroupText
-                    : styles.unselectedButtonGroupText
+                    ? [styles.buttonGroupText, { color: "#FFF" }]
+                    : [
+                        styles.buttonGroupText,
+                        { color: theme["color-primary-500"] },
+                      ]
                 }
               >
                 30 min
@@ -302,8 +374,8 @@ const InProgressExt = ({ remaining, navigation, id }) => {
           <Button
             style={
               timeButtonGroup === 3
-                ? styles.selectedButton
-                : styles.unseletedButton
+                ? { backgroundColor: theme["color-primary-500"] }
+                : { backgroundColor: "transparent" }
             }
             onPress={() => setTimeButtonGroup(3)}
           >
@@ -311,8 +383,11 @@ const InProgressExt = ({ remaining, navigation, id }) => {
               <Text
                 style={
                   timeButtonGroup === 3
-                    ? styles.selectedButtonGroupText
-                    : styles.unselectedButtonGroupText
+                    ? [styles.buttonGroupText, { color: "#FFF" }]
+                    : [
+                        styles.buttonGroupText,
+                        { color: theme["color-primary-500"] },
+                      ]
                 }
               >
                 1 h
@@ -329,7 +404,7 @@ const InProgressExt = ({ remaining, navigation, id }) => {
         </Button>
       </View>
       <LinearGradient
-        colors={["#00ABB9FF", "#00ABB900"]}
+        colors={[theme["color-primary-500"], theme["color-primary-100"]]}
         start={{ x: -1, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={{ height: 1 }}
@@ -345,6 +420,7 @@ const InProgressExt = ({ remaining, navigation, id }) => {
   )
 }
 const InProgressNoext = ({ remaining }) => {
+  const theme = useTheme()
   return (
     <View>
       <View
@@ -360,7 +436,7 @@ const InProgressNoext = ({ remaining }) => {
         </Text>
       </View>
       <LinearGradient
-        colors={["#00ABB9FF", "#00ABB900"]}
+        colors={[theme["color-primary-500"], theme["color-primary-100"]]}
         start={{ x: -1, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={{ height: 1 }}
@@ -391,13 +467,16 @@ const BookingComponent = ({
   id,
   navigation,
   remaining,
+  role,
+  finishedat,
 }) => {
+  const theme = useTheme()
   return (
     <LinearGradient
       colors={
-        status === "canceled by you" || status === "canceled by therapist"
+        status === "canceled by client" || status === "canceled by therapist"
           ? ["#D3DADB", "#D3DADB"]
-          : ["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]
+          : [theme["color-primary-100"], theme["color-warning-600"]]
       }
       style={styles.card}
     >
@@ -437,7 +516,8 @@ const BookingComponent = ({
               </View>
               <View
                 style={{
-                  backgroundColor: "#fff",
+                  backgroundColor:
+                    where === "in call" ? theme["color-success-500"] : "#fff",
                   borderRadius: 25,
                   padding: 3,
                   paddingHorizontal: 10,
@@ -449,7 +529,7 @@ const BookingComponent = ({
             </View>
           </View>
           <LinearGradient
-            colors={["#00ABB9FF", "#00ABB900"]}
+            colors={[theme["color-primary-500"], theme["color-primary-100"]]}
             start={{ x: -1, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{ height: 1 }}
@@ -480,15 +560,33 @@ const BookingComponent = ({
           </View>
         </TouchableOpacity>
         <LinearGradient
-          colors={["#00ABB9FF", "#00ABB900"]}
+          colors={[theme["color-primary-500"], theme["color-primary-100"]]}
           start={{ x: -1, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={{ height: 1 }}
         />
-        {status === "canceled by you" ? <CanceledByYou /> : true}
+        {status === "canceled by client" ? (
+          <CanceledByClient role={role} />
+        ) : (
+          true
+        )}
         {status === "completed" ? <Completed /> : true}
-        {status === "awaiting confirmation" ? <AwaitingConfirmation /> : true}
-        {status === "canceled by therapist" ? <CanceledByTherapist /> : true}
+        {status === "awaiting confirmation" ? (
+          <AwaitingConfirmation role={role} />
+        ) : (
+          true
+        )}
+        {status === "to check-in" ? <ToCheckIn /> : true}
+        {status === "to check-out" ? (
+          <ToCheckOut finishedat={finishedat} />
+        ) : (
+          true
+        )}
+        {status === "canceled by therapist" ? (
+          <CanceledByTherapist role={role} />
+        ) : (
+          true
+        )}
         {status === "full refund" ? <FullRefund /> : true}
         {status === "no refund" ? <NoRefund /> : true}
         {status === "in progress-ext" ? (
@@ -511,7 +609,7 @@ const BookingComponent = ({
 }
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,
@@ -554,18 +652,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderRadius: 6,
   },
-  selectedButton: {
-    backgroundColor: "#00ABB9",
-  },
-  unseletedButton: { backgroundColor: "transparent" },
-  selectedButtonGroupText: {
-    color: "#fff",
-    fontSize: 16,
-    paddingHorizontal: 5,
-    fontWeight: "500",
-  },
-  unselectedButtonGroupText: {
-    color: "#00ABB9",
+  buttonGroupText: {
     fontSize: 16,
     paddingHorizontal: 5,
     fontWeight: "500",

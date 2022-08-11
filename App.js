@@ -8,21 +8,23 @@ import * as eva from "@eva-design/eva"
 import Login from "./Components/Screens/login/login"
 import Signup from "./Components/Screens/login/signup"
 import PasswordRecovery from "./Components/Screens/login/passRecovery"
-import { default as theme } from "./custom-theme.json"
+import { default as themeClient } from "./custom-theme.json"
+import { default as themeTherapist } from "./custom-theme-therapist.json"
 import ConfirmCode from "./Components/Screens/login/confirmationCode"
 import SetNewPass from "./Components/Screens/login/setNewPass"
 import NewPassSaved from "./Components/Screens/login/newPassSaved"
-import Home from "./Components/Screens/home/home"
+import HomeNavigator from "./Components/Navigators/homeNavigator"
+import HomeTherapistNavigator from "./Components/Navigators/homeTherapistNavigator"
 import HomeSvg from "./content/home.svg"
 import ProfileSvg from "./content/profile.svg"
 import MessagesSvg from "./content/messages.svg"
-import BookingInfo from "./Components/Screens/home/bookingInfo"
-import ConfirmCancelation from "./Components/Screens/home/confirmCancelation"
 import NewBookingNavigator from "./Components/Navigators/newBookingNavigator"
 import MessagesNavigator from "./Components/Navigators/messagesNavigator"
 import ProfileNavigator from "./Components/Navigators/profileNavigator"
+import CalendarNavigator from "./Components/Navigators/calendarNavigator"
+import MessagesTherapistNavigator from "./Components/Navigators/messagesTherapistNavigator"
+import ProfileTherapistNavigator from "./Components/Navigators/profileTherapistNavigator"
 import Cart from "./Components/Screens/cart"
-import Terminate from "./Components/Screens/home/terminate"
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -30,13 +32,17 @@ export default function App() {
   const Stack = createNativeStackNavigator()
   const Tab = createBottomTabNavigator()
   const [isNotification, setIsNotification] = useState(true)
+  const [user, setUser] = useState({})
+  const theme = user.role === "therapist" ? themeTherapist : themeClient
 
   const notificationStyle = {
     tabBarIcon: (tab) => (
       <MessagesSvg
-        opacity={tab.focused ? 1 : 0.5}
+        fill={theme["color-primary-500"]}
         height={30}
+        opacity={tab.focused ? 1 : 0.5}
         style={{
+          height: 30,
           resizeMode: "contain",
         }}
       />
@@ -59,7 +65,6 @@ export default function App() {
   function Main() {
     return (
       <Tab.Navigator
-        initialRouteName="Home"
         screenOptions={({ route, navigation }) => ({
           headerShown: false,
           tabBarShowLabel: false,
@@ -73,19 +78,20 @@ export default function App() {
           },
           tabBarHideOnKeyboard: true,
           tabBarItemStyle: {
-            borderRightWidth: route.name === "Profile" ? 0 : 1,
-            borderColor: "#00ABB959",
+            borderRightWidth: route.name === "Profile Navigator" ? 0 : 1,
+            borderColor: theme["color-success-500"],
           },
         })}
       >
         <Tab.Screen
-          name="Home"
+          name="Home Navigator"
           children={({ navigation, route }) => (
-            <Home route={route} navigation={navigation} />
+            <HomeNavigator route={route} navigation={navigation} />
           )}
           options={{
             tabBarIcon: (tab) => (
               <HomeSvg
+                fill={theme["color-primary-500"]}
                 height={30}
                 opacity={tab.focused ? 1 : 0.5}
                 style={{
@@ -108,6 +114,7 @@ export default function App() {
               : {
                   tabBarIcon: (tab) => (
                     <MessagesSvg
+                      fill={theme["color-primary-500"]}
                       opacity={tab.focused ? 1 : 0.5}
                       height={30}
                       style={{
@@ -127,6 +134,7 @@ export default function App() {
           options={{
             tabBarIcon: (tab) => (
               <ProfileSvg
+                fill={theme["color-primary-500"]}
                 height={30}
                 opacity={tab.focused ? 1 : 0.5}
                 style={{
@@ -158,6 +166,102 @@ export default function App() {
       </Tab.Navigator>
     )
   }
+  function MainTherapist() {
+    return (
+      <Tab.Navigator
+        screenOptions={({ route, navigation }) => ({
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            height: Platform.OS === "ios" ? 90 : 60,
+            paddingHorizontal: 0,
+            paddingTop: 0,
+            backgroundColor: "#EAF6F7",
+            position: "absolute",
+            borderTopWidth: 0,
+          },
+          tabBarHideOnKeyboard: true,
+          tabBarItemStyle: {
+            borderRightWidth: route.name === "Profile Navigator" ? 0 : 1,
+            borderColor: theme["color-success-500"],
+          },
+        })}
+      >
+        <Tab.Screen
+          name="Home Navigator"
+          children={({ navigation, route }) => (
+            <HomeTherapistNavigator route={route} navigation={navigation} />
+          )}
+          options={{
+            tabBarIcon: (tab) => (
+              <HomeSvg
+                fill={theme["color-primary-500"]}
+                height={30}
+                opacity={tab.focused ? 1 : 0.5}
+                style={{
+                  height: 30,
+                  resizeMode: "contain",
+                }}
+              />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Messages Navigator"
+          children={({ navigation, route }) => (
+            <MessagesTherapistNavigator route={route} navigation={navigation} />
+          )}
+          options={
+            isNotification
+              ? notificationStyle
+              : {
+                  tabBarIcon: (tab) => (
+                    <HomeSvg
+                      fill={theme["color-primary-500"]}
+                      height={30}
+                      opacity={tab.focused ? 1 : 0.5}
+                      style={{
+                        height: 30,
+                        resizeMode: "contain",
+                      }}
+                    />
+                  ),
+                }
+          }
+        />
+
+        <Tab.Screen
+          name="Profile Navigator"
+          children={({ navigation, route }) => (
+            <ProfileTherapistNavigator route={route} navigation={navigation} />
+          )}
+          options={{
+            tabBarIcon: (tab) => (
+              <ProfileSvg
+                fill={theme["color-primary-500"]}
+                height={30}
+                opacity={tab.focused ? 1 : 0.5}
+                style={{
+                  height: 30,
+                  resizeMode: "contain",
+                }}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Calendar Navigator"
+          children={({ navigation, route }) => (
+            <CalendarNavigator route={route} navigation={navigation} />
+          )}
+          options={{
+            tabBarButton: () => null,
+          }}
+        />
+      </Tab.Navigator>
+    )
+  }
 
   return (
     <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
@@ -169,7 +273,7 @@ export default function App() {
           <Stack.Screen
             name="Login"
             children={({ navigation, route }) => (
-              <Login navigation={navigation} route={route} />
+              <Login setUser={setUser} navigation={navigation} route={route} />
             )}
             options={{ headerShown: false }}
           />
@@ -214,18 +318,8 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Booking Information"
-            component={BookingInfo}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Confirm Cancelation"
-            component={ConfirmCancelation}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Terminate"
-            component={Terminate}
+            name="Main Therapist"
+            component={MainTherapist}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

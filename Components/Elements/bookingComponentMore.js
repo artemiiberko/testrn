@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { StyleSheet, View, Image, Text, ScrollView } from "react-native"
-import { Button } from "@ui-kitten/components"
+import { Button, useTheme } from "@ui-kitten/components"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import SmallCheckSvg from "./../../content/small-check.svg"
@@ -8,10 +8,11 @@ import ArrowBackSvg from "./../../content/arrow-back.svg"
 import RoadSvg from "./../../content/road.svg"
 import MessagesSvg from "./../../content/messages.svg"
 
-const BookingComponentMore = ({ id, navigation }) => {
+const BookingComponentMore = ({ id, navigation, role }) => {
   const [bookingObject, setBookingObject] = useState({})
   const [cardHeight, setCardHeight] = useState({})
   const [scrollHeight, setScrollHeight] = useState({})
+  const theme = useTheme()
 
   useEffect(() => {
     console.log(id)
@@ -33,7 +34,7 @@ const BookingComponentMore = ({ id, navigation }) => {
         bookingObject.status === "canceled by you" ||
         bookingObject.status === "canceled by therapist"
           ? ["#D3DADB", "#D3DADB"]
-          : ["rgba(0, 171, 185, 0)", "rgba(0, 171, 185, 0.1)"]
+          : [theme["color-primary-100"], theme["color-warning-600"]]
       }
       style={styles.card}
       onLayout={(event) => {
@@ -57,7 +58,9 @@ const BookingComponentMore = ({ id, navigation }) => {
                 style={styles.backButton}
                 appearance="ghost"
                 size="giant"
-                accessoryLeft={() => <ArrowBackSvg />}
+                accessoryLeft={() => (
+                  <ArrowBackSvg fill={theme["color-primary-500"]} />
+                )}
                 onPress={() => {
                   navigation.goBack()
                 }}
@@ -74,11 +77,11 @@ const BookingComponentMore = ({ id, navigation }) => {
               >
                 Confirmed
               </Text>
-              <SmallCheckSvg />
+              <SmallCheckSvg fill={theme["color-primary-500"]} />
             </View>
           </View>
           <LinearGradient
-            colors={["#00ABB9FF", "#00ABB900"]}
+            colors={[theme["color-primary-500"], theme["color-primary-100"]]}
             start={{ x: -1, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{ height: 1 }}
@@ -118,20 +121,22 @@ const BookingComponentMore = ({ id, navigation }) => {
                   position: "absolute",
                   top: 20,
                   right: 0,
-                  backgroundColor: "#00ABB90D",
+                  backgroundColor: theme["color-warning-100"],
                   borderTopLeftRadius: 15,
                   borderBottomLeftRadius: 15,
                   paddingHorizontal: 5,
                 }}
                 appearance="ghost"
-                accessoryLeft={() => <MessagesSvg height={30} />}
+                accessoryLeft={() => (
+                  <MessagesSvg fill={theme["color-primary-500"]} height={30} />
+                )}
                 onPress={() => {
                   navigation.navigate("Messages Navigator")
                 }}
               />
             </View>
             <LinearGradient
-              colors={["#00ABB9FF", "#00ABB900"]}
+              colors={[theme["color-primary-500"], theme["color-primary-100"]]}
               start={{ x: -1, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={{ height: 1 }}
@@ -152,14 +157,19 @@ const BookingComponentMore = ({ id, navigation }) => {
               </View>
             </View>
             <LinearGradient
-              colors={["#00ABB9FF", "#00ABB900"]}
+              colors={[theme["color-primary-500"], theme["color-primary-100"]]}
               start={{ x: -1, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={{ height: 1 }}
             />
             <View>
               <LinearGradient
-                colors={["#d2f8fc", "#d2f8fc", "#d2f8fc", "#d2f8fc00"]}
+                colors={[
+                  theme["color-info-600"],
+                  theme["color-info-600"],
+                  theme["color-info-600"],
+                  theme["color-info-100"],
+                ]}
                 style={{
                   width: "100%",
                   height: 100,
@@ -180,12 +190,13 @@ const BookingComponentMore = ({ id, navigation }) => {
                 style={{ resizeMode: "cover", height: 200, marginTop: 50 }}
               />
               <RoadSvg
+                fill={theme["color-primary-500"]}
                 style={{ position: "absolute", bottom: 10, right: 10 }}
               />
             </View>
             <View style={styles.buttonsContainer}>
               <Button
-                style={{ margin: 25, width: "50%" }}
+                style={{ margin: 25, flexGrow: 1, maxWidth: "60%" }}
                 size="medium"
                 status="danger"
                 onPress={() =>
@@ -200,12 +211,39 @@ const BookingComponentMore = ({ id, navigation }) => {
                       fontSize: 18,
                       color: "white",
                       fontWeight: "500",
+                      paddingHorizontal: 5,
                     }}
                   >
-                    Cancel booking
+                    Cancel
                   </Text>
                 )}
               </Button>
+              {role === "therapist" ? (
+                <Button
+                  style={{ margin: 25, width: "50%" }}
+                  size="medium"
+                  onPress={() =>
+                    navigation.navigate("Confirm Cancelation", {
+                      id: id,
+                    })
+                  }
+                >
+                  {() => (
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: "white",
+                        fontWeight: "500",
+                        paddingHorizontal: 5,
+                      }}
+                    >
+                      OK
+                    </Text>
+                  )}
+                </Button>
+              ) : (
+                true
+              )}
             </View>
           </View>
         </ScrollView>
@@ -215,13 +253,12 @@ const BookingComponentMore = ({ id, navigation }) => {
 }
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#e7f4f6",
+    backgroundColor: "#e5f6fb",
     width: "90%",
     alignSelf: "center",
     marginVertical: 10,
     borderRadius: 20,
     overflow: "hidden",
-    maxHeight: "95%",
   },
   backHeader: {
     justifyContent: "flex-start",
@@ -331,7 +368,7 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
 })
 
