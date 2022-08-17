@@ -5,14 +5,14 @@ import { Button, useTheme, ButtonGroup } from "@ui-kitten/components"
 import SalderiaCleanSvg from "./../../content/saluderia-clean.svg"
 import CalendarSvg from "./../../content/calendar.svg"
 
-const LayoutTherapist = ({
+const LayoutTherapistCalendar = ({
   navigation,
   children,
   setHeaderHeight,
   button = true,
   white = false,
   title,
-  setShowNew,
+  setShowDays,
 }) => {
   const theme = useTheme()
   const [filterGroup, setFilterGroup] = useState(2)
@@ -82,7 +82,7 @@ const LayoutTherapist = ({
                     fontWeight: "700",
                   }}
                 >
-                  Bookings
+                  Calendar
                 </Text>
                 <ButtonGroup
                   size="small"
@@ -95,7 +95,7 @@ const LayoutTherapist = ({
                         ? styles.selectedButton
                         : styles.unseletedButton
                     }
-                    onPress={() => (setFilterGroup(1), setShowNew(true))}
+                    onPress={() => (setFilterGroup(1), setShowDays(true))}
                   >
                     {() => (
                       <Text
@@ -105,7 +105,7 @@ const LayoutTherapist = ({
                             : styles.unselectedButtonGroupText
                         }
                       >
-                        New 3
+                        Day
                       </Text>
                     )}
                   </Button>
@@ -115,7 +115,7 @@ const LayoutTherapist = ({
                         ? styles.selectedButton
                         : styles.unseletedButton
                     }
-                    onPress={() => (setFilterGroup(2), setShowNew(false))}
+                    onPress={() => (setFilterGroup(2), setShowDays(false))}
                   >
                     {() => (
                       <Text
@@ -125,7 +125,7 @@ const LayoutTherapist = ({
                             : styles.unselectedButtonGroupText
                         }
                       >
-                        Total 7
+                        Month
                       </Text>
                     )}
                   </Button>
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   buttonGroup: {
     backgroundColor: "transparent",
     borderRadius: 6,
-    width: "40%",
+    width: "45%",
   },
   selectedButton: {
     backgroundColor: "#00A3FF",
@@ -201,14 +201,12 @@ const styles = StyleSheet.create({
   selectedButtonGroupText: {
     color: "#fff",
     fontSize: 16,
-    paddingHorizontal: 0,
     fontWeight: "500",
   },
   unselectedButtonGroupText: {
     color: "#00A3FF",
     fontSize: 16,
-    paddingHorizontal: 0,
     fontWeight: "500",
   },
 })
-export default LayoutTherapist
+export default LayoutTherapistCalendar

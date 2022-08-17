@@ -3,8 +3,8 @@ import { StyleSheet, View, Text, Platform } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Button, useTheme } from "@ui-kitten/components"
 import { BlurView } from "expo-blur"
-import ArrowBackSvg from "./../../../content/arrow-back.svg"
-import LayoutMin from "../../Layouts/LayoutMin"
+import ArrowBackSvg from "../../content/arrow-back.svg"
+import LayoutMin from "../Layouts/LayoutMin"
 
 const ConfirmCancelation = ({ navigation, route }) => {
   const [headerHeight, setHeaderHeight] = useState()
@@ -20,7 +20,6 @@ const ConfirmCancelation = ({ navigation, route }) => {
         style={{
           width: "100%",
           paddingTop: headerHeight,
-          paddingBottom: Platform.OS === "ios" ? 90 : 60,
         }}
       >
         <LinearGradient colors={["#D3DADB", "#D3DADB00"]} style={styles.card}>

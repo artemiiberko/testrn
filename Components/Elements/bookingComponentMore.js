@@ -222,11 +222,7 @@ const BookingComponentMore = ({ id, navigation, role }) => {
                 <Button
                   style={{ margin: 25, width: "50%" }}
                   size="medium"
-                  onPress={() =>
-                    navigation.navigate("Confirm Cancelation", {
-                      id: id,
-                    })
-                  }
+                  onPress={() => navigation.goBack()}
                 >
                   {() => (
                     <Text

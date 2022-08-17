@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { View } from "react-native"
-import BookingComponentMore from "../../Elements/bookingComponentMore"
-import LayoutMin from "../../Layouts/LayoutMin"
+import BookingComponentMore from "../Elements/bookingComponentMore"
+import LayoutMin from "../Layouts/LayoutMin"
 
 const BookingInfo = ({ navigation, route, role }) => {
   const [bookingObject, setBookingObject] = useState({})
@@ -28,7 +28,6 @@ const BookingInfo = ({ navigation, route, role }) => {
           width: "100%",
           flex: 1,
           paddingTop: headerHeight,
-          marginBottom: Platform.OS === "ios" ? 90 : 60,
         }}
       >
         <BookingComponentMore

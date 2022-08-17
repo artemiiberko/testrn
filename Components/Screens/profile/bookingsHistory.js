@@ -11,13 +11,68 @@ import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import ArrowBackSvg from "./../../../content/arrow-back.svg"
-import ArrowForwardSvg from "../../../content/arrow-forward.svg"
+import PdfSvg from "./../../../content/pdf.svg"
+import DownloadSvg from "./../../../content/download.svg"
 
-const SettingsMenu = ({ navigation }) => {
+const BookingsHistory = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
   const [scrollHeight, setScrollHeight] = useState({})
   const [cardHeight, setCardHeight] = useState()
   const [screenHeight, setScreenHeight] = useState()
+  const [bookings, setBookings] = useState([
+    [
+      {
+        id: 1,
+        date: "19.08.22",
+        time: "09:00-10:30",
+        name: "Ivan Pupkin",
+        type: "Osteopathy",
+        price: 120,
+      },
+      {
+        id: 2,
+        date: "19.08.22",
+        time: "09:00-10:30",
+        name: "Ivan Pupkin",
+        type: "Osteopathy",
+        price: 120,
+      },
+      {
+        id: 3,
+        date: "19.08.22",
+        time: "09:00-10:30",
+        name: "Ivan Pupkin",
+        type: "Osteopathy",
+        price: 120,
+      },
+    ],
+    [
+      {
+        id: 4,
+        date: "18.08.22",
+        time: "09:00-10:30",
+        name: "Ivan Pupkin",
+        type: "Osteopathy",
+        price: 120,
+      },
+      {
+        id: 5,
+        date: "18.08.22",
+        time: "09:00-10:30",
+        name: "Ivan Pupkin",
+        type: "Osteopathy",
+        price: 120,
+      },
+      {
+        id: 6,
+        date: "18.08.22",
+        time: "09:00-10:30",
+        name: "Ivan Pupkin",
+        type: "Osteopathy",
+        price: 120,
+      },
+    ],
+  ])
   const theme = useTheme()
 
   return (
@@ -67,7 +122,7 @@ const SettingsMenu = ({ navigation }) => {
                     navigation.goBack()
                   }}
                 />
-                <Text style={styles.headerText}>Settings</Text>
+                <Text style={styles.headerText}>Bookings History</Text>
               </View>
             </View>
             <LinearGradient
@@ -78,6 +133,9 @@ const SettingsMenu = ({ navigation }) => {
             />
             <ScrollView
               scrollEnabled={scrollHeight + 35 > cardHeight ? true : false}
+              contentContainerStyle={{
+                paddingBottom: 50,
+              }}
             >
               <View
                 onLayout={(event) => {
@@ -85,77 +143,35 @@ const SettingsMenu = ({ navigation }) => {
                   setScrollHeight(height)
                 }}
               >
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Settings Change Pass")}
-                  style={styles.menuItem}
-                  activeOpacity={0.5}
-                >
-                  <Text style={styles.menuItemText}>Password</Text>
-                  <ArrowForwardSvg
-                    fill={theme["color-primary-500"]}
-                    height={20}
-                  />
-                </TouchableOpacity>
-                <LinearGradient
-                  colors={[
-                    theme["color-primary-500"],
-                    theme["color-primary-100"],
-                  ]}
-                  start={{ x: -1, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={{ height: 1 }}
-                />
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Settings Language")}
-                  style={styles.menuItem}
-                  activeOpacity={0.5}
-                >
-                  <Text style={styles.menuItemText}>Language</Text>
-                  <ArrowForwardSvg
-                    fill={theme["color-primary-500"]}
-                    height={20}
-                  />
-                </TouchableOpacity>
-                <LinearGradient
-                  colors={[
-                    theme["color-primary-500"],
-                    theme["color-primary-100"],
-                  ]}
-                  start={{ x: -1, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={{ height: 1 }}
-                />
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Settings Notification")}
-                  style={styles.menuItem}
-                  activeOpacity={0.5}
-                >
-                  <Text style={styles.menuItemText}>Notification</Text>
-                  <ArrowForwardSvg
-                    fill={theme["color-primary-500"]}
-                    height={20}
-                  />
-                </TouchableOpacity>
-                <LinearGradient
-                  colors={[
-                    theme["color-primary-500"],
-                    theme["color-primary-100"],
-                  ]}
-                  start={{ x: -1, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={{ height: 1 }}
-                />
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Settings Account Delete")}
-                  style={styles.menuItem}
-                  activeOpacity={0.5}
-                >
-                  <Text style={styles.menuItemText}>Account deleting</Text>
-                  <ArrowForwardSvg
-                    fill={theme["color-primary-500"]}
-                    height={20}
-                  />
-                </TouchableOpacity>
+                <View style={{ paddingVertical: 5 }}>
+                  {bookings.map((item, index) => (
+                    <View key={index} style={styles.dayContainer}>
+                      {item.map((booking, bookingIndex) => (
+                        <View style={styles.booking}>
+                          <View style={styles.bookingTop}>
+                            <View style={styles.bookingTopLeft}>
+                              <Text style={styles.text}>{booking.date}</Text>
+                              <Text style={styles.text}>{booking.time}</Text>
+                            </View>
+                            <Text style={styles.price}>£ {booking.price}</Text>
+                          </View>
+                          <Text style={styles.text}>
+                            {booking.name} / {booking.type}
+                          </Text>
+                        </View>
+                      ))}
+                      <LinearGradient
+                        colors={[
+                          theme["color-primary-500"],
+                          theme["color-primary-100"],
+                        ]}
+                        start={{ x: -1, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        style={{ height: 1 }}
+                      />
+                    </View>
+                  ))}
+                </View>
               </View>
             </ScrollView>
           </BlurView>
@@ -187,21 +203,32 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#454545",
   },
-  backHeaderRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 20,
+  infoText: {
+    fontSize: 18,
+    color: "#454545",
+    paddingVertical: 5,
   },
-  menuItem: {
+  booking: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  bookingTop: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 30,
-    paddingVertical: 20,
   },
-  menuItemText: {
+  bookingTopLeft: {
+    flexDirection: "row",
+  },
+  text: {
     fontSize: 18,
-    fontWeight: "500",
+    paddingRight: 5,
+    color: "#454545",
+  },
+  price: {
+    fontSize: 18,
+    color: "#454545",
+    fontWeight: "700",
   },
 })
 
-export default SettingsMenu
+export default BookingsHistory
