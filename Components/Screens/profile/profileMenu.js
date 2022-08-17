@@ -1,98 +1,190 @@
 import React, { useState } from "react"
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ScrollView,
+} from "react-native"
 import LayoutMore from "../../Layouts/LayoutMore"
 import { LinearGradient } from "expo-linear-gradient"
 import ArrowForwardSvg from "../../../content/arrow-forward.svg"
 import LayoutTherapist from "../../Layouts/LayoutTherapist"
-import { useTheme } from "@ui-kitten/components"
+import { Button, useTheme, ButtonGroup } from "@ui-kitten/components"
 
 const ProfileMenu = ({ navigation, role }) => {
   const [headerHeight, setHeaderHeight] = useState()
+  const [status, setStatus] = useState("active")
   const theme = useTheme()
 
   const menuList = (
-    <View style={{ flex: 1, paddingTop: headerHeight }}>
-      <LinearGradient
-        colors={[theme["color-primary-500"], theme["color-primary-100"]]}
-        start={{ x: -1, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{ height: 1 }}
-      />
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Personal data")}
-        style={styles.menuItem}
-        activeOpacity={0.5}
-      >
-        <Text style={styles.menuItemText}>Personal data</Text>
-        <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
-      </TouchableOpacity>
-      <LinearGradient
-        colors={[theme["color-primary-500"], theme["color-primary-100"]]}
-        start={{ x: -1, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{ height: 1 }}
-      />
-      <TouchableOpacity
-        onPress={() =>
-          role === " therapist"
-            ? navigation.navigate("Payment Information Therapist")
-            : navigation.navigate("Payment Information")
+    <ScrollView style={{ flex: 1, width: "100%", paddingTop: headerHeight }}>
+      <View
+        style={
+          headerHeight
+            ? {
+                paddingBottom:
+                  Platform.OS === "ios" ? headerHeight + 90 : headerHeight + 60,
+              }
+            : {}
         }
-        style={styles.menuItem}
-        activeOpacity={0.5}
       >
-        <Text style={styles.menuItemText}>Payment Information</Text>
-        <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
-      </TouchableOpacity>
-      <LinearGradient
-        colors={[theme["color-primary-500"], theme["color-primary-100"]]}
-        start={{ x: -1, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{ height: 1 }}
-      />
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Invoice")}
-        style={styles.menuItem}
-        activeOpacity={0.5}
-      >
-        <Text style={styles.menuItemText}>Invoice</Text>
-        <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
-      </TouchableOpacity>
-      <LinearGradient
-        colors={[theme["color-primary-500"], theme["color-primary-100"]]}
-        start={{ x: -1, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{ height: 1 }}
-      />
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Settings")}
-        style={styles.menuItem}
-        activeOpacity={0.5}
-      >
-        <Text style={styles.menuItemText}>Settings</Text>
-        <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
-      </TouchableOpacity>
-      <LinearGradient
-        colors={[theme["color-primary-500"], theme["color-primary-100"]]}
-        start={{ x: -1, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{ height: 1 }}
-      />
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Help Menu")}
-        style={styles.menuItem}
-        activeOpacity={0.5}
-      >
-        <Text style={styles.menuItemText}>Help</Text>
-        <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
-      </TouchableOpacity>
-      <LinearGradient
-        colors={[theme["color-primary-500"], theme["color-primary-100"]]}
-        start={{ x: -1, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{ height: 1 }}
-      />
-    </View>
+        {role === "therapist" ? (
+          <View style={styles.statusContainer}>
+            <Text style={{ fontSize: 22, fontWeight: "700", color: "#454545" }}>
+              Status
+            </Text>
+            <View style={styles.buttonGroup}>
+              <Button
+                style={
+                  status === "active"
+                    ? [styles.buttonActive, { backgroundColor: "#00A3FF" }]
+                    : styles.buttonActive
+                }
+                onPress={() => setStatus("active")}
+              >
+                {() => (
+                  <Text
+                    style={
+                      status === "active"
+                        ? styles.buttonGroupText
+                        : [styles.buttonGroupText, { color: "#00A3FF" }]
+                    }
+                  >
+                    Active
+                  </Text>
+                )}
+              </Button>
+              <Button
+                status="danger"
+                style={
+                  status === "inactive"
+                    ? [styles.buttonInactive, { backgroundColor: "#DC8D8D" }]
+                    : styles.buttonInactive
+                }
+                onPress={() => setStatus("inactive")}
+              >
+                {() => (
+                  <Text
+                    style={
+                      status === "inactive"
+                        ? styles.buttonGroupText
+                        : [styles.buttonGroupText, { color: "#DC8D8D" }]
+                    }
+                  >
+                    Inactive
+                  </Text>
+                )}
+              </Button>
+            </View>
+          </View>
+        ) : (
+          true
+        )}
+
+        <LinearGradient
+          colors={[theme["color-primary-500"], theme["color-primary-100"]]}
+          start={{ x: -1, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{ height: 1 }}
+        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Personal data")}
+          style={styles.menuItem}
+          activeOpacity={0.5}
+        >
+          <Text style={styles.menuItemText}>Personal data</Text>
+          <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
+        </TouchableOpacity>
+        <LinearGradient
+          colors={[theme["color-primary-500"], theme["color-primary-100"]]}
+          start={{ x: -1, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{ height: 1 }}
+        />
+        <TouchableOpacity
+          onPress={() =>
+            role === " therapist"
+              ? navigation.navigate("Payment Information Therapist")
+              : navigation.navigate("Payment Information")
+          }
+          style={styles.menuItem}
+          activeOpacity={0.5}
+        >
+          <Text style={styles.menuItemText}>Payment Information</Text>
+          <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
+        </TouchableOpacity>
+        <LinearGradient
+          colors={[theme["color-primary-500"], theme["color-primary-100"]]}
+          start={{ x: -1, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{ height: 1 }}
+        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Invoice")}
+          style={styles.menuItem}
+          activeOpacity={0.5}
+        >
+          <Text style={styles.menuItemText}>Invoice</Text>
+          <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
+        </TouchableOpacity>
+        <LinearGradient
+          colors={[theme["color-primary-500"], theme["color-primary-100"]]}
+          start={{ x: -1, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{ height: 1 }}
+        />
+        {role === "therapist" ? (
+          <View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Bookings History")}
+              style={styles.menuItem}
+              activeOpacity={0.5}
+            >
+              <Text style={styles.menuItemText}>Bookings History</Text>
+              <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
+            </TouchableOpacity>
+            <LinearGradient
+              colors={[theme["color-primary-500"], theme["color-primary-100"]]}
+              start={{ x: -1, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{ height: 1 }}
+            />
+          </View>
+        ) : (
+          true
+        )}
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Settings")}
+          style={styles.menuItem}
+          activeOpacity={0.5}
+        >
+          <Text style={styles.menuItemText}>Settings</Text>
+          <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
+        </TouchableOpacity>
+        <LinearGradient
+          colors={[theme["color-primary-500"], theme["color-primary-100"]]}
+          start={{ x: -1, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{ height: 1 }}
+        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Help Menu")}
+          style={styles.menuItem}
+          activeOpacity={0.5}
+        >
+          <Text style={styles.menuItemText}>Help</Text>
+          <ArrowForwardSvg fill={theme["color-primary-500"]} height={20} />
+        </TouchableOpacity>
+        <LinearGradient
+          colors={[theme["color-primary-500"], theme["color-primary-100"]]}
+          start={{ x: -1, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{ height: 1 }}
+        />
+      </View>
+    </ScrollView>
   )
 
   return role === "therapist" ? (
@@ -123,6 +215,41 @@ const styles = StyleSheet.create({
   },
   menuItemText: {
     fontSize: 18,
+    fontWeight: "500",
+  },
+  statusContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    borderRadius: 6,
+    width: "50%",
+  },
+  buttonActive: {
+    backgroundColor: "transparent",
+    maxHeight: "100%",
+    flex: 1,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    borderRightWidth: 0,
+  },
+  buttonInactive: {
+    backgroundColor: "transparent",
+    maxHeight: "100%",
+    flex: 1,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    borderLeftWidth: 0,
+    paddingHorizontal: 0,
+  },
+  buttonGroupText: {
+    color: "#fff",
+    fontSize: 16,
     fontWeight: "500",
   },
 })

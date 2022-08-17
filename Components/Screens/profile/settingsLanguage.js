@@ -11,13 +11,25 @@ import LayoutMin from "../../Layouts/LayoutMin"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import ArrowBackSvg from "./../../../content/arrow-back.svg"
-import ArrowForwardSvg from "../../../content/arrow-forward.svg"
+import PdfSvg from "./../../../content/pdf.svg"
+import DownloadSvg from "./../../../content/download.svg"
 
-const SettingsMenu = ({ navigation }) => {
+const SettingsLanguage = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = useState()
   const [scrollHeight, setScrollHeight] = useState({})
   const [cardHeight, setCardHeight] = useState()
   const [screenHeight, setScreenHeight] = useState()
+  const [selectedLanguage, setSelectedLanguage] = useState("English")
+  const [languages, setLanguages] = useState([
+    "French",
+    "Spanish",
+    "Russian",
+    "Arabic",
+    "Portuguese",
+    "German",
+    "English",
+    "Chinese",
+  ])
   const theme = useTheme()
 
   return (
@@ -67,7 +79,7 @@ const SettingsMenu = ({ navigation }) => {
                     navigation.goBack()
                   }}
                 />
-                <Text style={styles.headerText}>Settings</Text>
+                <Text style={styles.headerText}>Language</Text>
               </View>
             </View>
             <LinearGradient
@@ -78,6 +90,9 @@ const SettingsMenu = ({ navigation }) => {
             />
             <ScrollView
               scrollEnabled={scrollHeight + 35 > cardHeight ? true : false}
+              contentContainerStyle={{
+                paddingBottom: 50,
+              }}
             >
               <View
                 onLayout={(event) => {
@@ -85,77 +100,53 @@ const SettingsMenu = ({ navigation }) => {
                   setScrollHeight(height)
                 }}
               >
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Settings Change Pass")}
-                  style={styles.menuItem}
-                  activeOpacity={0.5}
-                >
-                  <Text style={styles.menuItemText}>Password</Text>
-                  <ArrowForwardSvg
-                    fill={theme["color-primary-500"]}
-                    height={20}
-                  />
-                </TouchableOpacity>
-                <LinearGradient
-                  colors={[
-                    theme["color-primary-500"],
-                    theme["color-primary-100"],
-                  ]}
-                  start={{ x: -1, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={{ height: 1 }}
-                />
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Settings Language")}
-                  style={styles.menuItem}
-                  activeOpacity={0.5}
-                >
-                  <Text style={styles.menuItemText}>Language</Text>
-                  <ArrowForwardSvg
-                    fill={theme["color-primary-500"]}
-                    height={20}
-                  />
-                </TouchableOpacity>
-                <LinearGradient
-                  colors={[
-                    theme["color-primary-500"],
-                    theme["color-primary-100"],
-                  ]}
-                  start={{ x: -1, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={{ height: 1 }}
-                />
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Settings Notification")}
-                  style={styles.menuItem}
-                  activeOpacity={0.5}
-                >
-                  <Text style={styles.menuItemText}>Notification</Text>
-                  <ArrowForwardSvg
-                    fill={theme["color-primary-500"]}
-                    height={20}
-                  />
-                </TouchableOpacity>
-                <LinearGradient
-                  colors={[
-                    theme["color-primary-500"],
-                    theme["color-primary-100"],
-                  ]}
-                  start={{ x: -1, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={{ height: 1 }}
-                />
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Settings Account Delete")}
-                  style={styles.menuItem}
-                  activeOpacity={0.5}
-                >
-                  <Text style={styles.menuItemText}>Account deleting</Text>
-                  <ArrowForwardSvg
-                    fill={theme["color-primary-500"]}
-                    height={20}
-                  />
-                </TouchableOpacity>
+                <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
+                  {languages.map((item, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      activeOpacity={0.5}
+                      style={{
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        paddingVertical: 10,
+                      }}
+                      onPress={() => setSelectedLanguage(item)}
+                    >
+                      <Text
+                        style={
+                          selectedLanguage === item
+                            ? {
+                                color: theme["color-primary-500"],
+                                fontSize: 18,
+                                paddingVertical: 5,
+                              }
+                            : {
+                                color: "#454545",
+                                fontSize: 18,
+                                paddingVertical: 5,
+                              }
+                        }
+                      >
+                        {item}
+                      </Text>
+                      {selectedLanguage === item ? (
+                        <Text
+                          style={{
+                            paddingHorizontal: 15,
+                            paddingVertical: 7,
+                            backgroundColor: theme["color-primary-500"],
+                            color: "#FFF",
+                          }}
+                        >
+                          Selected
+                        </Text>
+                      ) : (
+                        true
+                      )}
+                    </TouchableOpacity>
+                  ))}
+                </View>
               </View>
             </ScrollView>
           </BlurView>
@@ -187,21 +178,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#454545",
   },
-  backHeaderRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 20,
-  },
-  menuItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 30,
-    paddingVertical: 20,
-  },
-  menuItemText: {
+  infoText: {
     fontSize: 18,
-    fontWeight: "500",
+    color: "#454545",
+    paddingVertical: 5,
   },
 })
 
-export default SettingsMenu
+export default SettingsLanguage

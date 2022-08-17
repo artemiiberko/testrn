@@ -13,6 +13,8 @@ import SettingsAccountDelete from "./../Screens/profile/settingsAccountDelete"
 import SettingsChangePassword from "./../Screens/profile/settingsChangePass"
 import SettingsNewPassword from "./../Screens/profile/settingsNewPass"
 import SettingsNotification from "./../Screens/profile/settingsNotification"
+import BookingsHistory from "../Screens/profile/bookingsHistory"
+import SettingsLanguage from "../Screens/profile/settingsLanguage"
 
 const ProfileNavigator = () => {
   const Stack = createNativeStackNavigator()
@@ -59,6 +61,13 @@ const ProfileNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="Bookings History"
+        children={({ navigation, route }) => (
+          <BookingsHistory navigation={navigation} route={route} />
+        )}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Settings"
         children={({ navigation, route }) => (
           <SettingsMenu navigation={navigation} route={route} />
@@ -83,6 +92,13 @@ const ProfileNavigator = () => {
         name="Settings New Pass"
         children={({ navigation, route }) => (
           <SettingsNewPassword navigation={navigation} route={route} />
+        )}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Settings Language"
+        children={({ navigation, route }) => (
+          <SettingsLanguage navigation={navigation} route={route} />
         )}
         options={{ headerShown: false }}
       />

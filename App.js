@@ -25,6 +25,8 @@ import CalendarNavigator from "./Components/Navigators/calendarNavigator"
 import MessagesTherapistNavigator from "./Components/Navigators/messagesTherapistNavigator"
 import ProfileTherapistNavigator from "./Components/Navigators/profileTherapistNavigator"
 import Cart from "./Components/Screens/cart"
+import BookingInfo from "./Components/Screens/bookingInfo"
+import ConfirmCancelation from "./Components/Screens/confirmCancelation"
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -32,7 +34,7 @@ export default function App() {
   const Stack = createNativeStackNavigator()
   const Tab = createBottomTabNavigator()
   const [isNotification, setIsNotification] = useState(true)
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({ role: "therapist" })
   const theme = user.role === "therapist" ? themeTherapist : themeClient
 
   const notificationStyle = {
@@ -169,6 +171,7 @@ export default function App() {
   function MainTherapist() {
     return (
       <Tab.Navigator
+        initialRouteName="Calendar Navigator"
         screenOptions={({ route, navigation }) => ({
           headerShown: false,
           tabBarShowLabel: false,
@@ -269,7 +272,7 @@ export default function App() {
         barStyle={Platform.OS === "ios" ? "dark-content" : "default"}
       />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Main Therapist">
           <Stack.Screen
             name="Login"
             children={({ navigation, route }) => (
@@ -320,6 +323,22 @@ export default function App() {
           <Stack.Screen
             name="Main Therapist"
             component={MainTherapist}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Booking Information"
+            children={({ route, navigation }) => (
+              <BookingInfo
+                route={route}
+                navigation={navigation}
+                role={user.role}
+              />
+            )}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Confirm Cancelation"
+            component={ConfirmCancelation}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
