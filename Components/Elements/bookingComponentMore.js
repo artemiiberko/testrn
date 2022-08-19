@@ -34,7 +34,7 @@ const BookingComponentMore = ({ id, navigation, role }) => {
         bookingObject.status === "canceled by you" ||
         bookingObject.status === "canceled by therapist"
           ? ["#D3DADB", "#D3DADB"]
-          : [theme["color-primary-100"], theme["color-warning-600"]]
+          : [theme["color-primary-100"], theme["color-warning-700"]]
       }
       style={styles.card}
       onLayout={(event) => {
