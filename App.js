@@ -34,7 +34,7 @@ export default function App() {
   const Stack = createNativeStackNavigator()
   const Tab = createBottomTabNavigator()
   const [isNotification, setIsNotification] = useState(true)
-  const [user, setUser] = useState({ role: "therapist" })
+  const [user, setUser] = useState({})
   const theme = user.role === "therapist" ? themeTherapist : themeClient
 
   const notificationStyle = {
@@ -171,7 +171,7 @@ export default function App() {
   function MainTherapist() {
     return (
       <Tab.Navigator
-        initialRouteName="Calendar Navigator"
+        initialRouteName="Home Navigator"
         screenOptions={({ route, navigation }) => ({
           headerShown: false,
           tabBarShowLabel: false,
@@ -272,7 +272,7 @@ export default function App() {
         barStyle={Platform.OS === "ios" ? "dark-content" : "default"}
       />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main Therapist">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Login"
             children={({ navigation, route }) => (
