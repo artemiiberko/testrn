@@ -1,9 +1,10 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
-import { Button, Input } from "@ui-kitten/components"
+import { Button, Input, Spinner, useTheme } from "@ui-kitten/components"
 import { useState } from "react"
 import { StackActions } from "@react-navigation/native"
 import LayoutLogin from "../../Layouts/LayoutLogin"
+import { Configuration, LoginApi } from "@krupnov/saluderia-api-webserver-rn"
 
 const Login = ({ navigation, setUser }) => {
   const [email, setEmail] = useState("")
@@ -11,6 +12,49 @@ const Login = ({ navigation, setUser }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [modalText, setModalText] = useState("Wrong Email or Password!")
   const [scrollHeight, setScrollHeight] = useState({})
+  const [loading, setLoading] = useState(false)
+  const theme = useTheme()
+
+  // const loginRequest = () => {
+  //   setLoading(true)
+  //   axios
+  //     .post("https://api.saluderia.com/login", {
+  //       email: email,
+  //       password: pass,
+  //     })
+  //     .then((response) => {
+  //       response.data.role === "therapist"
+  //         ? navigation.dispatch(StackActions.replace("Main Therapist"))
+  //         : navigation.dispatch(StackActions.replace("Main"))
+  //       setUser(response.data)
+  //     })
+  //     .catch(() => {
+  //       setModalVisible(true)
+  //       setLoading(false)
+  //     })
+  // }
+
+  const configuration = new Configuration({
+    basePath: "https://api.saluderia.com/",
+  })
+  const loginApi = new LoginApi(configuration)
+
+  const loginRequest = () => {
+    setLoading(true)
+    loginApi
+      .postLogin({ email: email.toLocaleLowerCase(), password: pass })
+      .then((response) => {
+        response.data.role === "therapist"
+          ? navigation.dispatch(StackActions.replace("Main Therapist"))
+          : navigation.dispatch(StackActions.replace("Main"))
+        setUser(response.data)
+      })
+      .catch((response) => {
+        setModalVisible(true)
+        setLoading(false)
+      })
+  }
+
   return (
     <LayoutLogin
       scrollHeight={scrollHeight}
@@ -19,6 +63,23 @@ const Login = ({ navigation, setUser }) => {
       modal={modalText}
       scroller={true}
     >
+      {loading && (
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1,
+            backgroundColor: theme["color-warning-600"],
+          }}
+        >
+          <Spinner size="giant" />
+        </View>
+      )}
       <View
         style={{
           width: "100%",
@@ -76,15 +137,16 @@ const Login = ({ navigation, setUser }) => {
         <Button
           style={styles.button}
           size="medium"
-          onPress={() => {
-            email === "admin" && pass === "pass"
-              ? (navigation.dispatch(StackActions.replace("Main")),
-                setUser({ name: "John Smith", role: "client" }))
-              : email === "therapist" && pass === "pass"
-              ? (navigation.dispatch(StackActions.replace("Main Therapist")),
-                setUser({ name: "John Smith", role: "therapist" }))
-              : setModalVisible(true)
-          }}
+          // onPress={() => {
+          //   email === "admin" && pass === "pass"
+          //     ? (navigation.dispatch(StackActions.replace("Main")),
+          //       setUser({ name: "John Smith", role: "client" }))
+          //     : email === "therapist" && pass === "pass"
+          //     ? (navigation.dispatch(StackActions.replace("Main Therapist")),
+          //       setUser({ name: "John Smith", role: "therapist" }))
+          //     : setModalVisible(true)
+          // }}
+          onPress={() => loginRequest()}
         >
           {() => <Text style={styles.buttonText}>Login</Text>}
         </Button>

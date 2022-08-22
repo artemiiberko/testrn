@@ -11,6 +11,7 @@ import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 import TimeSvg from "./../../content/time.svg"
 import StarSvg from "./../../content/star.svg"
+import StarFilledSvg from "./../../content/star-filled.svg"
 import SmallCheckSvg from "./../../content/small-check.svg"
 
 const Completed = () => {
@@ -40,15 +41,22 @@ const Completed = () => {
                 index + 1 === star ? setStar(0) : setStar(index + 1)
               }}
             >
-              <StarSvg
-                style={{
-                  marginHorizontal: 3,
-                  backgroundColor:
-                    star > index
-                      ? theme["color-primary-500"]
-                      : theme["color-primary-100"],
-                }}
-              />
+              {star > index ? (
+                <StarFilledSvg
+                  fill={theme["color-primary-500"]}
+                  height={20}
+                  width={20}
+                  style={{
+                    marginHorizontal: 3,
+                  }}
+                />
+              ) : (
+                <StarSvg
+                  style={{
+                    marginHorizontal: 3,
+                  }}
+                />
+              )}
             </TouchableOpacity>
           ))}
         </View>

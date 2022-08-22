@@ -29,11 +29,17 @@ const LayoutTherapist = ({
         end={white ? { x: 1, y: 1.5 } : { x: 0.5, y: 1 }}
       >
         <LinearGradient
+          // colors={[
+          //   "rgba(228, 244, 245, 1)",
+          //   "rgba(228, 244, 245, 1)",
+          //   "rgba(228, 244, 245, 0.5)",
+          // ]}
           colors={[
-            "rgba(228, 244, 245, 1)",
-            "rgba(228, 244, 245, 1)",
-            "rgba(228, 244, 245, 0.5)",
+            theme["color-info-600"],
+            theme["color-info-700"],
+            theme["color-info-800"],
           ]}
+          locations={[0.9, 0.95, 1]}
           style={styles.blurContainer}
           onLayout={(event) => {
             const { height } = event.nativeEvent.layout
@@ -162,7 +168,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    height: "65%",
+    height: "50%",
     alignItems: "center",
   },
   blurContainerBottom: {
@@ -170,7 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: "35%",
+    height: "50%",
   },
   logo: {
     marginTop: -15,
@@ -186,7 +192,7 @@ const styles = StyleSheet.create({
   buttonGroup: {
     backgroundColor: "transparent",
     borderRadius: 6,
-    width: "40%",
+    width: "45%",
   },
   selectedButton: {
     backgroundColor: "#00A3FF",
@@ -194,7 +200,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   unseletedButton: {
-    backgroundColor: "transparent",
+    backgroundColor: "#d8f4ff",
     maxHeight: "100%",
     flex: 1,
   },

@@ -1,3 +1,4 @@
+import "react-native-url-polyfill/auto"
 import { useState } from "react"
 import { LogBox, Platform, StatusBar } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
@@ -27,6 +28,7 @@ import ProfileTherapistNavigator from "./Components/Navigators/profileTherapistN
 import Cart from "./Components/Screens/cart"
 import BookingInfo from "./Components/Screens/bookingInfo"
 import ConfirmCancelation from "./Components/Screens/confirmCancelation"
+import AccountCreated from "./Components/Screens/login/accountCreated"
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -88,7 +90,7 @@ export default function App() {
         <Tab.Screen
           name="Home Navigator"
           children={({ navigation, route }) => (
-            <HomeNavigator route={route} navigation={navigation} />
+            <HomeNavigator user={user} route={route} navigation={navigation} />
           )}
           options={{
             tabBarIcon: (tab) => (
@@ -131,7 +133,11 @@ export default function App() {
         <Tab.Screen
           name="Profile Navigator"
           children={({ navigation, route }) => (
-            <ProfileNavigator route={route} navigation={navigation} />
+            <ProfileNavigator
+              setUser={setUser}
+              route={route}
+              navigation={navigation}
+            />
           )}
           options={{
             tabBarIcon: (tab) => (
@@ -193,7 +199,11 @@ export default function App() {
         <Tab.Screen
           name="Home Navigator"
           children={({ navigation, route }) => (
-            <HomeTherapistNavigator route={route} navigation={navigation} />
+            <HomeTherapistNavigator
+              user={user}
+              route={route}
+              navigation={navigation}
+            />
           )}
           options={{
             tabBarIcon: (tab) => (
@@ -237,7 +247,11 @@ export default function App() {
         <Tab.Screen
           name="Profile Navigator"
           children={({ navigation, route }) => (
-            <ProfileTherapistNavigator route={route} navigation={navigation} />
+            <ProfileTherapistNavigator
+              setUser={setUser}
+              route={route}
+              navigation={navigation}
+            />
           )}
           options={{
             tabBarIcon: (tab) => (
@@ -284,6 +298,13 @@ export default function App() {
             name="Signup"
             children={({ navigation, route }) => (
               <Signup navigation={navigation} route={route} />
+            )}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Account Created"
+            children={({ navigation, route }) => (
+              <AccountCreated navigation={navigation} route={route} />
             )}
             options={{ headerShown: false }}
           />
