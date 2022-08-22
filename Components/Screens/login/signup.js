@@ -1,9 +1,10 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
-import { Button, Input } from "@ui-kitten/components"
+import { Button, Input, useTheme, Spinner } from "@ui-kitten/components"
 import { useState } from "react"
 import LayoutLogin from "../../Layouts/LayoutLogin"
 import validator from "validator"
+import { UserApi, Configuration } from "@krupnov/saluderia-api-webserver-rn"
 
 const Signup = ({ navigation }) => {
   const [email, setEmail] = useState("")
@@ -13,23 +14,41 @@ const Signup = ({ navigation }) => {
   const [modalText, setModalText] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
   const [scrollHeight, setScrollHeight] = useState({})
+  const [loading, setLoading] = useState(false)
+  const theme = useTheme()
 
-  const showError = () => {
-    let errortext = ""
+  const signupRequest = () => {
+    const configuration = new Configuration({
+      basePath: "https://api.saluderia.com/",
+    })
+    const userApi = new UserApi(configuration)
+
     if (!validator.isEmail(email)) {
-      errortext = "Incorrect email"
-    } else if (pass === "incorrectpass") {
-      errortext = "Incorrect password"
+      setModalText("Incorrect email")
+      setModalVisible(true)
     } else if (repeatpass !== pass) {
-      errortext = "Passwords do not match"
-    } else if (email === "emailinuse") {
-      errortext = "This Email is already in use"
+      setModalText("Passwords do not match")
+      setModalVisible(true)
     } else {
-      errortext = ""
+      setLoading(true)
+
+      userApi
+        .registerNewUser({
+          email: email,
+          password: pass,
+          name: userName,
+        })
+        .then((response) => {
+          navigation.navigate("Account Created")
+          setLoading(false)
+        })
+        .catch((err) => {
+          setModalText(err.response.data.message)
+          setModalVisible(true)
+          setLoading(false)
+        })
+        .finally(() => setLoading(false))
     }
-    errortext === ""
-      ? setModalVisible(false)
-      : (setModalText(errortext), setModalVisible(true))
   }
 
   return (
@@ -40,6 +59,23 @@ const Signup = ({ navigation }) => {
       modal={modalText}
       scroller={true}
     >
+      {loading && (
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1,
+            backgroundColor: theme["color-warning-600"],
+          }}
+        >
+          <Spinner size="giant" />
+        </View>
+      )}
       <View
         style={{
           width: "100%",
@@ -75,6 +111,11 @@ const Signup = ({ navigation }) => {
             placeholder="Name"
           />
           <Input
+            autoCapitalize="none"
+            autoCorrect={false}
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            autoCompleteType="email"
             placeholderTextColor="#454545"
             style={styles.input}
             textStyle={{ fontSize: 20 }}
@@ -114,7 +155,7 @@ const Signup = ({ navigation }) => {
         <Button
           style={styles.button}
           onPress={() => {
-            showError()
+            signupRequest()
           }}
           size="medium"
           disabled={!repeatpass || !userName || !pass || !email}

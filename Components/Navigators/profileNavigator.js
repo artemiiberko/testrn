@@ -16,13 +16,15 @@ import SettingsNotification from "./../Screens/profile/settingsNotification"
 import BookingsHistory from "../Screens/profile/bookingsHistory"
 import SettingsLanguage from "../Screens/profile/settingsLanguage"
 
-const ProfileNavigator = () => {
+const ProfileNavigator = ({ setUser }) => {
   const Stack = createNativeStackNavigator()
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Menu"
-        children={({ navigation }) => <ProfileMenu navigation={navigation} />}
+        children={({ navigation }) => (
+          <ProfileMenu setUser={setUser} navigation={navigation} />
+        )}
         options={{ headerShown: false }}
       />
       <Stack.Screen

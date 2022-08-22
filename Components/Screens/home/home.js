@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { FlatList, Platform } from "react-native"
 import BookingComponent from "../../Elements/bookingComponent"
 import LayoutMore from "../../Layouts/LayoutMore"
+import { BookingApi, Configuration } from "@krupnov/saluderia-api-webserver-rn"
 
 const bookings_data = [
   {
@@ -88,8 +89,29 @@ const bookings_data = [
   },
 ]
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, user }) => {
   const [headerHeight, setHeaderHeight] = useState()
+
+  /* useEffect(() => {
+    const configuration = new Configuration({
+      basePath: "https://api.saluderia.com/",
+      headers: { Authorization: `Bearer ${user.access_token}` },
+    })
+    const bookingApi = new BookingApi(configuration)
+
+    bookingApi
+      .bookingInfo(
+        {},
+        { headers: { Authorization: `Bearer ${user.access_token}` } }
+      )
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((err) => {
+        console.log(err.response.data)
+      })
+  }, []) */
+
   return (
     <LayoutMore navigation={navigation} setHeaderHeight={setHeaderHeight}>
       <FlatList

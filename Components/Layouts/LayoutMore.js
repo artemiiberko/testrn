@@ -32,12 +32,18 @@ const LayoutMore = ({
         end={white ? { x: 1, y: 1.5 } : { x: 0.5, y: 1 }}
       >
         <LinearGradient
+          // colors={[
+          //   "rgba(228, 244, 245, 1)",
+          //   "rgba(228, 244, 245, 1)",
+          //   "rgba(228, 244, 245, 0.5)",
+          // ]}
           colors={[
-            "rgba(228, 244, 245, 1)",
-            "rgba(228, 244, 245, 1)",
-            "rgba(228, 244, 245, 0.5)",
+            theme["color-info-600"],
+            theme["color-info-700"],
+            theme["color-info-800"],
           ]}
-          style={styles.blurContainer}
+          locations={[0.9, 0.95, 1]}
+          style={[styles.blurContainer]}
           onLayout={(event) => {
             const { height } = event.nativeEvent.layout
             setHeaderHeight(height)
@@ -94,11 +100,11 @@ const LayoutMore = ({
                 >
                   Bookings <Text style={{ fontWeight: "400" }}> 5 </Text>
                 </Text>
-                <Text
+                {/* <Text
                   style={{ color: "#454545", fontSize: 28, fontWeight: "700" }}
                 >
                   478 €
-                </Text>
+                </Text> */}
               </View>
             )}
           </SafeAreaView>
@@ -131,7 +137,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    height: "65%",
+    height: "50%",
     alignItems: "center",
   },
   blurContainerBottom: {
@@ -139,7 +145,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: "35%",
+    height: "50%",
   },
   logo: {
     marginTop: -15,
